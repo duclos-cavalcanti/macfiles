@@ -115,7 +115,8 @@ local plugins = {
     { -- themes/ui
         "https://github.com/Mofiqul/adwaita.nvim",
         "loctvl842/monokai-pro.nvim",
-        'nvim-lualine/lualine.nvim',
+        "UtkarshVerma/molokai.nvim",
+        "nvim-lualine/lualine.nvim",
         dependencies = {
                 'kyazdani42/nvim-web-devicons', 
                 {

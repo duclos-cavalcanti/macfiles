@@ -1,5 +1,5 @@
 -- colorscheme
-local scheme="monokai-pro"
+local scheme="molokai"
 local statusline = require('lualine.themes.' .. scheme)
 
 vim.cmd('colorscheme ' .. scheme)
