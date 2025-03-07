@@ -2,17 +2,8 @@
 #
 # Personal Stow script of my dotiles onto a new machine.
 
-FOLDERS=(bash
-         awesome
-         picom
-         wezterm
-         nvim
-         bin
-         git
-         X11)
-
 usage() {
-  printf "USAGE: syntax: ./stow.sh <options>
+  printf "USAGE: syntax: ./install.sh <options>
   OPTIONS:
     -i | --install:
     -r | --reinstall:
@@ -56,12 +47,6 @@ main() {
                 shift
                 ;;
 
-            -R|--root)
-                $uninstall / root
-                $install / root
-                shift
-                ;;
-
             -h|--help)
                 usage
                 exit 0
@@ -75,5 +60,9 @@ main() {
     done
 }
 
-check "stow"
+if ! command -v stow &>/dev/null; then
+    printf "stow is not installed!\n"
+    exit 1
+fi
+
 main "$@"
