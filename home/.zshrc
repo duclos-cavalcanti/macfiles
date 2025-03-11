@@ -1,3 +1,28 @@
+export VISUAL='nvim'
+export EDITOR="nvim"
+export GIT_EDITOR='nvim'
+export DIFFPROG='nvim'
+export PAGER='less'
+export XDG_DESKTOP_DIR="$HOME/Desktop"
+export XDG_DOCUMENTS_DIR="$HOME/Documents"
+export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+export XDG_MUSIC_DIR="$HOME/Music"
+export XDG_PICTURES_DIR="$HOME/Pictures"
+export XDG_PUBLICSHARE_DIR="$HOME/Public"
+export XDG_TEMPLATES_DIR="$HOME/Templates"
+export XDG_VIDEOS_DIR="$HOME/Videos"
+export XDG_DATA_HOME="$HOME/.local/"
+export XDG_CACHE_HOME="$HOME/.cache/"
+export XDG_CONFIG_HOME="$HOME/.config/"
+export XDG_STATE_HOME="$HOME/.local/state"
+export TMUXP_CONFIGDIR="$HOME/.dotfiles/sessions"
+export TERM='xterm-256color'
+export BAT_THEME='ansi'
+export PYLINTHOME="${XDG_DATA_HOME}/pylint"
+export IPYTHONDIR="$HOME/.config/ipython/"
+export CARGO_HOME="$HOME/.cargo/"
+export LESSHISTFILE=-
+
 # Enable command auto-correction and completion
 autoload -Uz compinit && compinit
 autoload -Uz vcs_info
@@ -65,7 +90,28 @@ export PATH=$PATH:${HOME}/.local/bin:${HOME}/.bin
 
 # Homebrew
 if [[ -d /opt/homebrew ]]; then
-  export PATH=$PATH:/opt/homebrew/bin
+    export PATH=$PATH:/opt/homebrew/bin
+    export HOMEBREW_PREFIX="/opt/homebrew"
+    export HOMEBREW_CACHE="$XDG_CACHE_HOME/homebrew"
+    export HOMEBREW_LOGS="$XDG_STATE_HOME/homebrew"
+
+    export CA_BUNDLE="$HOMEBREW_PREFIX/opt/ca-certificates/share/ca-certificates/cacert.pem"
+    export CURL_CA_BUNDLE="$CA_BUNDLE"
+
+    # export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
+
+    export PATH=$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$HOMEBREW_PREFIX/opt/curl/bin
+
+    export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/lib
+    export INCLUDE_PATH=$INCLUDE_PATH:/opt/homebrew/include
+
+    export CPLUS_INCLUDE_PATH="$HOMEBREW_PREFIX/include:/usr/local/include"
+    export LDFLAGS="-L$HOMEBREW_PREFIX/lib -L$HOMEBREW_PREFIX/opt/libpq/lib -L$HOMEBREW_PREFIX/opt/curl/lib"
+    export CPPFLAGS="-I$HOMEBREW_PREFIX/include -I/usr/local/include -I$HOMEBREW_PREFIX/opt/libpq/include -I$HOMEBREW_PREFIX/opt/curl/include"
+    export LIBRARY_PATH="$HOMEBREW_PREFIX/lib:$HOMEBREW_PREFIX/opt/libpq/lib:/usr/local/lib:/usr/lib"
+    export LD_LIBRARY_PATH="$HOMEBREW_PREFIX/lib:/usr/local/lib:/usr/lib"
+    export DYLD_LIBRARY_PATH="$HOMEBREW_PREFIX/lib:/usr/local/lib:/usr/lib"
+    export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/curl/lib/pkgconfig"
 fi
 
 if [[ -d ${HOME}/Library/Python/3.9/bin ]]; then
@@ -114,7 +160,7 @@ alias e="vim"
 alias v="nvim"
 
 if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
-  alias bat="batcat"
+  # alias bat="batcat"
   alias cat="bat -p"
 fi
 
@@ -163,33 +209,6 @@ alias gbd="git branch -d"
 alias gbD="git push --delete origin"
 alias greset="git reset --hard"
 alias greb="git rebase -i --root"
-
-export VISUAL='nvim'
-export EDITOR="nvim"
-export GIT_EDITOR='nvim'
-export DIFFPROG='nvim'
-export PAGER='less'
-
-export XDG_DESKTOP_DIR="$HOME/Desktop"
-export XDG_DOCUMENTS_DIR="$HOME/Documents"
-export XDG_DOWNLOAD_DIR="$HOME/Downloads"
-export XDG_MUSIC_DIR="$HOME/Music"
-export XDG_PICTURES_DIR="$HOME/Pictures"
-export XDG_PUBLICSHARE_DIR="$HOME/Public"
-export XDG_TEMPLATES_DIR="$HOME/Templates"
-export XDG_VIDEOS_DIR="$HOME/Videos"
-export XDG_DATA_HOME="$HOME/.local/"
-export XDG_CACHE_HOME="$HOME/.cache/"
-export XDG_CONFIG_HOME="$HOME/.config/"
-
-export TMUXP_CONFIGDIR="$HOME/.dotfiles/sessions"
-export TERM='tmux-256color'
-
-export BAT_THEME='ansi'
-export PYLINTHOME="${XDG_DATA_HOME}/pylint"
-export IPYTHONDIR="$HOME/.config/ipython/"
-export CARGO_HOME="$HOME/.cargo/"
-export LESSHISTFILE=-
 
 cd() {
   builtin cd "$@" && ls --color=auto
