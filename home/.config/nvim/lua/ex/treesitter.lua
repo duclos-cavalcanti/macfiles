@@ -3,7 +3,8 @@ require('nvim-treesitter.configs').setup({
     parser_install_dir = "$HOME/.local/share/treesitter",
 	highlight = {
         enable = true,
-        additional_vim_regex_highlighting = false
+        additional_vim_regex_highlighting = false,
+        -- disable = { "vimdoc" }, -- Temporary workaround
     },
     autotag = { -- html auto-tagging
         enable = true,
@@ -30,6 +31,9 @@ require('nvim-treesitter.configs').setup({
     "java",
     "json",
     "yaml",
-    "vim"
+    "vim",
+    "vimdoc",
+    "query",
+    "latex"
 	},
 })

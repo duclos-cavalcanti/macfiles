@@ -44,7 +44,6 @@ local plugins = {
         'nvim-telescope/telescope.nvim',
         dependencies = {
             {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
-            'nvim-telescope/telescope-dap.nvim',
             'nvim-lua/plenary.nvim',
         },
         config = function() require('ex.telescope') end,
@@ -79,16 +78,6 @@ local plugins = {
             s.config()
             s.setup()
         end,
-    },
-    { -- debugger
-        "mfussenegger/nvim-dap",
-        dependencies = {
-            {
-                "rcarriga/nvim-dap-ui",
-                config = function() require("ex.debugger-ui") end,
-            },
-        },
-        config = function() require('ex.debugger') end
     },
     { -- git
         "NeogitOrg/neogit",
