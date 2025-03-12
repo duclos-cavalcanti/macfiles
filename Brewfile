@@ -14,6 +14,9 @@ brew "luarocks"
 brew "tmux"
 brew "tmuxp"
 brew "stow"
+brew "wezterm"
+
+brew "pyenv-virtualenv"
 
 brew "fzf"
 brew "rg"
@@ -23,4 +26,5 @@ brew "wget"
 brew "golang"
 
 cask "docker"
+cask "postman"
 cask "nikitabobko/tap/aerospace"
