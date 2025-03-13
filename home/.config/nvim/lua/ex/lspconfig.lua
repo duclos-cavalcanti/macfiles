@@ -13,12 +13,13 @@ local function _on_attach(client, bufnr)
     bufnnoremap("gi",           "<Cmd>lua vim.lsp.buf.implementation()<CR>")
     bufnnoremap("gr",           "<cmd>Telescope lsp_references<CR>") 
     bufnnoremap("gh",           "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
-    bufnnoremap("gv",           "<Cmd>vsplit | lua vim.lsp.buf.definition()<CR>")
-    -- bufnnoremap("gt",           "<Cmd>vsplit | wincmd T | lua vim.lsp.buf.definition()<CR>")
+    bufnnoremap("GT",           "<Cmd>lua vim.lsp.buf.type_definition()<CR>")
     bufnnoremap("K",            "<Cmd>lua vim.lsp.buf.hover()<CR>")
   --bufnnoremap("<leader>R",    "<Cmd>lua vim.lsp.buf.rename()<CR>")
     bufnnoremap("gn",           "<Cmd>lua vim.diagnostic.goto_next()<CR>")
     bufnnoremap("gp",           "<Cmd>lua vim.diagnostic.goto_prev()<CR>")
+    bufnnoremap("gn",           "<Cmd>lua vim.diagnostic.goto_next()<CR>")
+    bufnnoremap("gf",           "<Cmd>lua vim.diagnostic.open_float()<CR>")
 end
 
 vim.diagnostic.config({
@@ -32,8 +33,12 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {f
 -- add capabilities from nvim-cmp
 local _capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local runtime_path = vim.split(package.path, ';')
+
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
+
+vim.lsp.set_log_level 'debug'
+-- require('vim.lsp.log').set_format_func(vim.inspect)
 
 require('lspconfig').clangd.setup({
     on_attach = _on_attach,
@@ -48,18 +53,32 @@ require('lspconfig').gopls.setup({
     filetypes = { "go", "gomod", "gotmpl" },
 })
 
-require'lspconfig'.rust_analyzer.setup{
-    cmd = { "rustup", "run", "stable", "rust-analyzer" },
-    settings = {
+-- rust
+-- require'lspconfig'.rust_analyzer.setup{
+--     cmd = { "rust-analyzer" },
+--     capabilities = _capabilities,
+--     settings = {
+--       ['rust-analyzer'] = {
+--         diagnostics = {
+--           enable = true;
+--         }
+--       }
+--     }
+-- }
+vim.g.rustaceanvim = {
+  -- Plugin configuration
+  tools = {
+  },
+  -- LSP configuration
+  server = {
+    on_attach = _on_attach,
+    default_settings = {
       ['rust-analyzer'] = {
-        diagnostics = {
-          enable = false;
-        }
-      }
-    }
-}
 
--- require('nixd').clangd.setup({})
+      },
+    },
+  },
+}
 
 require('lspconfig').cssls.setup {
   on_attach = _on_attach,
@@ -71,32 +90,18 @@ require('lspconfig').html.setup {
   capabilities = _capabilities
 }
 
-require('lspconfig').tsserver.setup({
-    on_attach = _on_attach,
-    capabilities = _capabilities,
-    cmd = { "typescript-language-server", "--stdio" },
-    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-})
+-- require('lspconfig').tsserver.setup({
+--     on_attach = _on_attach,
+--     capabilities = _capabilities,
+--     cmd = { "typescript-language-server", "--stdio" },
+--     filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+-- })
 
 require('lspconfig').pyright.setup({
     on_attach = _on_attach,
     capabilities = _capabilities,
     cmd = { "pyright-langserver", "--stdio" },
     filetypes = { "python" },
-})
-
-require('lspconfig').ghdl_ls.setup({
-    on_attach = _on_attach,
-    capabilities = _capabilities,
-    cmd = { "ghdl-ls" },
-    filetypes = { "vhdl" },
-})
-
-require('lspconfig').hls.setup({
-    on_attach = _on_attach,
-    capabilities = _capabilities,
-    cmd = { "haskell-language-server-wrapper", "--lsp" },
-    filetypes = { "haskell", "lhaskell" },
 })
 
 require('lspconfig').bashls.setup({

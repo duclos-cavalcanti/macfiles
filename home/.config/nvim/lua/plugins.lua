@@ -23,14 +23,19 @@ local plugins = {
             require('telescope').load_extension 'remote-sshfs'
         end
     },
-    { -- lsp
-        "neovim/nvim-lspconfig",
-        config = function() require('ex.lspconfig') end,
-    },
-    { -- completion
-        "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
+    { -- treesitter
+        "nvim-treesitter/nvim-treesitter",
         dependencies = {
+            "windwp/nvim-ts-autotag",
+        },
+        config = function() require('ex.treesitter') end,
+    },
+    { -- lsp and completion
+        "neovim/nvim-lspconfig",
+        -- event = "InsertEnter",
+        dependencies = {
+            "mrcjkb/rustaceanvim",
+            "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
@@ -38,7 +43,18 @@ local plugins = {
             "hrsh7th/cmp-nvim-lua",
             "saadparwaiz1/cmp_luasnip",
         },
-        config = function() require('ex.completion') end,
+        config = function() 
+            require('ex.completion') 
+            require('ex.lspconfig')
+        end,
+    },
+    { -- snippets
+        "L3MON4D3/LuaSnip",
+        config = function() 
+            local s = require('ex.luasnip')
+            s.config()
+            s.setup()
+        end,
     },
     { -- fuzzy finder
         'nvim-telescope/telescope.nvim',
@@ -48,16 +64,9 @@ local plugins = {
         },
         config = function() require('ex.telescope') end,
     },
-    { -- file-brwoser
+    { -- file-browser
         "nvim-telescope/telescope-file-browser.nvim",
         dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-    },
-    { -- treesitter
-        "nvim-treesitter/nvim-treesitter",
-        dependencies = {
-            "windwp/nvim-ts-autotag",
-        },
-        config = function() require('ex.treesitter') end,
     },
     { -- markdown
         "iamcco/markdown-preview.nvim",
@@ -65,18 +74,10 @@ local plugins = {
             vim.fn["mkdp#util#install"]()
             vim.cmd[[
             function OpenMarkdownPreview (url)
-                execute "silent ! google-chrome --new-tab " . a:url
+                execute "silent ! open -a Google\ Chrome -n --args --new-window " . a:url
             endfunction
             let g:mkdp_browserfunc = 'OpenMarkdownPreview'
             ]]
-        end,
-    },
-    { -- snippets
-        "L3MON4D3/LuaSnip",
-        config = function() 
-            local s = require('ex.luasnip')
-            s.config()
-            s.setup()
         end,
     },
     { -- git

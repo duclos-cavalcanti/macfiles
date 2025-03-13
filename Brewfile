@@ -8,6 +8,7 @@ brew "cmake"
 brew "gcc"
 brew "lua-language-server"
 brew "bash-language-server"
+brew "typescript-language-server"
 
 brew "nvim"
 brew "luarocks"
