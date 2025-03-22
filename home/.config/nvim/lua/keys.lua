@@ -31,10 +31,8 @@ vim.g.maplocalleader = " "
 nnoremap("z.", "zszH")
 
 -- Tabs
--- nnoremap("<M-j>", ":tabp<CR>")
--- nnoremap("<M-k>", ":tabn<CR>")
--- nnoremap("<M-J>", ":tabmove -1<CR>")
--- nnoremap("<M-K>", ":tabmove +1<CR>")
+nnoremap("<leader>gT", ":tabmove -1<CR>")
+nnoremap("<leader>gt", ":tabmove +1<CR>")
 
 -- Terminal
 tnoremap("<ESC>", "<C-\\><C-n>")
@@ -42,7 +40,14 @@ tnoremap("<C-w>", "<C-\\><C-N><C-w>")
 nnoremap("<leader><space>", ":split <BAR> :resize 20 <BAR> term<CR>i")
 
 -- File explorer
-nnoremap("<leader>e", ":Telescope file_browser<CR>")
+nnoremap("<leader>e", ":Neotree<CR>")
+
+-- Tags 
+nnoremap("<leader><tab>", "<cmd>AerialToggle! left<CR>")
+
+-- File explorer
+nnoremap("<leader>q", "<cmd>lua vim.diagnostic.setloclist()")
+-- cnext, cprev to jump between them
 
 -- Telescope
 nnoremap("<leader>sf", "<cmd>lua require('telescope.builtin').find_files({})<CR>")

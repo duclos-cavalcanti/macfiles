@@ -48,6 +48,24 @@ local plugins = {
             require('ex.lspconfig')
         end,
     },
+    { -- tags
+      'stevearc/aerial.nvim',
+      opts = {},
+      dependencies = {
+         "nvim-treesitter/nvim-treesitter",
+         "nvim-tree/nvim-web-devicons"
+      },
+        config = function() 
+            require("aerial").setup({
+              -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+              -- on_attach = function(bufnr)
+              --   -- Jump forwards/backwards with '{' and '}'
+              --   vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+              --   vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+              -- end,
+            })
+        end,
+    },
     { -- snippets
         "L3MON4D3/LuaSnip",
         config = function() 
@@ -79,6 +97,16 @@ local plugins = {
             let g:mkdp_browserfunc = 'OpenMarkdownPreview'
             ]]
         end,
+    },
+    { -- filebrowser
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v3.x",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+        "MunifTanjim/nui.nvim",
+        -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
+      }
     },
     { -- git
         "NeogitOrg/neogit",

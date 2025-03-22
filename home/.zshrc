@@ -48,6 +48,9 @@ elif [[ -r /etc/bash_completion.d/git ]]; then
   source /etc/bash_completion.d/git
 fi
 
+[ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+[ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
+
 if [[ -r /usr/share/git/completion/git-prompt.sh ]]; then
   source /usr/share/git/completion/git-prompt.sh
 elif [[ -r /etc/bash_completion.d/git-prompt ]]; then
@@ -205,6 +208,7 @@ alias gpo="git push origin"
 alias gd="git diff --color=always"
 alias gdd="git diff HEAD~1 HEAD"
 alias gba="git branch --all"
+alias gb="git branch"
 alias gbd="git branch -d"
 alias gbD="git push --delete origin"
 alias greset="git reset --hard"
@@ -213,4 +217,3 @@ alias greb="git rebase -i --root"
 cd() {
   builtin cd "$@" && ls --color=auto
 }
-

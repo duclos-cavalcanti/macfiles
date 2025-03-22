@@ -74,7 +74,7 @@ vim.g.rustaceanvim = {
     on_attach = _on_attach,
     default_settings = {
       ['rust-analyzer'] = {
-
+          enable = true;
       },
     },
   },

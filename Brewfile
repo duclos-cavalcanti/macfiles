@@ -9,6 +9,7 @@ brew "gcc"
 brew "lua-language-server"
 brew "bash-language-server"
 brew "typescript-language-server"
+brew "pyenv-virtualenv"
 
 brew "nvim"
 brew "luarocks"
@@ -16,8 +17,8 @@ brew "tmux"
 brew "tmuxp"
 brew "stow"
 brew "wezterm"
-
-brew "pyenv-virtualenv"
+cask "alacritty"
+cask "hammerspoon"
 
 brew "fzf"
 brew "rg"
@@ -28,4 +29,6 @@ brew "golang"
 
 cask "docker"
 cask "postman"
-cask "nikitabobko/tap/aerospace"
+
+# cask "nikitabobko/tap/aerospace"
+# cask "copyq"
