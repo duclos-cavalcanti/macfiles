@@ -18,7 +18,6 @@ brew "tmuxp"
 brew "stow"
 brew "wezterm"
 cask "alacritty"
-cask "hammerspoon"
 
 brew "fzf"
 brew "rg"
@@ -29,6 +28,4 @@ brew "golang"
 
 cask "docker"
 cask "postman"
-
-# cask "nikitabobko/tap/aerospace"
 # cask "copyq"
