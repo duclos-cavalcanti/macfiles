@@ -10,14 +10,14 @@ brew "lua-language-server"
 brew "bash-language-server"
 brew "typescript-language-server"
 brew "pyenv-virtualenv"
-
-brew "nvim"
 brew "luarocks"
+
+brew "wezterm"
+brew "nvim"
 brew "tmux"
 brew "tmuxp"
 brew "stow"
-brew "wezterm"
-cask "alacritty"
+brew "maccy"
 
 brew "fzf"
 brew "rg"
@@ -28,4 +28,3 @@ brew "golang"
 
 cask "docker"
 cask "postman"
-# cask "copyq"
