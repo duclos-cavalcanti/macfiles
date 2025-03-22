@@ -19,6 +19,8 @@ brew "tmuxp"
 brew "stow"
 brew "maccy"
 
+cask "font-hack-nerd-font"
+
 brew "fzf"
 brew "rg"
 brew "fd"
