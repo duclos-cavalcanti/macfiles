@@ -1,3 +1,5 @@
+export AWS_PROFILE=custo-eng-dev
+
 export VISUAL='nvim'
 export EDITOR="nvim"
 export GIT_EDITOR='nvim'
@@ -180,8 +182,8 @@ if command -v exa &>/dev/null; then
 fi
 
 
-alias ..="cd .."
-alias ...="cd ../.."
+alias '..'="cd .."
+alias '...'="cd ../.."
 
 alias ls="ls --color=auto"
 alias sl="ls --color=auto"
@@ -220,6 +222,9 @@ alias gbd="git branch -d"
 alias gbD="git push --delete origin"
 alias greset="git reset --hard"
 alias greb="git rebase -i --root"
+
+alias azlog="az login"
+alias metlog="az acr login -n metacodev"
 
 cd() {
   builtin cd "$@" && ls --color=auto

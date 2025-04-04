@@ -1,5 +1,5 @@
 -- colorscheme
-local scheme="molokai"
+local scheme="gruvbox"
 local statusline = require('lualine.themes.' .. scheme)
 
 vim.cmd('colorscheme ' .. scheme)
@@ -33,7 +33,8 @@ require('lualine').setup {
     extensions = {}
 }
 
--- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
 
 vim.api.nvim_set_hl(0, "TelescopeSelection", { fg = "red" })
 vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "red" })
