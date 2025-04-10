@@ -82,16 +82,27 @@ if command -v fzf &>/dev/null; then
 fi
 
 # PROMPTS
-_prompt() {
-  precmd() { vcs_info }
-  setopt prompt_subst
-  PROMPT='%F{blue}%~ %F{white}${vcs_info_msg_0_}%f%(?.%F{green}.%F{red})%#%f '
-}
-
 if [[ -n "$SSH_CONNECTION" ]]; then
   export PS1="%n@%m: %~ \$ "
 else
-  _prompt
+    precmd() { vcs_info }
+
+    setopt prompt_subst
+
+    zstyle ':vcs_info:*' enable git
+
+    zstyle ':vcs_info:git:*' check-for-changes true
+    zstyle ':vcs_info:git:*' get-revision true
+    zstyle ':vcs_info:git:*' get-untracked-files true
+
+    zstyle ':vcs_info:git:*' stagedstr '●'
+    zstyle ':vcs_info:git:*' unstagedstr '✗'
+
+    zstyle ':vcs_info:git:*' formats '%F{blue}git:(%F{red}%b%F{blue})%f%c'
+    zstyle ':vcs_info:git:*' actionformats '%F{blue}git:(%F{red}%b|%a%F{blue})%f%c'
+
+    # PROMPT='%F{blue}%~ %F{white}${vcs_info_msg_0_}%f%(?.%F{green}.%F{red})%#%f '
+    PROMPT='%(!.%F{red}.%F{green})➜%f %F{cyan}%~%f ${vcs_info_msg_0_} %(?.%F{green}.%F{red})$%f '
 fi
 
 export PS2=">> "
@@ -176,19 +187,21 @@ if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
   alias cat="bat -p"
 fi
 
-if command -v exa &>/dev/null; then
-  alias ls="exa"
-  alias tree="exa --tree"
+if command -v eza &>/dev/null; then
+    alias ls="eza"
+    alias sl="eza"
+    alias la="eza"
+    alias ll="eza -l"
+else
+    alias ls="ls --color=auto"
+    alias sl="ls --color=auto"
+    alias la="ls -a --color=auto"
+    alias ll="ls -l --color=auto"
 fi
 
 
 alias '..'="cd .."
 alias '...'="cd ../.."
-
-alias ls="ls --color=auto"
-alias sl="ls --color=auto"
-alias la="ls -a --color=auto"
-alias ll="ls -l --color=auto"
 
 alias mv="mv -i"
 alias cp="cp -i"
