@@ -1,4 +1,5 @@
 tap "nikitabobko/tap"
+tap "d12frosted/emacs-plus"
 
 cask_args appdir: '/Applications'
 
@@ -36,3 +37,4 @@ brew "awscli"
 
 cask "docker"
 cask "postman"
+cask "obsidian"

@@ -53,6 +53,8 @@ require('lspconfig').gopls.setup({
     filetypes = { "go", "gomod", "gotmpl" },
 })
 
+require'lspconfig'.metals.setup{}
+
 -- rust
 -- require'lspconfig'.rust_analyzer.setup{
 --     cmd = { "rust-analyzer" },
