@@ -56,17 +56,6 @@ require('lspconfig').gopls.setup({
 require'lspconfig'.metals.setup{}
 
 -- rust
--- require'lspconfig'.rust_analyzer.setup{
---     cmd = { "rust-analyzer" },
---     capabilities = _capabilities,
---     settings = {
---       ['rust-analyzer'] = {
---         diagnostics = {
---           enable = true;
---         }
---       }
---     }
--- }
 vim.g.rustaceanvim = {
   -- Plugin configuration
   tools = {

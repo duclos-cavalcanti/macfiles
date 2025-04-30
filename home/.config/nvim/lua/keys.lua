@@ -31,8 +31,10 @@ vim.g.maplocalleader = " "
 nnoremap("z.", "zszH")
 
 -- Tabs
-nnoremap("<leader>gT", ":tabmove -1<CR>")
-nnoremap("<leader>gt", ":tabmove +1<CR>")
+nnoremap("<M-k>", ":tabnext<CR>")
+nnoremap("<M-j>", ":tabprev<CR>")
+nnoremap("<M-S-k>", ":tabmove +1<CR>")
+nnoremap("<M-S-j>", ":tabmove -1<CR>")
 
 -- Terminal
 tnoremap("<ESC>", "<C-\\><C-n>")

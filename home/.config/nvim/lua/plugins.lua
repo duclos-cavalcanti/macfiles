@@ -14,21 +14,31 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    { -- ssh
-        'nosduco/remote-sshfs.nvim',
-        dependencies = { 'nvim-telescope/telescope.nvim' },
-        config = function() 
-            -- require('ex.ssh') 
-            require('remote-sshfs').setup({})
-            require('telescope').load_extension 'remote-sshfs'
-        end
-    },
     { -- treesitter
         "nvim-treesitter/nvim-treesitter",
         dependencies = {
             "windwp/nvim-ts-autotag",
         },
         config = function() require('ex.treesitter') end,
+    },
+    { -- copilot
+        "github/copilot.vim",
+        config = function() 
+            -- 
+        end,
+    },
+    { -- chatgpt
+      "jackMort/ChatGPT.nvim",
+        event = "VeryLazy",
+        dependencies = {
+          "MunifTanjim/nui.nvim",
+          "nvim-lua/plenary.nvim",
+          "folke/trouble.nvim",
+          "nvim-telescope/telescope.nvim"
+        },
+        config = function()
+          -- require("chatgpt").setup()
+        end,
     },
     { -- lsp and completion
         "neovim/nvim-lspconfig",
@@ -56,14 +66,7 @@ local plugins = {
          "nvim-tree/nvim-web-devicons"
       },
         config = function() 
-            require("aerial").setup({
-              -- optionally use on_attach to set keymaps when aerial has attached to a buffer
-              -- on_attach = function(bufnr)
-              --   -- Jump forwards/backwards with '{' and '}'
-              --   vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
-              --   vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
-              -- end,
-            })
+            require("aerial").setup({ })
         end,
     },
     { -- snippets
@@ -82,46 +85,6 @@ local plugins = {
         },
         config = function() require('ex.telescope') end,
     },
-    { -- file-browser
-        "nvim-telescope/telescope-file-browser.nvim",
-        dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-    },
-    { -- markdown
-        "iamcco/markdown-preview.nvim",
-        config = function()
-            vim.fn["mkdp#util#install"]()
-            vim.cmd[[
-            function OpenMarkdownPreview (url)
-                execute "! open -a 'Google Chrome' -n --args --new-window " . a:url
-            endfunction
-            let g:mkdp_browserfunc = 'OpenMarkdownPreview'
-            ]]
-        end,
-    },
-    { -- filebrowser
-      "nvim-neo-tree/neo-tree.nvim",
-      branch = "v3.x",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-        "MunifTanjim/nui.nvim",
-        -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
-      }
-    },
-    { -- git
-        "NeogitOrg/neogit",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "sindrets/diffview.nvim",
-
-            "nvim-telescope/telescope.nvim",
-            "ibhagwan/fzf-lua",
-      },
-        config = function() 
-            local neogit = require('neogit')
-            neogit.setup {}
-        end
-    },
     { -- auto pairs
         "windwp/nvim-autopairs",
         config = function() require('nvim-autopairs').setup({}) end
@@ -131,11 +94,9 @@ local plugins = {
         config = function() require('ex.comment') end,
     },
     { -- themes/ui
-        "https://github.com/Mofiqul/adwaita.nvim",
-        "loctvl842/monokai-pro.nvim",
-        "UtkarshVerma/molokai.nvim",
         "ellisonleao/gruvbox.nvim",
         "nvim-lualine/lualine.nvim",
+        'fei6409/log-highlight.nvim',
         dependencies = {
                 'kyazdani42/nvim-web-devicons', 
                 {
@@ -143,9 +104,6 @@ local plugins = {
                     config  = function() require('colorizer').setup() end,
                 }
         },
-    },
-    { -- logging
-        'fei6409/log-highlight.nvim',
         config = function()
             require('log-highlight').setup {}
         end,
