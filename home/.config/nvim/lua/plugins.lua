@@ -28,16 +28,14 @@ local plugins = {
         end,
     },
     { -- chatgpt
-      "jackMort/ChatGPT.nvim",
-        event = "VeryLazy",
-        dependencies = {
-          "MunifTanjim/nui.nvim",
-          "nvim-lua/plenary.nvim",
-          "folke/trouble.nvim",
-          "nvim-telescope/telescope.nvim"
-        },
+        "robitx/gp.nvim",
         config = function()
-          -- require("chatgpt").setup()
+            local conf = {
+                -- For customization, refer to Install > Configuration in the Documentation/Readme
+            }
+            require("gp").setup(conf)
+    
+            -- Setup shortcuts here (see Usage > Shortcuts in the Documentation/Readme)
         end,
     },
     { -- lsp and completion
