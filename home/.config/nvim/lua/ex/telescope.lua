@@ -1,4 +1,5 @@
 local actions = require('telescope.actions')
+local action_state = require("telescope.actions.state")
 
 require('telescope').setup({
   defaults = {
@@ -8,6 +9,8 @@ require('telescope').setup({
         ['<C-n>'] = actions.move_selection_next,
         ['<C-p>'] = actions.move_selection_previous,
         ['<C-c>'] = actions.close,
+        ["<C-a>"] = actions.send_to_qflist,
+        ["<C-q>"] = actions.send_selected_to_qflist,
       },
       n = {
         ['<C-c>'] = actions.close,

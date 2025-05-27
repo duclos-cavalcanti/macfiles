@@ -55,20 +55,16 @@ require('lspconfig').gopls.setup({
 
 require'lspconfig'.metals.setup{}
 
--- rust
-vim.g.rustaceanvim = {
-  -- Plugin configuration
-  tools = {
-  },
-  -- LSP configuration
-  server = {
+require'lspconfig'.rust_analyzer.setup{
     on_attach = _on_attach,
-    default_settings = {
+    capabilities = _capabilities,
+    settings = {
       ['rust-analyzer'] = {
+        diagnostics = {
           enable = true;
-      },
-    },
-  },
+        }
+      }
+    }
 }
 
 require('lspconfig').cssls.setup {
@@ -81,30 +77,11 @@ require('lspconfig').html.setup {
   capabilities = _capabilities
 }
 
--- require('lspconfig').tsserver.setup({
---     on_attach = _on_attach,
---     capabilities = _capabilities,
---     cmd = { "typescript-language-server", "--stdio" },
---     filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
--- })
-
 require('lspconfig').pyright.setup({
     on_attach = _on_attach,
     capabilities = _capabilities,
     cmd = { "pyright-langserver", "--stdio" },
     filetypes = { "python" },
-})
-
-require('lspconfig').bashls.setup({
-    on_attach = _on_attach,
-    capabilities = _capabilities,
-    cmd = { "bash-language-server", "start" },
-    cmd_env = {
-      GLOB_PATTERN = "*@(.sh|.inc|.bash|.command)"
-    },
-    filetypes = { "sh", "bash" },
-    -- root_dir = util.find_git_ancestor,
-    single_file_support = true,
 })
 
 require('lspconfig').lua_ls.setup({

@@ -1,6 +1,5 @@
 -- loads all configs
 
-require("globals")
 require("settings")
 require("keys")
 require("commands")

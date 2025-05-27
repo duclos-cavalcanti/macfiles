@@ -42,7 +42,7 @@ local plugins = {
         "neovim/nvim-lspconfig",
         -- event = "InsertEnter",
         dependencies = {
-            "mrcjkb/rustaceanvim",
+            -- "mrcjkb/rustaceanvim",
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
@@ -54,6 +54,13 @@ local plugins = {
         config = function() 
             require('ex.completion') 
             require('ex.lspconfig')
+        end,
+    },
+    { -- git
+        'ruifm/gitlinker.nvim',
+        dependencies = 'nvim-lua/plenary.nvim',
+        config = function() 
+            require"gitlinker".setup()
         end,
     },
     { -- tags

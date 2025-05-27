@@ -62,10 +62,3 @@ vim.diagnostic.config {
     underline = true,            -- Keep error underline
     signs = true,                -- Keep gutter signs
 }
-
--- neovide GUI options
-vim.cmd[[
-if exists('g:neovide')
-    set guifont=Iosevka\ Nerd\ Font:h12
-endif
-]]
