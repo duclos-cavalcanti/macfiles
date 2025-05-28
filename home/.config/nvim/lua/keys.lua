@@ -42,10 +42,10 @@ tnoremap("<C-w>", "<C-\\><C-N><C-w>")
 nnoremap("<leader>t", ":split <BAR> :resize 20 <BAR> term<CR>i")
 
 -- Tags 
-nnoremap("<leader><tab>", "<cmd>AerialToggle! left<CR>")
+nnoremap("<leader><tab>", "<cmd>AerialToggle left<CR>")
 
-nnoremap("<leader>q", "<cmd>lua vim.diagnostic.setloclist()")
--- cnext, cprev to jump between them
+-- Quickfix list / Buffers
+nnoremap("<leader>q", "<cmd>lua vim.diagnostic.setloclist()") -- cnext, cprev to jump between them
 
 -- Telescope
 nnoremap("<leader>sf", "<cmd>lua require('telescope.builtin').find_files({})<CR>")

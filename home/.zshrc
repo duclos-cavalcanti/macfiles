@@ -1,5 +1,4 @@
 export AWS_PROFILE=custo-eng-dev
-
 export VISUAL='nvim'
 export EDITOR="nvim"
 export GIT_EDITOR='nvim'
@@ -18,7 +17,7 @@ export XDG_CACHE_HOME="$HOME/.cache/"
 export XDG_CONFIG_HOME="$HOME/.config/"
 export XDG_STATE_HOME="$HOME/.local/state"
 export TMUXP_CONFIGDIR="$HOME/.dotfiles/sessions"
-export TERM='xterm-256color'
+export TERM='screen-256color-bce'
 export BAT_THEME='ansi'
 export PYLINTHOME="${XDG_DATA_HOME}/pylint"
 export IPYTHONDIR="$HOME/.config/ipython/"
@@ -57,33 +56,28 @@ elif [[ -r /etc/bash_completion.d/git ]]; then
   source /etc/bash_completion.d/git
 fi
 
-[ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-[ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
-
 if [[ -r /usr/share/git/completion/git-prompt.sh ]]; then
   source /usr/share/git/completion/git-prompt.sh
 elif [[ -r /etc/bash_completion.d/git-prompt ]]; then
   source /etc/bash_completion.d/git-prompt
 fi
 
-if command -v fzf &>/dev/null; then
-    fzf_dirs=(
-      /usr/share/fzf/key-bindings.zsh
-      /usr/share/fzf/completion.zsh
-      /usr/share/doc/fzf/examples/key-bindings.zsh
-    )
-    for d in ${fzf_dirs[@]}; do
-      [[ -e ${d} ]] && source ${d}
-    done
-
-    export FZF_DEFAULT_COMMAND="fd --follow --hidden --type f --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
-    export FZF_ALT_C_COMMAND="fd --follow --hidden --type d --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-fi
-
 # PROMPTS
 if [[ -n "$SSH_CONNECTION" ]]; then
-  export PS1="%n@%m: %~ \$ "
+    export PS1="%n@%m: %~ \$ "
+
+elif [ -d "$HOME/.oh-my-zsh" ]; then
+    export ZSH="$HOME/.oh-my-zsh"
+    export ZSH_THEME="robbyrussell"
+    source $ZSH/oh-my-zsh.sh
+
+    plugins=(
+      git
+      dotenv
+      macos
+      zsh-autosuggestions 
+      zsh-autocomplete
+    )
 else
     precmd() { vcs_info }
 
@@ -152,7 +146,11 @@ fi
 
 # Java setup
 if command -v java &>/dev/null; then
-  export JAVA_HOME="/usr/lib/jvm/java-18-openjdk/"
+    if [[ -d /opt/homebrew ]]; then
+        export JAVA_HOME="/opt/homebrew/opt/openjdk"
+    else
+        export JAVA_HOME="/usr/lib/jvm/java-18-openjdk/"
+    fi
 fi
 
 # Ruby setup
@@ -242,3 +240,12 @@ alias metlog="az acr login -n metacodev"
 cd() {
   builtin cd "$@" && ls --color=auto
 }
+
+if command -v fzf &>/dev/null; then
+    export FZF_DEFAULT_COMMAND="fd --follow --hidden --type f --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
+    export FZF_ALT_C_COMMAND="fd --follow --hidden --type d --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+    [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+    [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
+fi
