@@ -79,7 +79,10 @@ elif [ -d "$HOME/.oh-my-zsh" ]; then
       zsh-autocomplete
     )
 else
-    precmd() { vcs_info }
+    precmd() { 
+        echo hello
+        vcs_info
+    }
 
     setopt prompt_subst
 

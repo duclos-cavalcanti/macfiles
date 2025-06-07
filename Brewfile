@@ -2,15 +2,7 @@ tap "nikitabobko/tap"
 
 cask_args appdir: '/Applications'
 
-brew "autoconf"
-brew "automake"
-brew "cmake"
-brew "gcc"
-brew "lua-language-server"
-brew "typescript-language-server"
-brew "pyenv-virtualenv"
-brew "luarocks"
-
+# base
 brew "nvim"
 brew "vim"
 brew "tmux"
@@ -19,9 +11,10 @@ brew "lazygit"
 brew "stow"
 brew "maccy"
 brew "hammerspoon"
-
+brew "wezterm"
 cask "font-hack-nerd-font"
 
+# dev
 brew "fzf"
 brew "rg"
 brew "fd"
@@ -29,13 +22,24 @@ brew "eza"
 brew "curl"
 brew "wget"
 brew "golang"
-brew "k9s"
-brew "kind"
-brew "grpcurl"
-brew "awscli"
+brew "lua-language-server"
+brew "typescript-language-server"
+brew "pyenv-virtualenv"
+brew "luarocks"
+brew "autoconf"
+brew "automake"
+brew "cmake"
+brew "gcc"
+
+# system
 brew "pass"
 brew "hugo"
 
+# work
+brew "kind"
+brew "grpcurl"
+brew "k9s"
+brew "awscli"
 cask "docker"
 cask "postman"
 cask "postman-cli"

@@ -21,22 +21,17 @@ local plugins = {
         },
         config = function() require('ex.treesitter') end,
     },
-    { -- copilot
-        "github/copilot.vim",
-        config = function() 
-            -- 
-        end,
-    },
-    { -- chatgpt
-        "robitx/gp.nvim",
-        config = function()
-            local conf = {
-                -- For customization, refer to Install > Configuration in the Documentation/Readme
-            }
-            require("gp").setup(conf)
-    
-            -- Setup shortcuts here (see Usage > Shortcuts in the Documentation/Readme)
-        end,
+    { --copilot
+      "CopilotC-Nvim/CopilotChat.nvim",
+      dependencies = {
+        { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
+        { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+      },
+      build = "make tiktoken", -- Only on MacOS or Linux
+      opts = {
+        -- See Configuration section for options
+      },
+      -- See Commands section for default commands if you want to lazy load on them
     },
     { -- lsp and completion
         "neovim/nvim-lspconfig",
@@ -86,6 +81,7 @@ local plugins = {
         'nvim-telescope/telescope.nvim',
         dependencies = {
             {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
+            'nvim-telescope/telescope-ui-select.nvim',
             'nvim-lua/plenary.nvim',
         },
         config = function() require('ex.telescope') end,
@@ -99,8 +95,9 @@ local plugins = {
         config = function() require('ex.comment') end,
     },
     { -- themes/ui
-        "ellisonleao/gruvbox.nvim",
+        "Shatur/neovim-ayu",
         "nvim-lualine/lualine.nvim",
+        {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
         'fei6409/log-highlight.nvim',
         dependencies = {
                 'kyazdani42/nvim-web-devicons', 
@@ -109,10 +106,14 @@ local plugins = {
                     config  = function() require('colorizer').setup() end,
                 }
         },
-        config = function()
-            require('log-highlight').setup {}
-        end,
     },
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        ---@module "ibl"
+        ---@type ibl.config
+        opts = {},
+    }
 }
 
 local opts = {

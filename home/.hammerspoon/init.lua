@@ -1,5 +1,5 @@
 function focusOrLaunchTerminal()
-  local app_name = "Terminal"
+  local app_name = "Wezterm"
   local app = hs.application.get(app_name)
 
   if app then
