@@ -1,5 +1,3 @@
-tap "nikitabobko/tap"
-
 cask_args appdir: '/Applications'
 
 # base
@@ -9,10 +7,14 @@ brew "tmux"
 brew "tmuxp"
 brew "lazygit"
 brew "stow"
-brew "maccy"
-brew "hammerspoon"
-brew "wezterm"
+brew "zsh-autosuggestions"
+brew "zsh-autocomplete"
+
+cask "wezterm"
 cask "font-hack-nerd-font"
+
+brew "hammerspoon"
+brew "maccy"
 
 # dev
 brew "fzf"

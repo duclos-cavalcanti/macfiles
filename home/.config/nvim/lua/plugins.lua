@@ -21,18 +21,6 @@ local plugins = {
         },
         config = function() require('ex.treesitter') end,
     },
-    { --copilot
-      "CopilotC-Nvim/CopilotChat.nvim",
-      dependencies = {
-        { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
-        { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-      },
-      build = "make tiktoken", -- Only on MacOS or Linux
-      opts = {
-        -- See Configuration section for options
-      },
-      -- See Commands section for default commands if you want to lazy load on them
-    },
     { -- lsp and completion
         "neovim/nvim-lspconfig",
         -- event = "InsertEnter",
@@ -51,7 +39,19 @@ local plugins = {
             require('ex.lspconfig')
         end,
     },
-    { -- git
+    { -- copilot
+      "CopilotC-Nvim/CopilotChat.nvim",
+      dependencies = {
+        { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
+        { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+      },
+      build = "make tiktoken", -- Only on MacOS or Linux
+      opts = {
+        -- See Configuration section for options
+      },
+      -- See Commands section for default commands if you want to lazy load on them
+    },
+    { -- git utilities
         'ruifm/gitlinker.nvim',
         dependencies = 'nvim-lua/plenary.nvim',
         config = function() 
@@ -86,34 +86,92 @@ local plugins = {
         },
         config = function() require('ex.telescope') end,
     },
-    { -- auto pairs
-        "windwp/nvim-autopairs",
-        config = function() require('nvim-autopairs').setup({}) end
-    }, 
-    { -- comment
-        "numToStr/Comment.nvim",
-        config = function() require('ex.comment') end,
+    { -- utils
+        { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
+        { "numToStr/Comment.nvim", config = function() require('ex.comment') end, },
+        { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },
+        { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, }
     },
     { -- themes/ui
-        "Shatur/neovim-ayu",
-        "nvim-lualine/lualine.nvim",
-        {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
-        'fei6409/log-highlight.nvim',
+        "RRethy/base16-nvim",
+        lazy = false,
         dependencies = {
                 'kyazdani42/nvim-web-devicons', 
+                "nvim-lualine/lualine.nvim",
+                {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
                 {
                     'norcalli/nvim-colorizer.lua',
                     config  = function() require('colorizer').setup() end,
-                }
+                },
         },
+        config = function() 
+            -- vim.g.termguicolors=true
+
+            require("bufferline").setup {
+                options = {
+                    mode = "tabs"
+                }
+            }
+
+            -- local scheme="base16-3024"
+            -- vim.cmd('colorscheme ' .. scheme)
+
+            require('base16-colorscheme').setup({
+              base00 = '#000000', -- background
+              base01 = '#1a1a1a', -- slightly lighter background
+              base02 = '#333333', -- selection background
+              base03 = '#555555', -- comments / secondary content
+              base04 = '#aaaaaa', -- lighter UI elements
+              base05 = '#ffffff', -- default foreground
+              base06 = '#e0e0e0', -- lighter foreground
+              base07 = '#ffffff', -- brightest white
+            
+              base08 = '#ff0000', -- red
+              base09 = '#ff7f00', -- orange
+              base0A = '#ffff00', -- yellow
+              base0B = '#00ff00', -- green
+              base0C = '#00ffff', -- cyan
+              base0D = '#0000ff', -- blue
+              base0E = '#ff00ff', -- magenta
+              base0F = '#7f3f00', -- brown / fallback (dark orange-brown)
+            })
+
+            -- statusline
+            require('lualine').setup {
+                options = {
+                    theme = "auto", -- require('lualine.themes.' .. scheme),
+                    component_separators = {left = '', right = ''},
+                    section_separators = {left = '', right = ''},
+                    disabled_filetypes = {},
+                    always_divide_middle = true,
+                },
+                sections = {
+                    lualine_a = {'mode'},
+                    lualine_b = {'filename', 'diff'},
+                    lualine_c = {'branch'},
+                    lualine_x = {'location'},
+                    lualine_y = {'progress'},
+                    lualine_z = {'filetype'}
+                },
+                inactive_sections = {
+                    lualine_a = {},
+                    lualine_b = {},
+                    lualine_c = {'filename'},
+                    lualine_x = {'location'},
+                    lualine_y = {},
+                    lualine_z = {}
+                },
+                tabline = {},
+                extensions = {}
+            }
+
+            -- vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+            -- vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
+
+            -- vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE" })
+            -- vim.api.nvim_set_hl(0, "TabLine", { bg = "NONE" })
+        end,
     },
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        main = "ibl",
-        ---@module "ibl"
-        ---@type ibl.config
-        opts = {},
-    }
 }
 
 local opts = {

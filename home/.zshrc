@@ -17,7 +17,7 @@ export XDG_CACHE_HOME="$HOME/.cache/"
 export XDG_CONFIG_HOME="$HOME/.config/"
 export XDG_STATE_HOME="$HOME/.local/state"
 export TMUXP_CONFIGDIR="$HOME/.dotfiles/sessions"
-export TERM='screen-256color-bce'
+export TERM='xterm-256color'
 export BAT_THEME='ansi'
 export PYLINTHOME="${XDG_DATA_HOME}/pylint"
 export IPYTHONDIR="$HOME/.config/ipython/"
@@ -44,10 +44,10 @@ setopt INC_APPEND_HISTORY
 set -o emacs
 
 zstyle ':vcs_info:*'        enable git
-zstyle ':vcs_info:git:*'    formats '%F{green}(%b%u%c%f) ' # Show branch name
-zstyle ':vcs_info:git:*'    actionformats '%F{red}(%b|%a%u%c%f) ' # Show if in rebase, merge, etc.
-zstyle ':vcs_info:git:*'    unstagedstr '%F{yellow}*%f' # Indicator for unstaged changes
-zstyle ':vcs_info:git:*'    stagedstr '%F{red}+%f' # Indicator for staged changes
+zstyle ':vcs_info:git:*'    formats '%F{green}(%b%u%c%f) '          # Show branch name
+zstyle ':vcs_info:git:*'    actionformats '%F{red}(%b|%a%u%c%f) '   # Show if in rebase, merge, etc.
+zstyle ':vcs_info:git:*'    unstagedstr '%F{yellow}*%f'             # Indicator for unstaged changes
+zstyle ':vcs_info:git:*'    stagedstr '%F{red}+%f'                  # Indicator for staged changes
 zstyle ':vcs_info:git:*'    check-for-changes true
 
 if [[ -r /usr/share/git/completion/git-completion.zsh ]]; then
