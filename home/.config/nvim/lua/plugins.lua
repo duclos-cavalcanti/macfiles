@@ -117,7 +117,7 @@ local plugins = {
             -- vim.cmd('colorscheme ' .. scheme)
 
             require('base16-colorscheme').setup({
-              base00 = '#000000', -- background
+              base00 = '#121212', -- background
               base01 = '#1a1a1a', -- slightly lighter background
               base02 = '#333333', -- selection background
               base03 = '#555555', -- comments / secondary content
@@ -133,7 +133,7 @@ local plugins = {
               base0C = '#00ffff', -- cyan
               base0D = '#0000ff', -- blue
               base0E = '#ff00ff', -- magenta
-              base0F = '#7f3f00', -- brown / fallback (dark orange-brown)
+              base0F = '#aa4400', -- brown / fallback (dark orange-brown)
             })
 
             -- statusline
@@ -147,7 +147,7 @@ local plugins = {
                 },
                 sections = {
                     lualine_a = {'mode'},
-                    lualine_b = {'filename', 'diff'},
+                    lualine_b = { {'filename', path = 1}, 'diff'},
                     lualine_c = {'branch'},
                     lualine_x = {'location'},
                     lualine_y = {'progress'},

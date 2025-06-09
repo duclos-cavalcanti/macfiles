@@ -17,7 +17,7 @@ config.macos_window_background_blur = 10
 
 config.colors = {
   foreground = "#ffffff",      -- base05 (fg)
-  background = "#000000",      -- base00 (bg)
+  background = "#121212",      -- base00 (bg)
 
   cursor_bg = "#ffffff",       -- same as fg
   cursor_border = "#ffffff",

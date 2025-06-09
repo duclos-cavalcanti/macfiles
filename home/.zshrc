@@ -28,6 +28,9 @@ export LESSHISTFILE=-
 autoload -Uz compinit && compinit
 autoload -Uz vcs_info
 
+# emacs mode for CLI
+set -o emacs
+
 # Set history options
 HISTFILE="${HOME}/.zsh_history"
 HISTSIZE=10000
@@ -41,25 +44,12 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt INC_APPEND_HISTORY
 
-set -o emacs
-
-zstyle ':vcs_info:*'        enable git
-zstyle ':vcs_info:git:*'    formats '%F{green}(%b%u%c%f) '          # Show branch name
-zstyle ':vcs_info:git:*'    actionformats '%F{red}(%b|%a%u%c%f) '   # Show if in rebase, merge, etc.
-zstyle ':vcs_info:git:*'    unstagedstr '%F{yellow}*%f'             # Indicator for unstaged changes
-zstyle ':vcs_info:git:*'    stagedstr '%F{red}+%f'                  # Indicator for staged changes
-zstyle ':vcs_info:git:*'    check-for-changes true
-
 if [[ -r /usr/share/git/completion/git-completion.zsh ]]; then
   source /usr/share/git/completion/git-completion.zsh
-elif [[ -r /etc/bash_completion.d/git ]]; then
-  source /etc/bash_completion.d/git
 fi
 
 if [[ -r /usr/share/git/completion/git-prompt.sh ]]; then
   source /usr/share/git/completion/git-prompt.sh
-elif [[ -r /etc/bash_completion.d/git-prompt ]]; then
-  source /etc/bash_completion.d/git-prompt
 fi
 
 # PROMPTS
@@ -79,27 +69,7 @@ elif [ -d "$HOME/.oh-my-zsh" ]; then
       zsh-autocomplete
     )
 else
-    precmd() { 
-        echo hello
-        vcs_info
-    }
-
-    setopt prompt_subst
-
-    zstyle ':vcs_info:*' enable git
-
-    zstyle ':vcs_info:git:*' check-for-changes true
-    zstyle ':vcs_info:git:*' get-revision true
-    zstyle ':vcs_info:git:*' get-untracked-files true
-
-    zstyle ':vcs_info:git:*' stagedstr '●'
-    zstyle ':vcs_info:git:*' unstagedstr '✗'
-
-    zstyle ':vcs_info:git:*' formats '%F{blue}git:(%F{red}%b%F{blue})%f%c'
-    zstyle ':vcs_info:git:*' actionformats '%F{blue}git:(%F{red}%b|%a%F{blue})%f%c'
-
-    # PROMPT='%F{blue}%~ %F{white}${vcs_info_msg_0_}%f%(?.%F{green}.%F{red})%#%f '
-    PROMPT='%(!.%F{red}.%F{green})➜%f %F{cyan}%~%f ${vcs_info_msg_0_} %(?.%F{green}.%F{red})$%f '
+    export PS1="%n@%m: %~ \$ "
 fi
 
 export PS2=">> "
@@ -134,11 +104,12 @@ if [[ -d /opt/homebrew ]]; then
     export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/curl/lib/pkgconfig"
 fi
 
+# Python
 if [[ -d ${HOME}/Library/Python/3.9/bin ]]; then
   export PATH=$PATH:${HOME}/Library/Python/3.9/bin
 fi
 
-# Lua setup
+# Lua
 if command -v lua &>/dev/null; then
   export LUA_PATH=";;$HOME/Documents/programs/debugger.lua/?.lua"
   export PATH=$PATH:${HOME}/.luarocks/bin
@@ -147,7 +118,7 @@ if command -v lua &>/dev/null; then
   fi
 fi
 
-# Java setup
+# Java
 if command -v java &>/dev/null; then
     if [[ -d /opt/homebrew ]]; then
         export JAVA_HOME="/opt/homebrew/opt/openjdk"
@@ -156,22 +127,22 @@ if command -v java &>/dev/null; then
     fi
 fi
 
-# Ruby setup
+# Ruby
 if command -v ruby &>/dev/null; then
   export GEM_HOME="$HOME/.gems"
   export PATH=$PATH:${HOME}/.local/gem/ruby/3.0.0/bin:${HOME}/.gems/bin
 fi
 
-# Go setup
+# Go
 if command -v go &>/dev/null; then
   export GOPATH="$HOME/.go"
   export PATH=$PATH:${GOPATH}/bin
 fi
 
-# Rust setup
+# Rust
 export PATH=$PATH:${HOME}/.cargo/bin
 
-# Node.js and npm setup
+# Node.js and npm
 if command -v npm &>/dev/null; then
   export NPM_CONFIG_PREFIX="${HOME}/.node_modules"
   export N_PREFIX="${HOME}/.n"
@@ -184,7 +155,6 @@ alias e="vim"
 alias v="nvim"
 
 if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
-  # alias bat="batcat"
   alias cat="bat -p"
 fi
 
