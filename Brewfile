@@ -1,6 +1,7 @@
 cask_args appdir: '/Applications'
 
 # base
+cask "font-hack-nerd-font"
 cask "wezterm"
 brew "nvim"
 brew "vim"
@@ -10,7 +11,7 @@ brew "lazygit"
 brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
-cask "font-hack-nerd-font"
+cask "hammerspoon"
 
 # dev
 brew "fzf"
