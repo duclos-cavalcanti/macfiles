@@ -93,7 +93,7 @@ local plugins = {
         { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, }
     },
     { -- themes/ui
-        "RRethy/base16-nvim",
+        "EdenEast/nightfox.nvim",
         lazy = false,
         dependencies = {
                 'kyazdani42/nvim-web-devicons', 
@@ -113,33 +113,13 @@ local plugins = {
                 }
             }
 
-            -- local scheme="base16-3024"
-            -- vim.cmd('colorscheme ' .. scheme)
-
-            require('base16-colorscheme').setup({
-              base00 = '#121212', -- background
-              base01 = '#1a1a1a', -- slightly lighter background
-              base02 = '#333333', -- selection background
-              base03 = '#555555', -- comments / secondary content
-              base04 = '#aaaaaa', -- lighter UI elements
-              base05 = '#ffffff', -- default foreground
-              base06 = '#e0e0e0', -- lighter foreground
-              base07 = '#ffffff', -- brightest white
-            
-              base08 = '#ff0000', -- red
-              base09 = '#ff7f00', -- orange
-              base0A = '#ffff00', -- yellow
-              base0B = '#00ff00', -- green
-              base0C = '#00ffff', -- cyan
-              base0D = '#0000ff', -- blue
-              base0E = '#ff00ff', -- magenta
-              base0F = '#aa4400', -- brown / fallback (dark orange-brown)
-            })
+            local scheme="carbonfox"
+            vim.cmd('colorscheme ' .. scheme)
 
             -- statusline
             require('lualine').setup {
                 options = {
-                    theme = "auto", -- require('lualine.themes.' .. scheme),
+                    theme = require('lualine.themes.' .. scheme),
                     component_separators = {left = '', right = ''},
                     section_separators = {left = '', right = ''},
                     disabled_filetypes = {},
