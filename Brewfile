@@ -9,6 +9,7 @@ brew "lazygit"
 brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
+brew "zsh-git-prompt"
 
 cask "wezterm"
 cask "font-hack-nerd-font"

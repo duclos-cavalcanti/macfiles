@@ -23,18 +23,18 @@ export PYLINTHOME="${XDG_DATA_HOME}/pylint"
 export IPYTHONDIR="$HOME/.config/ipython/"
 export CARGO_HOME="$HOME/.cargo/"
 export LESSHISTFILE=-
+export HISTFILE="${HOME}/.zsh_history"
+export HISTSIZE=10000
+export SAVEHIST=10000
 
 # Enable command auto-correction and completion
 autoload -Uz compinit && compinit
 autoload -Uz vcs_info
+autoload -Uz is-at-least
+autoload -U colors && colors
 
 # emacs mode for CLI
 set -o emacs
-
-# Set history options
-HISTFILE="${HOME}/.zsh_history"
-HISTSIZE=10000
-SAVEHIST=10000
 
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
@@ -43,33 +43,83 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt INC_APPEND_HISTORY
+setopt PROMPT_SUBST
 
 if [[ -r /usr/share/git/completion/git-completion.zsh ]]; then
   source /usr/share/git/completion/git-completion.zsh
 fi
 
-if [[ -r /usr/share/git/completion/git-prompt.sh ]]; then
-  source /usr/share/git/completion/git-prompt.sh
+if [[ -d $(brew --prefix)/share/zsh-autosuggestions ]]; then
+    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+if [[ -d $(brew --prefix)/share/zsh-autocomplete ]]; then
+    source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 fi
 
 # PROMPTS
 if [[ -n "$SSH_CONNECTION" ]]; then
     export PS1="%n@%m: %~ \$ "
 
-elif [ -d "$HOME/.oh-my-zsh" ]; then
+elif [ -d "$HOME/.oh-my-zsh/" ]; then
     export ZSH="$HOME/.oh-my-zsh"
     export ZSH_THEME="robbyrussell"
     source $ZSH/oh-my-zsh.sh
 
     plugins=(
-      git
-      dotenv
-      macos
-      zsh-autosuggestions 
-      zsh-autocomplete
+        macos 
+        dotenv
     )
+
 else
-    export PS1="%n@%m: %~ \$ "
+    __git_prompt_git() {
+      GIT_OPTIONAL_LOCKS=0 command git "$@"
+    }
+    
+    git_prompt_info() {
+      local git_status ref ahead behind dirty untracked stash state diverge=""
+    
+      git_status=$(__git_prompt_git status --porcelain=2 --branch 2>/dev/null) || return
+    
+      # Extract branch name
+      ref=$(echo "$git_status" | grep '^# branch.head' | cut -d ' ' -f3)
+      [[ "$ref" == "(detached)" ]] && \
+        ref="DETACHED@$(git rev-parse --short HEAD 2>/dev/null)"
+    
+      # Extract ahead/behind counts
+      ahead=$(git rev-list --count @{upstream}..HEAD 2>/dev/null || echo 0)
+      behind=$(git rev-list --count HEAD..@{upstream} 2>/dev/null || echo 0)
+      [[ "$ahead" -gt 0 ]] && diverge+=" ↑${ahead}"
+      [[ "$behind" -gt 0 ]] && diverge+=" ↓${behind}"
+    
+      # Check if dirty or untracked
+      if echo "$git_status" | grep -q '^[12]'; then
+        dirty="✗"
+      fi
+      if echo "$git_status" | grep -q '^?'; then
+        untracked="?"
+      fi
+    
+      # Stash check
+      if __git_prompt_git stash list --quiet 2>/dev/null | grep -q .; then
+        stash="$"
+      fi
+    
+      # Repo state
+      local gitdir
+      gitdir=$(__git_prompt_git rev-parse --git-dir 2>/dev/null)
+      if [[ -d "$gitdir/rebase-apply" ]]; then
+        state="|REBASE"
+      elif [[ -d "$gitdir/MERGE_HEAD" ]]; then
+        state="|MERGING"
+      elif [[ -f "$gitdir/BISECT_LOG" ]]; then
+        state="|BISECTING"
+      fi
+    
+      echo "%{$fg_bold[blue]%}git:(%{$fg[red]%}${ref}%{$fg_bold[blue]%})%{$fg_bold[blue]%}${diverge}%{$fg_bold[yellow]%}${dirty}${untracked}${stash}%{$fg_bold[blue]%}${state}%{$reset_color%} "
+    }
+
+    PROMPT='%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
 fi
 
 export PS2=">> "
@@ -197,6 +247,8 @@ alias gcb="git checkout -b"
 alias gm="git commit"
 alias gmm="git commit -m"
 alias gl="git log"
+alias glo='git log --pretty="oneline"'
+alias glol='git log --graph --oneline --decorate'
 alias gpo="git push origin"
 alias gd="git diff --color=always"
 alias gdd="git diff HEAD~1 HEAD"

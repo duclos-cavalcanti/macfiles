@@ -55,6 +55,9 @@ nnoremap("<leader>sR", "<cmd>lua require('telescope.builtin').grep_string({searc
 nnoremap("<leader>sh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
 nnoremap("<leader>sm", "<cmd>lua require('telescope.builtin').man_pages({sections={'ALL'}})<CR>")
 
+-- Copiloyt
+nnoremap("<leader>c", "<cmd>CopilotChatToggle<CR>")
+
 function is_quickfix_open()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)
@@ -86,6 +89,7 @@ end,
 vim.keymap.set("n", "<C-n>", function()
   if is_quickfix_open() then
     vim.cmd("cnext")
+    vim.cmd("normal! zz")
   else
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-n>", true, false, true), "n", true)
   end
@@ -95,6 +99,7 @@ end,
 vim.keymap.set("n", "<C-p>", function()
   if is_quickfix_open() then
     vim.cmd("cprev")
+    vim.cmd("normal! zz")
   else
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-p>", true, false, true), "n", true)
   end
@@ -103,8 +108,9 @@ end,
 
 
 vim.api.nvim_create_user_command('Scratch', function()
-    vim.cmd('vsplit')
+    vim.cmd('vnew')
     vim.cmd('setlocal buftype=nofile')
+    vim.cmd('setlocal nowrap')
     vim.cmd('setfiletype markdown')
 end, {})
 

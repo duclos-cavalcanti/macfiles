@@ -11,10 +11,6 @@ config.window_decorations = "RESIZE"
 config.window_background_opacity = 1.0
 config.macos_window_background_blur = 10
 
--- https://github.com/mbadolato/iTerm2-Color-Schemes/blob/master/wezterm/Builtin%20Dark.toml
--- https://github.com/mbadolato/iTerm2-Color-Schemes/blob/master/wezterm/Hardcore.toml
--- config.color_scheme = '3024 (base16)'
-
 config.colors = {
   foreground = "#ffffff",      -- base05 (fg)
   background = "#121212",      -- base00 (bg)
