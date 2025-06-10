@@ -211,7 +211,7 @@ fi
 if command -v eza &>/dev/null; then
     alias ls="eza"
     alias sl="eza"
-    alias la="eza"
+    alias la="eza -la"
     alias ll="eza -l"
 else
     alias ls="ls --color=auto"

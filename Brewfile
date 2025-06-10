@@ -1,6 +1,7 @@
 cask_args appdir: '/Applications'
 
 # base
+cask "wezterm"
 brew "nvim"
 brew "vim"
 brew "tmux"
@@ -9,13 +10,7 @@ brew "lazygit"
 brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
-brew "zsh-git-prompt"
-
-cask "wezterm"
 cask "font-hack-nerd-font"
-
-brew "hammerspoon"
-brew "maccy"
 
 # dev
 brew "fzf"
@@ -35,6 +30,7 @@ brew "cmake"
 brew "gcc"
 
 # system
+brew "maccy"
 brew "pass"
 brew "hugo"
 
