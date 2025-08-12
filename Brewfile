@@ -12,6 +12,7 @@ brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
 cask "hammerspoon"
+cask "zen"
 
 # dev
 brew "fzf"
@@ -23,12 +24,15 @@ brew "wget"
 brew "golang"
 brew "lua-language-server"
 brew "typescript-language-server"
+brew "pyright"
 brew "pyenv-virtualenv"
 brew "luarocks"
 brew "autoconf"
 brew "automake"
 brew "cmake"
 brew "gcc"
+brew "watch"
+cask "excalidrawz"
 
 # system
 brew "maccy"

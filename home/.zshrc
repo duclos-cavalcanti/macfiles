@@ -49,12 +49,27 @@ if [[ -r /usr/share/git/completion/git-completion.zsh ]]; then
   source /usr/share/git/completion/git-completion.zsh
 fi
 
-if [[ -d $(brew --prefix)/share/zsh-autosuggestions ]]; then
-    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
-
-if [[ -d $(brew --prefix)/share/zsh-autocomplete ]]; then
-    source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+if command -v brew &>/dev/null; then
+    if [[ -d $(brew --prefix)/share/zsh-autosuggestions ]]; then
+        source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    fi
+    
+    if [[ -d $(brew --prefix)/share/zsh-autocomplete ]]; then
+        source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+    
+        bindkey -M emacs              '^I'         menu-complete
+        bindkey -M emacs "$terminfo[kcbt]" reverse-menu-complete
+    
+        bindkey -M emacs \
+            "^[p"   .history-search-backward \
+            "^[n"   .history-search-forward \
+            "^P"    .up-line-or-history \
+            "^[OA"  .up-line-or-history \
+            "^[[A"  .up-line-or-history \
+            "^N"    .down-line-or-history \
+            "^[OB"  .down-line-or-history \
+            "^[[B"  .down-line-or-history
+    fi
 fi
 
 # PROMPTS

@@ -90,7 +90,8 @@ local plugins = {
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('ex.comment') end, },
         { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },
-        { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, }
+        { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, },
+        { "iamcco/markdown-preview.nvim", cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" }, ft = { "markdown" }, build = "cd app && yarn install",}
     },
     { -- themes/ui
         "EdenEast/nightfox.nvim",

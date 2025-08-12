@@ -65,7 +65,7 @@ vim.keymap.set("n", "<leader>o", function()
     vim.cmd('setlocal nowrap')
     vim.cmd('setfiletype markdown')
 end,
-{ noremap = true, silent = true, desc = "Quickfix Prev if Open" })
+{ noremap = true, silent = true, desc = "Open scratch buffer" })
 
 function is_quickfix_open()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -114,3 +114,13 @@ vim.keymap.set("n", "<C-p>", function()
   end
 end,
 { noremap = true, silent = true, desc = "Quickfix Prev if Open" })
+
+
+vim.cmd[[ 
+function OpenMarkdownPreview(url)
+    echom a:url
+    let @+ = a:url
+    "execute "silent !open -a 'Google Chrome' -n --args --new-window " . a:url
+endfunction
+let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+]]
