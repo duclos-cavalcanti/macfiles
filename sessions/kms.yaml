@@ -1,0 +1,16 @@
+session_name: kms
+start_directory: ~/Documents/work/kms/
+windows:
+  - window_name: zsh
+    panes:
+      - ls -l
+      - nvim README.md
+  - window_name: src
+    layout: even-horizontal
+    shell_command_before:
+      - cd kms-rs
+    panes:
+      - nvim src/lib.rs
+  - window_name: run
+    panes:
+      - ls -l

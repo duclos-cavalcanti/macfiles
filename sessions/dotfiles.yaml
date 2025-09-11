@@ -1,25 +1,25 @@
-session_name: dotfiles
-start_directory: ~/.dotfiles
+session_name: macfiles
+start_directory: ~/Documents/macfiles
 windows:
-  - window_name: readme
-    panes:
-      - nvim README.md
-  - window_name: bash
-    layout: tiled
+  - window_name: zsh
     panes:
       - ls -l
-  - window_name: install
-    layout: tiled
+      - nvim Brewfile
+  - window_name: zsh
+    layout: even-horizontal
     panes:
-      - nvim install.sh
-  - window_name: rc
-    panes:
-      - nvim ~/.bashrc
-  - window_name: editor
+      - ls -l
+      - nvim home/.zshrc
+  - window_name: nvim
     shell_command_before:
-      - cd ~/.config/nvim
+      - cd home/.config/nvim
     panes:
       - nvim init.lua
-  - window_name: mux
+  - window_name: tmux
     panes:
-      - nvim ~/.tmux.conf
+      - nvim home/.tmux.conf
+  - window_name: wm
+    shell_command_before:
+      - cd home/.hammerspoon
+    panes:
+      - nvim init.lua

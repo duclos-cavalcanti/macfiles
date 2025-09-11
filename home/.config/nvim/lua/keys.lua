@@ -55,17 +55,11 @@ nnoremap("<leader>sR", "<cmd>lua require('telescope.builtin').grep_string({searc
 nnoremap("<leader>sh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
 nnoremap("<leader>sm", "<cmd>lua require('telescope.builtin').man_pages({sections={'ALL'}})<CR>")
 
--- Copilot
-nnoremap("<leader>c", "<cmd>CopilotChatToggle<CR>")
-
--- No-file buffer
-vim.keymap.set("n", "<leader>o", function()
-    vim.cmd('tabnew')
-    vim.cmd('setlocal buftype=nofile')
-    vim.cmd('setlocal nowrap')
-    vim.cmd('setfiletype markdown')
-end,
-{ noremap = true, silent = true, desc = "Open scratch buffer" })
+-- Augment AI
+nnoremap("<C-g>g", "<cmd>Augment signin<CR>")
+nnoremap("<C-g>o", "<cmd>Augment chat-toggle<CR>")
+nnoremap("<C-g>n", "<cmd>Augment chat-new<CR>")
+nnoremap("<C-g>i", "<cmd>Augment chat ")
 
 function is_quickfix_open()
   for _, win in ipairs(vim.api.nvim_list_wins()) do

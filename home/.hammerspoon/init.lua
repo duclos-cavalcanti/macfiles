@@ -56,14 +56,6 @@ function notification(text)
   hs.notify.new({title="Hammerspoon", informativeText=text}):send()
 end
 
--- hs.hotkey.bind({"cmd"}, "0", function()
---   focusOrLaunch('Wezterm')
--- end)
---
--- hs.hotkey.bind({"cmd", "shift"}, "0", function()
---   focusOrLaunch('ChatGPT')
--- end)
-
 hs.hotkey.bind({"cmd"}, "0", function()
   toggleWindows("WezTerm", "Google Chrome")
 end)

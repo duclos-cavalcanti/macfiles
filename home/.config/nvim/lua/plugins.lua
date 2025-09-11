@@ -39,17 +39,11 @@ local plugins = {
             require('ex.lspconfig')
         end,
     },
-    { -- copilot
-      "CopilotC-Nvim/CopilotChat.nvim",
-      dependencies = {
-        { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
-        { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-      },
-      build = "make tiktoken", -- Only on MacOS or Linux
-      opts = {
-        -- See Configuration section for options
-      },
-      -- See Commands section for default commands if you want to lazy load on them
+    { -- augment AI
+        'augmentcode/augment.vim',
+        config = function() 
+            require('ex.ai')
+        end,
     },
     { -- git utilities
         'ruifm/gitlinker.nvim',
@@ -145,12 +139,6 @@ local plugins = {
                 tabline = {},
                 extensions = {}
             }
-
-            -- vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-            -- vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
-
-            -- vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE" })
-            -- vim.api.nvim_set_hl(0, "TabLine", { bg = "NONE" })
         end,
     },
 }

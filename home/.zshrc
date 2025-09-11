@@ -16,7 +16,7 @@ export XDG_DATA_HOME="$HOME/.local/"
 export XDG_CACHE_HOME="$HOME/.cache/"
 export XDG_CONFIG_HOME="$HOME/.config/"
 export XDG_STATE_HOME="$HOME/.local/state"
-export TMUXP_CONFIGDIR="$HOME/.dotfiles/sessions"
+export TMUXP_CONFIGDIR="$HOME/Documents/macfiles/sessions"
 export TERM='xterm-256color'
 export BAT_THEME='ansi'
 export PYLINTHOME="${XDG_DATA_HOME}/pylint"
@@ -165,7 +165,7 @@ if [[ -d /opt/homebrew ]]; then
     export CPPFLAGS="-I$HOMEBREW_PREFIX/include -I/usr/local/include -I$HOMEBREW_PREFIX/opt/libpq/include -I$HOMEBREW_PREFIX/opt/curl/include"
     export LIBRARY_PATH="$HOMEBREW_PREFIX/lib:$HOMEBREW_PREFIX/opt/libpq/lib:/usr/local/lib:/usr/lib"
     export LD_LIBRARY_PATH="$HOMEBREW_PREFIX/lib:/usr/local/lib:/usr/lib"
-    export DYLD_LIBRARY_PATH="$HOMEBREW_PREFIX/lib:/usr/local/lib:/usr/lib"
+    export DYLD_LIBRARY_PATH="$HOMEBREW_PREFIX/lib:/usr/local/lib:/usr/lib:/usr/local/opt/sqlite/lib"
     export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/curl/lib/pkgconfig"
 fi
 
