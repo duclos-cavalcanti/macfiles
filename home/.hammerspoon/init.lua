@@ -56,8 +56,14 @@ function notification(text)
   hs.notify.new({title="Hammerspoon", informativeText=text}):send()
 end
 
+-- Switch between terminal and browser
 hs.hotkey.bind({"cmd"}, "0", function()
   toggleWindows("WezTerm", "Google Chrome")
+end)
+
+-- Use screencapture to copy a screenshot to the clipboard
+hs.hotkey.bind({'cmd', 'shift'}, 'C', function()
+  hs.task.new("/usr/sbin/screencapture", nil, {"-i", "-c"}):start()
 end)
 
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()

@@ -70,6 +70,13 @@ function is_quickfix_open()
   end
   return false
 end
+--
+-- local list
+vim.keymap.set("n", "<leader>l", function()
+    vim.diagnostic.setloclist()
+end, 
+{ noremap = true, silent = true, desc = "Open Locallist"})
+
 
 -- Quickfix list / Buffers
 vim.keymap.set("n", "<leader>q", function()
@@ -83,11 +90,6 @@ vim.keymap.set("n", "<leader>q", function()
   vim.cmd("copen")
 end, 
 { noremap = true, silent = true, desc = "ToggleOrFocus Quickfixlist" })
-
-vim.keymap.set("n", "<leader>l", function()
-    vim.diagnostic.setloclist()
-end, 
-{ noremap = true, silent = true, desc = "Open Locallist"})
 
 vim.keymap.set("n", "<C-n>", function()
   if is_quickfix_open() then
@@ -109,7 +111,7 @@ vim.keymap.set("n", "<C-p>", function()
 end,
 { noremap = true, silent = true, desc = "Quickfix Prev if Open" })
 
-
+-- Markdown Preview
 vim.cmd[[ 
 function OpenMarkdownPreview(url)
     echom a:url
