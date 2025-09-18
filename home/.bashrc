@@ -163,40 +163,11 @@ PATH=$PATH:${HOME}/.local/bin/
 # personal binaries and scripts
 PATH=$PATH:${HOME}/.bin
 
-# lua
-if command -v lua &>/dev/null; then
-    export LUA_PATH=";;$HOME/Documents/programs/debugger.lua/?.lua"
-    PATH=$PATH:${HOME}/.luarocks/bin/
-    if [ -d ${HOME}/Documents/programs/lua-language-server ]; then
-        PATH=$PATH:${HOME}/Documents/programs/lua-language-server/bin
-    fi
-fi
-
-# java
-if command -v java &>/dev/null; then
-    export JAVA_HOME="/usr/lib/jvm/java-18-openjdk/"
-fi
-
-# ruby
-if command -v ruby &>/dev/null; then
-    export GEM_HOME="$HOME/.gems"
-    PATH=$PATH:${HOME}/.local/gem/ruby/3.0.0/bin
-    PATH=":$PATH:${HOME}/.gems/bin"
-fi
 
 # go
 if command -v go &>/dev/null; then
     export GOPATH="$HOME/.go"
-    # PKG_CONFIG_PATH="$HOME/.go/pkg"
-    # PKG_CONFIG_PATH="$HOME/.go/pkg/mod/github.com/":${PKG_CONFIG_PATH}
-    # export PKG_CONFIG_PATH
     PATH=$PATH:${GOPATH}/bin
-fi
-
-# haskell/cabal
-if command -v ghc &>/dev/null; then
-    export CABAL_PATH="$HOME/.cabal"
-    PATH=$PATH:${CABAL_PATH}/bin
 fi
 
 # rust
@@ -426,45 +397,3 @@ extract () {
     echo "'$1' is not a valid file!"
   fi
 }
-
-if command -v fzf &>/dev/null; then
-    ptmux(){
-        local name=$(tmux list-sessions -F '#S' | fzf --height 40% --reverse)
-        [ -n "$name" ] && tmux attach-session -t $name
-    }
-
-    ptemplates() {
-        local path="/home/duclos/Documents/stuff/templates"
-        if [ ! -d ${path} ]; then 
-            pushd "$HOME/Downloads" &>/dev/null
-            [ ! -d ${templates} ] && git clone https://github.com/duclos-cavalcanti/templates
-            popd &>/dev/null
-            path="$HOME/Downloads/templates"
-        fi
-
-        local dir=$(/usr/bin/ls -1 -d ${path}/* | xargs -I {} basename {} | fzf --height 40% --reverse)
-        [ -z "$dir" ] && return
-        
-        cp -r ${path}/${dir} ./TEMPLATE-${dir}
-    }
-
-    pgit() {
-        local repo=$(curl -s "https://api.github.com/users/duclos-cavalcanti/repos" | 
-                     grep -o --color=never 'git@[^"]*' | 
-                     cut -d '/' -f2 | 
-                     cut -d '.' -f1 | 
-                     fzf --height 40% --reverse)
-
-        if command -v gh &>/dev/null; then
-            [ -n "$repo" ] && gh repo clone duclos-cavalcanti/${repo}
-        else
-            [ -n "$repo" ] && git clone https://github.com/duclos-cavalcanti/${repo}
-        fi
-    }
-
-    # ALT-G: "\eg"
-    # CTL-G: "\C-g"
-    bind -m emacs-standard -x '"\C-o": ptmux'
-    bind -m emacs-standard -x '"\C-g": pgit'
-    bind -m emacs-standard -x '"\C-t": ptemplates'
-fi
