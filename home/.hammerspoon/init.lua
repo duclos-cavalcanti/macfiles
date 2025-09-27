@@ -1,3 +1,9 @@
+local toggleAppState = nil
+
+function notification(text)
+  hs.notify.new({title="Hammerspoon", informativeText=text}):send()
+end
+
 function focusOrLaunch(app_name)
   local app = hs.application.get(app_name)
   if app then
@@ -7,30 +13,6 @@ function focusOrLaunch(app_name)
   end
 end
 
-function moveMouseToScreen(screen)
-  local rect = screen:fullFrame()
-  local center = hs.geometry.rectMidPoint(rect)
-  hs.mouse.absolutePosition(center)
-end
-
-function focusFirstWindowOnScreen(screen)
-  local windows = hs.window.orderedWindows()
-  for _, win in ipairs(windows) do
-    if win:screen() == screen and win:isStandard() and win:isVisible() then
-      win:focus()
-      return true
-    end
-  end
-  return false
-end
-
-function focusWorkspace(screen)
-  local didFocus = focusFirstWindowOnScreen(screen)
-  moveMouseToScreen(screen)
-  return didFocus
-end
-
-local toggleAppState = nil
 function toggleWindows(option_a, option_b)
     local frontmostApp = hs.application.frontmostApplication()
     local frontmostAppName = frontmostApp:name()
@@ -52,10 +34,6 @@ function toggleWindows(option_a, option_b)
     end
 end
 
-function notification(text)
-  hs.notify.new({title="Hammerspoon", informativeText=text}):send()
-end
-
 -- Switch between terminal and browser
 hs.hotkey.bind({"cmd"}, "0", function()
   toggleWindows("WezTerm", "Google Chrome")
@@ -64,9 +42,4 @@ end)
 -- Use screencapture to copy a screenshot to the clipboard
 hs.hotkey.bind({'cmd', 'shift'}, 'C', function()
   hs.task.new("/usr/sbin/screencapture", nil, {"-i", "-c"}):start()
-end)
-
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
-  hs.reload()
-  hs.notify.new({title = "Hammerspoon", informativeText = "Config reloaded"}):send()
 end)

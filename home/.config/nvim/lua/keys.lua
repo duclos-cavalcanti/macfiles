@@ -59,7 +59,7 @@ nnoremap("<leader>sm", "<cmd>lua require('telescope.builtin').man_pages({section
 nnoremap("<C-g>g", "<cmd>Augment signin<CR>")
 nnoremap("<C-g>o", "<cmd>Augment chat-toggle<CR>")
 nnoremap("<C-g>n", "<cmd>Augment chat-new<CR>")
-nnoremap("<C-g>i", "<cmd>Augment chat ")
+nnoremap("<C-g>i", "<cmd>Augment chat<CR>")
 
 function is_quickfix_open()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -78,7 +78,7 @@ end,
 { noremap = true, silent = true, desc = "Open Locallist"})
 
 
--- Quickfix list / Buffers
+-- Quickfix list
 vim.keymap.set("n", "<leader>q", function()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)
