@@ -12,9 +12,9 @@ function focusOrLaunch(app_name)
   end
 end
 
--- Switch between terminal and browser
+-- FocusOrLaunch Terminal
 hs.hotkey.bind({'cmd', 'shift'}, '0', function()
-    focusOrLaunch("WezTerm")
+    focusOrLaunch("Terminal")
 end)
 
 -- Use screencapture to copy a screenshot to the clipboard
