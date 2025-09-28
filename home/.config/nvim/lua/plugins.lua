@@ -108,13 +108,13 @@ local plugins = {
                 }
             }
 
-            local scheme="carbonfox"
+            local scheme="brogrammer"
             vim.cmd('colorscheme ' .. scheme)
 
             -- statusline
             require('lualine').setup {
                 options = {
-                    theme = require('lualine.themes.' .. scheme),
+                    theme = 'auto',
                     component_separators = {left = '', right = ''},
                     section_separators = {left = '', right = ''},
                     disabled_filetypes = {},

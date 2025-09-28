@@ -13,6 +13,7 @@ brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
 cask "hammerspoon"
 cask "zen"
+cask "spotify"
 
 # dev
 brew "fzf"
@@ -35,7 +36,7 @@ brew "watch"
 cask "excalidrawz"
 
 # system
-brew "maccy"
+cask "maccy"
 brew "pass"
 brew "hugo"
 
