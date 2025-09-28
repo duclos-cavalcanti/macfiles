@@ -108,6 +108,16 @@ local plugins = {
                 }
             }
 
+            local function is_in_tmux()
+                return os.getenv("TMUX") ~= nil
+            end
+            
+            if is_in_tmux() then
+                vim.opt.termguicolors = true
+            else
+                vim.opt.termguicolors = false
+            end
+
             local scheme="brogrammer"
             vim.cmd('colorscheme ' .. scheme)
 

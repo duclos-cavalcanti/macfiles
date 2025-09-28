@@ -1,51 +1,60 @@
 local M = {}
--- ANSIBlackColor	        #1F1F1F
--- ANSIBlueColor	        #2A84D2
--- ANSICyanColor	        #0F81D6
--- ANSIGreenColor	        #2DC55E
--- ANSIMagentaColor	        #4E5AB7
--- ANSIRedColor	            #F81118
--- ANSIWhiteColor           #D6D9E5
--- ANSIYellowColor	        #ECCB0F
+-- ANSIBlackColor:          #1F1F1F, Black (0)
+-- ANSIBlueColor:           #2A84D2, Blue (4)
+-- ANSICyanColor:           #0F81D6, Cyan (6)
+-- ANSIGreenColor:          #2DC55E, Green (2)
+-- ANSIMagentaColor:        #4E5AB7, Magenta (5)
+-- ANSIRedColor:            #F81118, Red (1)
+-- ANSIWhiteColor:          #D6D9E5, White (7)
+-- ANSIYellowColor:         #ECCB0F, Yellow (3)
 --
--- ANSIBrightBlackColor	    #D6D9E5
--- ANSIBrightBlueColor	    #0F81D6
--- ANSIBrightCyanColor	    #0E7DC4
--- ANSIBrightGreenColor	    #1DD361
--- ANSIBrightMagentaColor   #5350B9
--- ANSIBrightRedColor	    #DE352E
--- ANSIBrightWhiteColor	    #FFFFFF
--- ANSIBrightYellowColor	#F3BC09
+-- ANSIBrightBlackColor:    #D6D9E5, BrightBlack (8)  -- Note: This is often rendered as White/Light Gray
+-- ANSIBrightBlueColor:     #0F81D6, BrightBlue (12)
+-- ANSIBrightCyanColor:     #0E7DC4, BrightCyan (14)
+-- ANSIBrightGreenColor:    #1DD361, BrightGreen (10)
+-- ANSIBrightMagentaColor:  #5350B9, BrightMagenta (13)
+-- ANSIBrightRedColor:      #DE352E, BrightRed (9)
+-- ANSIBrightWhiteColor:    #FFFFFF, BrightWhite (15)
+-- ANSIBrightYellowColor:   #F3BC09, BrightYellow (11)
 
 local colors = {
-  bg = "#131313",               -- BackgroundColor
-  fg = "#d6dbe5",               -- TextColor (Foreground)
-  black_ansi = "#1f1f1f",       -- ANSIBlackColor
-  bright_red = "#de352e",       -- ANSIBrightRedColor (Used for ErrorMsg)
-  green = "#2dc55e",            -- ANSIGreenColor (Used for Constants, Keywords)
-  bright_yellow = "#f3bd09",    -- ANSIBrightYellowColor (Used for Strings, Numbers, Title)
-  bright_magenta = "#5350b9",   -- ANSIBrightMagentaColor (Used for Directory, Storage)
-  cyan_func = "#1081d6",        -- Close to ANSICyanColor (Used for Function)
-  cyan_op = "#0f7ddb",          -- Close to ANSIBrightCyanColor (Used for Statement, Operator)
-  grey = "#6e6f70",             -- Close to ANSIBrightCyanColor (Used for Statement, Operator)
+  bg              = { gui = "#131313",  cterm = "Black" },       -- BackgroundColor
+  fg              = { gui = "#d6dbe5",  cterm = "White" },       -- TextColor (Foreground)
+  black_ansi      = { gui = "#1f1f1f",  cterm = "Black" },       -- ANSIBlackColor (for non-bg black areas)
+  line_nr_fg      = { gui = "#5d6f92",  cterm = "Grey" },        -- LineNr FG (custom hex, setting cterm to a standard Grey)
+  grey_comment    = { gui = "#6e6f70",  cterm = "DarkGrey" },    -- Comment FG (your custom grey)
+
+  red             = { gui = "#f81118",  cterm = "Red" },         -- ANSIRedColor
+  bright_red      = { gui = "#de352e",  cterm = "Red" },         -- ANSIBrightRedColor (Mapped to Red, as BrightRed can be harsh)
+  green           = { gui = "#2dc55e",  cterm = "Green" },       -- ANSIGreenColor
+  bright_yellow   = { gui = "#f3bd09",  cterm = "Yellow" },      -- ANSIBrightYellowColor (Mapped to Yellow)
+  bright_magenta  = { gui = "#5350b9",  cterm = "Magenta" },     -- ANSIBrightMagentaColor
+  cyan_func       = { gui = "#1081d6",  cterm = "Cyan" },        -- Close to ANSICyanColor
+  cyan_op         = { gui = "#0f7ddb",  cterm = "Cyan" },        -- Close to ANSIBrightCyanColor
 }
 
 local function hi(group, foreground, background, style)
-  local cmd = "highlight " .. group
-  if foreground then cmd = cmd .. " guifg=" .. foreground end
-  if background then cmd = cmd .. " guibg=" .. background end
-  if style then cmd = cmd .. " gui=" .. style end
-  vim.cmd(cmd)
+    local cmd = "highlight " .. group
+    local guiOn = vim.opt.termguicolors:get() -- Check if termguicolors is enabled[]
+    if guiOn then
+        if foreground then cmd = cmd .. " guifg=" .. foreground.gui end
+        if background then cmd = cmd .. " guibg=" .. background.gui end
+        if style then cmd = cmd .. " gui=" .. style end
+    else 
+        if foreground then cmd = cmd .. " ctermfg=" .. foreground.cterm end
+        if background then cmd = cmd .. " ctermbg=" .. background.cterm end
+        if style then cmd = cmd .. " cterm=" .. style end
+    end
+    vim.cmd(cmd)
 end
 
 hi("clear")
 vim.opt.background = "dark"
-vim.opt.termguicolors = true
 
 -- Main Highlights
 hi("Normal", colors.fg, colors.bg, "NONE")
 hi("SignColumn", nil, colors.bg) -- Same background as Normal
-hi("LineNr", "#5d6f92", colors.bg)
+hi("LineNr", colors.line_nr_fg, colors.bg)
 hi("NonText", colors.bright_red, colors.bg)
 hi("CursorLine", nil, colors.black_ansi)
 hi("Visual", nil, colors.black_ansi)
@@ -53,7 +62,7 @@ hi("Visual", nil, colors.black_ansi)
 -- Statusline/Tabline
 hi("Pmenu", colors.fg, colors.black_ansi)
 hi("TabLineFill", nil, colors.black_ansi, "NONE")
-hi("TabLine", "#5d6f92", colors.black_ansi, "NONE")
+hi("TabLine", colors.line_nr_fg, colors.black_ansi, "NONE")
 hi("StatusLine", colors.fg, colors.black_ansi, "bold")
 hi("StatusLineNC", colors.fg, colors.bg, "NONE")
 hi("VertSplit", colors.black_ansi, nil, "NONE")
@@ -67,7 +76,7 @@ local red_groups = {
   "cssImportant", "Type", "Identifier",
 }
 for _, group in ipairs(red_groups) do
-  hi(group, "#f81118")
+  hi(group, colors.red)
 end
 hi("Comment", colors.grey, nil, "italic")
 hi("SpecialComment", colors.grey, nil, "italic")
@@ -89,8 +98,7 @@ for _, group in ipairs(yellow_groups) do
   hi(group, colors.bright_yellow)
 end
 
--- Cyan/Blue Group (Bright Cyan/Blue variants)
-hi("Function", colors.cyan_func) -- #1081d6
+hi("Function", colors.cyan_func)
 
 local magenta_groups = {
   "Directory", "markdownLinkText", "javaScriptBoolean", "Include", "Storage",
@@ -104,7 +112,7 @@ local op_groups = {
   "Statement", "Operator", "cssAttr"
 }
 for _, group in ipairs(op_groups) do
-  hi(group, colors.cyan_op) -- #0f7ddb
+  hi(group, colors.cyan_op)
 end
 
 return M
