@@ -1,4 +1,3 @@
--- FUNCTIONS
 local function map(mode, lhs, rhs)
     vim.api.nvim_set_keymap(mode, lhs, rhs, {silent =  true})
 end
@@ -55,11 +54,9 @@ nnoremap("<leader>sR", "<cmd>lua require('telescope.builtin').grep_string({searc
 nnoremap("<leader>sh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
 nnoremap("<leader>sm", "<cmd>lua require('telescope.builtin').man_pages({sections={'ALL'}})<CR>")
 
--- Augment AI
-nnoremap("<C-g>g", "<cmd>Augment signin<CR>")
-nnoremap("<C-g>o", "<cmd>Augment chat-toggle<CR>")
-nnoremap("<C-g>n", "<cmd>Augment chat-new<CR>")
-nnoremap("<C-g>i", "<cmd>Augment chat<CR>")
+-- AI
+nnoremap("<C-g>o", "<cmd>AvanteChat<CR>")
+nnoremap("<C-g>?", "<cmd>AvanteAsk<CR>")
 
 function is_quickfix_open()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -111,12 +108,9 @@ vim.keymap.set("n", "<C-p>", function()
 end,
 { noremap = true, silent = true, desc = "Quickfix Prev if Open" })
 
--- Markdown Preview
-vim.cmd[[ 
-function OpenMarkdownPreview(url)
-    echom a:url
-    let @+ = a:url
-    "execute "silent !open -a 'Google Chrome' -n --args --new-window " . a:url
-endfunction
-let g:mkdp_browserfunc = 'OpenMarkdownPreview'
-]]
+-------------------
+-- EVENT MAPPINGS
+-------------------
+vim.cmd [[ autocmd Signal SIGWINCH wincmd = ]]
+vim.cmd [[ autocmd TermEnter term://* setlocal scl=no | setlocal nohidden | setlocal norelativenumber | setlocal nonu ]]
+vim.cmd [[ autocmd BufHidden term://* q! ]]

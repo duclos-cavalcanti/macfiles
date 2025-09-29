@@ -39,19 +39,6 @@ local plugins = {
             require('ex.lspconfig')
         end,
     },
-    { -- augment AI
-        'augmentcode/augment.vim',
-        config = function() 
-            require('ex.ai')
-        end,
-    },
-    { -- git utilities
-        'ruifm/gitlinker.nvim',
-        dependencies = 'nvim-lua/plenary.nvim',
-        config = function() 
-            require"gitlinker".setup()
-        end,
-    },
     { -- tags
       'stevearc/aerial.nvim',
       opts = {},
@@ -80,19 +67,61 @@ local plugins = {
         },
         config = function() require('ex.telescope') end,
     },
+    {
+        "yetone/avante.nvim",
+        build = "make",
+        event = "VeryLazy",
+        version = false, -- Never set this value to "*"! Never!
+        ---@module 'avante'
+        ---@type avante.Config
+        opts = {
+            instructions_file = "avante.md",
+            provider = "gemini",
+            mode = "agentic",
+            auto_suggestions_provider = "gemini",
+
+            providers = {
+              gemini = {
+                model = "gemini-2.5-pro",
+                extra_request_body = {
+                  temperature = 0.75,
+                  max_tokens = 4096,
+                },
+              },
+            },
+            behaviour = {
+              auto_suggestions = false, 
+            },
+        },
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+          "MunifTanjim/nui.nvim",
+          "nvim-telescope/telescope.nvim",
+          "hrsh7th/nvim-cmp",
+          -- "stevearc/dressing.nvim",
+          -- "folke/snacks.nvim",
+          "nvim-tree/nvim-web-devicons",
+        },
+    },
     { -- utils
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('ex.comment') end, },
         { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },
         { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, },
-        { "iamcco/markdown-preview.nvim", cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" }, ft = { "markdown" }, build = "cd app && yarn install",}
+        { 'ruifm/gitlinker.nvim', dependencies = 'nvim-lua/plenary.nvim', config = function() require"gitlinker".setup() end, },
+        {
+            'MeanderingProgrammer/render-markdown.nvim',
+            dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },
+            ---@module 'render-markdown'
+            ---@type render.md.UserConfig
+            opts = {},
+        }
     },
     { -- themes/ui
-        "EdenEast/nightfox.nvim",
+        "nvim-lualine/lualine.nvim",
         lazy = false,
         dependencies = {
                 'kyazdani42/nvim-web-devicons', 
-                "nvim-lualine/lualine.nvim",
                 {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
                 {
                     'norcalli/nvim-colorizer.lua',

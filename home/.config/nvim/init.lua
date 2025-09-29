@@ -1,9 +1,8 @@
 -- loads all configs
 
 require("settings")
-require("keys")
-require("commands")
 require("plugins")
+require("map")
 
 -- vim.opt.runtimepath:append("$HOME/.config/nvim/pack/plugins/start/example")
 -- require("example").setup({})

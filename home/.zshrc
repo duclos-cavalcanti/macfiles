@@ -27,6 +27,12 @@ export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE=10000
 export SAVEHIST=10000
 
+if [[ -f ~/.personal.env ]]; then 
+    source ~/.personal.env
+elif [[ -f ~/.work.env ]]; then 
+    source ~/.work.env
+fi
+
 # Enable command auto-correction and completion
 autoload -Uz compinit && compinit
 autoload -Uz vcs_info
@@ -56,6 +62,10 @@ if command -v brew &>/dev/null; then
     
     if [[ -d $(brew --prefix)/share/zsh-autocomplete ]]; then
         source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+        # zstyle ':autocomplete:list-choices:*' ignored-input '*'
+        zstyle ':autocomplete:*' ignored-input '*'
+        # zstyle ':autocomplete:*' min-input 3
     
         bindkey -M emacs              '^I'         menu-complete
         bindkey -M emacs "$terminfo[kcbt]" reverse-menu-complete
@@ -81,11 +91,7 @@ elif [ -d "$HOME/.oh-my-zsh/" ]; then
     export ZSH_THEME="robbyrussell"
     source $ZSH/oh-my-zsh.sh
 
-    plugins=(
-        macos 
-        dotenv
-    )
-
+    plugins=()
 else
     __git_prompt_git() {
       GIT_OPTIONAL_LOCKS=0 command git "$@"

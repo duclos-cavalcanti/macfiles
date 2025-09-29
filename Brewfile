@@ -1,6 +1,8 @@
 cask_args appdir: '/Applications'
 
 # base
+cask "zen"
+cask "spotify"
 cask "font-hack-nerd-font"
 cask "wezterm"
 brew "nvim"
@@ -12,8 +14,6 @@ brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
 cask "hammerspoon"
-cask "zen"
-cask "spotify"
 
 # dev
 brew "fzf"
@@ -33,7 +33,7 @@ brew "automake"
 brew "cmake"
 brew "gcc"
 brew "watch"
-cask "excalidrawz"
+brew "rust"
 
 # system
 cask "maccy"
