@@ -57,7 +57,7 @@ hi("SignColumn", nil, colors.bg) -- Same background as Normal
 hi("LineNr", colors.line_nr_fg, colors.bg)
 hi("NonText", colors.bright_red, colors.bg)
 hi("CursorLine", nil, colors.black_ansi)
-hi("Visual", nil, colors.black_ansi)
+hi("Visual", nil, colors.line_nr_fg)
 
 -- Statusline/Tabline
 hi("Pmenu", colors.fg, colors.black_ansi)

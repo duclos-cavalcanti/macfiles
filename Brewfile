@@ -13,6 +13,7 @@ brew "lazygit"
 brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
+brew "reattach-to-user-namespace"
 cask "hammerspoon"
 
 # dev
