@@ -2,6 +2,7 @@ session_name: macfiles
 start_directory: ~/Documents/macfiles
 windows:
   - window_name: zsh
+    layout: even-horizontal
     panes:
       - ls -l
       - nvim Brewfile
