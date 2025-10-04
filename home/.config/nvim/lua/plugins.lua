@@ -118,9 +118,10 @@ local plugins = {
         }
     },
     { -- themes/ui
-        "nvim-lualine/lualine.nvim",
+        "RRethy/base16-nvim",
         lazy = false,
         dependencies = {
+                "nvim-lualine/lualine.nvim",
                 'kyazdani42/nvim-web-devicons', 
                 {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
                 {
