@@ -1,5 +1,8 @@
 cask_args appdir: '/Applications'
 
+# taps
+tap "jesseduffield/lazydocker"
+
 # base
 cask "zen"
 cask "spotify"
@@ -35,6 +38,7 @@ brew "cmake"
 brew "gcc"
 brew "watch"
 brew "rust"
+brew "lazydocker" 
 
 # system
 cask "maccy"

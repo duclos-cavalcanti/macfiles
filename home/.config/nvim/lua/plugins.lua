@@ -158,12 +158,12 @@ local plugins = {
                 base06 = '#f0f1f4', -- Lighter Foreground/Delimiters (Editor) -> ANSI 13 (Bright Magenta)
                 base07 = '#ffffff', -- Highest Contrast UI (Editor) -> ANSI 14 (Bright Cyan)
             
-                base08 = '#ff5555', -- Red Accent (Errors, Constants) (Editor) -> ANSI 1 (Red)
+                base08 = '#ff5d5d', -- Red Accent (Errors, Constants) (Editor) -> ANSI 1 (Red)
                 base09 = '#ffb86c', -- Orange Accent (Warnings, Numbers) (Editor) -> ANSI 9 (Bright Red)
                 base0A = '#f1fa8c', -- Yellow Accent (Strings, Types) (Editor) -> ANSI 3 (Yellow)
                 base0B = '#50fa7b', -- Green Accent (Success, Function Names) (Editor) -> ANSI 2 (Green)
                 base0C = '#8be9fd', -- Cyan Accent (Control Flow, Macros) (Editor) -> ANSI 6 (Cyan)
-                base0D = '#80bfff', -- Blue Accent (Keywords, Classes) (Editor) -> ANSI 4 (Blue)
+                base0D = '#74b2ff', -- Blue Accent (Keywords, Classes) (Editor) -> ANSI 4 (Blue)
                 base0E = '#ff79c6', -- Magenta Accent (Storage, Special Chars) (Editor) -> ANSI 5 (Magenta)
                 base0F = '#bd93f9'  -- Violet Accent (User Types, Exceptions) (Editor) -> ANSI 15 (Bright White)
             }
