@@ -115,7 +115,23 @@ local plugins = {
             ---@module 'render-markdown'
             ---@type render.md.UserConfig
             opts = {},
-        }
+        },
+        {
+        "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        build = "cd app && yarn install",
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+            vim.cmd[[ 
+                function OpenMarkdownPreview (url)
+                    echo "Markdown Preview URL: " . a:url
+                    let @+ = a:url
+                endfunction
+                let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+            ]]
+        end,
+        ft = { "markdown" },
+        },
     },
     { -- themes/ui
         "RRethy/base16-nvim",
@@ -141,7 +157,7 @@ local plugins = {
             local function is_in_tmux()
                 return os.getenv("TMUX") ~= nil
             end
-            
+
             if is_in_tmux() then
                 vim.opt.termguicolors = true
             else
@@ -157,7 +173,7 @@ local plugins = {
                 base05 = '#f8f8f2', -- Main Foreground (Editor) -> ANSI 7 (White)
                 base06 = '#f0f1f4', -- Lighter Foreground/Delimiters (Editor) -> ANSI 13 (Bright Magenta)
                 base07 = '#ffffff', -- Highest Contrast UI (Editor) -> ANSI 14 (Bright Cyan)
-            
+
                 base08 = '#ff5d5d', -- Red Accent (Errors, Constants) (Editor) -> ANSI 1 (Red)
                 base09 = '#ffb86c', -- Orange Accent (Warnings, Numbers) (Editor) -> ANSI 9 (Bright Red)
                 base0A = '#f1fa8c', -- Yellow Accent (Strings, Types) (Editor) -> ANSI 3 (Yellow)

@@ -1,13 +1,15 @@
 #!/bin/bash
 
-# installing brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+function install_brew() {
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+}
 
-# installing zsh plugin
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  echo "Installing Oh My Zsh..."
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-fi
+function install_oh_my_zsh() {
+    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+      echo "Installing Oh My Zsh..."
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    fi
+}
 
-# installing rust
-curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+install_brew()
+install_oh_my_zsh()
