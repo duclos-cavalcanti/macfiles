@@ -1,4 +1,3 @@
-export AWS_PROFILE=custo-eng-dev
 export VISUAL='nvim'
 export EDITOR="nvim"
 export GIT_EDITOR='nvim'
@@ -16,9 +15,7 @@ export XDG_DATA_HOME="$HOME/.local/"
 export XDG_CACHE_HOME="$HOME/.cache/"
 export XDG_CONFIG_HOME="$HOME/.config/"
 export XDG_STATE_HOME="$HOME/.local/state"
-export TMUXP_CONFIGDIR="$HOME/Documents/macfiles/sessions"
 export TERM='screen-256color-bce'
-export BAT_THEME='ansi'
 export PYLINTHOME="${XDG_DATA_HOME}/pylint"
 export IPYTHONDIR="$HOME/.config/ipython/"
 export CARGO_HOME="$HOME/.cargo/"
@@ -26,6 +23,11 @@ export LESSHISTFILE=-
 export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE=10000
 export SAVEHIST=10000
+
+export BAT_THEME='ansi'
+export TMUXP_CONFIGDIR="$HOME/Documents/macfiles/sessions"
+
+export AWS_PROFILE=custo-eng-dev
 
 if [[ -f ~/.personal.env ]]; then 
     source ~/.personal.env

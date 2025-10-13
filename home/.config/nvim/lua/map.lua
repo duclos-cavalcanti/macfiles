@@ -54,10 +54,6 @@ nnoremap("<leader>sR", "<cmd>lua require('telescope.builtin').grep_string({searc
 nnoremap("<leader>sh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
 nnoremap("<leader>sm", "<cmd>lua require('telescope.builtin').man_pages({sections={'ALL'}})<CR>")
 
--- AI
-nnoremap("<C-g>o", "<cmd>AvanteChat<CR>")
-nnoremap("<C-g>?", "<cmd>AvanteAsk<CR>")
-
 function is_quickfix_open()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)
