@@ -67,42 +67,6 @@ local plugins = {
         },
         config = function() require('ex.telescope') end,
     },
-    {
-        "yetone/avante.nvim",
-        build = "make",
-        event = "VeryLazy",
-        version = false, -- Never set this value to "*"! Never!
-        ---@module 'avante'
-        ---@type avante.Config
-        opts = {
-            instructions_file = "avante.md",
-            provider = "gemini",
-            mode = "agentic",
-            auto_suggestions_provider = "gemini",
-
-            providers = {
-              gemini = {
-                model = "gemini-2.5-pro",
-                extra_request_body = {
-                  temperature = 0.75,
-                  max_tokens = 4096,
-                },
-              },
-            },
-            behaviour = {
-              auto_suggestions = false, 
-            },
-        },
-        dependencies = {
-          "nvim-lua/plenary.nvim",
-          "MunifTanjim/nui.nvim",
-          "nvim-telescope/telescope.nvim",
-          "hrsh7th/nvim-cmp",
-          -- "stevearc/dressing.nvim",
-          -- "folke/snacks.nvim",
-          "nvim-tree/nvim-web-devicons",
-        },
-    },
     { -- utils
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('ex.comment') end, },
@@ -220,5 +184,7 @@ local plugins = {
 local opts = {
 
 }
+
+-- table.insert(plugins, require('ex.ai'))
 
 require("lazy").setup(plugins, opts)

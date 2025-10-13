@@ -58,15 +58,6 @@ nnoremap("<leader>sm", "<cmd>lua require('telescope.builtin').man_pages({section
 nnoremap("<C-g>o", "<cmd>AvanteChat<CR>")
 nnoremap("<C-g>?", "<cmd>AvanteAsk<CR>")
 
-
-vim.cmd[[ 
-    function OpenMarkdownPreview (url)
-        echo "Markdown Preview URL: " . a:url
-        let @+ = a:url
-    endfunction
-    let g:mkdp_browserfunc = 'OpenMarkdownPreview'
-]]
-
 function is_quickfix_open()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)

@@ -25,6 +25,7 @@ hs.hotkey.bind({"cmd", "ctrl"}, "l", function()
     end
 end)
 
+-- Safari: Move to the prev tab group
 hs.hotkey.bind({"cmd", "ctrl"}, "h", function()
     local app = hs.application.frontmostApplication()
     if app:title() == "Safari" then
