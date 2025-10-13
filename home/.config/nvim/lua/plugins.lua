@@ -81,20 +81,38 @@ local plugins = {
             opts = {},
         },
         {
-        "iamcco/markdown-preview.nvim",
-        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-        build = "cd app && yarn install",
-        init = function()
-            vim.g.mkdp_filetypes = { "markdown" }
-            vim.cmd[[ 
-                function OpenMarkdownPreview (url)
-                    echo "Markdown Preview URL: " . a:url
-                    let @+ = a:url
-                endfunction
-                let g:mkdp_browserfunc = 'OpenMarkdownPreview'
-            ]]
-        end,
-        ft = { "markdown" },
+            "iamcco/markdown-preview.nvim",
+            cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+            build = "cd app && yarn install",
+            init = function()
+                vim.g.mkdp_filetypes = { "markdown" }
+                vim.cmd[[ 
+                    function OpenMarkdownPreview (url)
+                        echo "Markdown Preview URL: " . a:url
+                        let @+ = a:url
+                    endfunction
+                    let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+                ]]
+            end,
+            ft = { "markdown" },
+        },
+        {
+            "zk-org/zk-nvim",
+            config = function()
+                require("zk").setup({
+                    picker = "select",
+                    lsp = {
+                        config = {
+                            name = "zk",
+                            cmd = { "zk", "lsp" },
+                            filetypes = { "markdown" },
+                        },
+                        auto_attach = {
+                            enabled = true,
+                        },
+                    },
+                })
+            end,
         },
     },
     { -- themes/ui
@@ -118,14 +136,10 @@ local plugins = {
                 }
             }
 
-            local function is_in_tmux()
-                return os.getenv("TMUX") ~= nil
-            end
-
-            if is_in_tmux() then
-                vim.opt.termguicolors = true
-            else
+            if os.getenv("TMUX") == nil then
                 vim.opt.termguicolors = false
+            else
+                vim.opt.termguicolors = true
             end
 
             M = {

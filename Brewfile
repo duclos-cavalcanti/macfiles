@@ -14,6 +14,7 @@ brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
 cask "hammerspoon"
 cask "font-hack-nerd-font"
+brew "zk"
 
 # dev
 brew "fzf"

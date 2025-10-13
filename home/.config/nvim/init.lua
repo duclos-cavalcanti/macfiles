@@ -1,5 +1,9 @@
 -- loads all configs
 
+if os.getenv("TMUX") == nil then
+    return 
+end
+
 require("settings")
 require("plugins")
 require("map")

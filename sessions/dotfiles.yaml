@@ -5,12 +5,7 @@ windows:
     layout: even-horizontal
     panes:
       - ls -l
-      - nvim Brewfile
-  - window_name: zsh
-    layout: even-horizontal
-    panes:
-      - ls -l
-      - nvim home/.zshrc
+      - nvim Brewfile -c ":tabedit ~/.zshrc"
   - window_name: nvim
     shell_command_before:
       - cd home/.config/nvim
