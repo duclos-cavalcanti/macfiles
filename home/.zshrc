@@ -84,63 +84,27 @@ fi
 
 # PROMPTS
 if [[ -n "$SSH_CONNECTION" ]]; then
+    # Keep using a simple prompt for SSH sessions
     export PS1="%n@%m: %~ \$ "
-
-elif [ -d "$HOME/.oh-my-zsh/" ]; then
-    export ZSH="$HOME/.oh-my-zsh"
-    export ZSH_THEME="robbyrussell"
-    source $ZSH/oh-my-zsh.sh
-
-    plugins=()
 else
-    __git_prompt_git() {
-      GIT_OPTIONAL_LOCKS=0 command git "$@"
-    }
-    
-    git_prompt_info() {
-      local git_status ref ahead behind dirty untracked stash state diverge=""
-    
-      git_status=$(__git_prompt_git status --porcelain=2 --branch 2>/dev/null) || return
-    
-      # Extract branch name
-      ref=$(echo "$git_status" | grep '^# branch.head' | cut -d ' ' -f3)
-      [[ "$ref" == "(detached)" ]] && \
-        ref="DETACHED@$(git rev-parse --short HEAD 2>/dev/null)"
-    
-      # Extract ahead/behind counts
-      ahead=$(git rev-list --count @{upstream}..HEAD 2>/dev/null || echo 0)
-      behind=$(git rev-list --count HEAD..@{upstream} 2>/dev/null || echo 0)
-      [[ "$ahead" -gt 0 ]] && diverge+=" ↑${ahead}"
-      [[ "$behind" -gt 0 ]] && diverge+=" ↓${behind}"
-    
-      # Check if dirty or untracked
-      if echo "$git_status" | grep -q '^[12]'; then
-        dirty="✗"
-      fi
-      if echo "$git_status" | grep -q '^?'; then
-        untracked="?"
-      fi
-    
-      # Stash check
-      if __git_prompt_git stash list --quiet 2>/dev/null | grep -q .; then
-        stash="$"
-      fi
-    
-      # Repo state
-      local gitdir
-      gitdir=$(__git_prompt_git rev-parse --git-dir 2>/dev/null)
-      if [[ -d "$gitdir/rebase-apply" ]]; then
-        state="|REBASE"
-      elif [[ -d "$gitdir/MERGE_HEAD" ]]; then
-        state="|MERGING"
-      elif [[ -f "$gitdir/BISECT_LOG" ]]; then
-        state="|BISECTING"
-      fi
-    
-      echo "%{$fg_bold[blue]%}git:(%{$fg[red]%}${ref}%{$fg_bold[blue]%})%{$fg_bold[blue]%}${diverge}%{$fg_bold[yellow]%}${dirty}${untracked}${stash}%{$fg_bold[blue]%}${state}%{$reset_color%} "
+    autoload -Uz vcs_info
+    precmd() {
+        vcs_info
     }
 
-    PROMPT='%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+    zstyle ':vcs_info:*' enable git
+    zstyle ':vcs_info:*' use-simple true
+    zstyle ':vcs_info:*' check-for-changes true
+    zstyle ':vcs_info:*' stagedstr '*'   # Symbol for staged files
+    zstyle ':vcs_info:*' unstagedstr '!' # Symbol for unstaged/modified files
+    zstyle ':vcs_info:git*' formats 'on %B%F{red}%b%f %B%F{red}%c%u%f'
+
+    # - %(?.<success>.<failure>): Conditional expression for the prompt symbol color.
+    # - %B...%b: Makes text bold.
+    # - %F{color}...%f: Sets text color.
+    # - %3~: Truncates the path to the last 3 directories.
+    # - ${vcs_info_msg_0_}: Inserts the formatted git string.
+    PROMPT='%B%(?.%F{green}➜.%F{red}➜)%b %B%F{cyan}%3~%f%b ${vcs_info_msg_0_} '
 fi
 
 export PS2=">> "

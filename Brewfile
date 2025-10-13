@@ -4,12 +4,7 @@ cask_args appdir: '/Applications'
 tap "jesseduffield/lazydocker"
 
 # base
-cask "zen"
-cask "spotify"
-cask "font-hack-nerd-font"
-cask "wezterm"
 brew "nvim"
-brew "vim"
 brew "tmux"
 brew "tmuxp"
 brew "lazygit"
@@ -17,8 +12,8 @@ brew "lazydocker"
 brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
-brew "reattach-to-user-namespace"
 cask "hammerspoon"
+cask "font-hack-nerd-font"
 
 # dev
 brew "fzf"
@@ -42,11 +37,13 @@ brew "automake"
 brew "cmake"
 brew "gcc"
 brew "watch"
+brew "reattach-to-user-namespace"
 
 # system
 cask "maccy"
 brew "pass"
 brew "hugo"
+cask "spotify"
 
 # work
 brew "kind"
