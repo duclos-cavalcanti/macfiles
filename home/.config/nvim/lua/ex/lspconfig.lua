@@ -55,6 +55,8 @@ require('lspconfig').gopls.setup({
 
 require'lspconfig'.metals.setup{}
 
+require'lspconfig'.marksman.setup{}
+
 require'lspconfig'.rust_analyzer.setup{
     on_attach = _on_attach,
     capabilities = _capabilities,
