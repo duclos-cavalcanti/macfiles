@@ -12,6 +12,11 @@ function focusOrLaunch(app_name)
   end
 end
 
+-- Use screencapture to copy a screenshot to the clipboard
+hs.hotkey.bind({'cmd', 'shift'}, 'C', function()
+  hs.task.new("/usr/sbin/screencapture", nil, {"-i", "-c"}):start()
+end)
+
 -- Terminal: Focus or Launch
 hs.hotkey.bind({'cmd', 'shift'}, '1', function()
     focusOrLaunch("Terminal")
@@ -31,7 +36,40 @@ hs.hotkey.bind({"cmd", "ctrl"}, "h", function()
     app:selectMenuItem({"Window", "Go to Previous Tab Group"})
 end)
 
--- Use screencapture to copy a screenshot to the clipboard
-hs.hotkey.bind({'cmd', 'shift'}, 'C', function()
-  hs.task.new("/usr/sbin/screencapture", nil, {"-i", "-c"}):start()
+-- Move the current Safari tab to the left
+hs.hotkey.bind({"cmd", "ctrl"}, "[", function()
+    local app = hs.application.frontmostApplication()
+    if app:title() ~= "Safari" then return end
+    local moveTabScript = [[
+        tell application "Safari"
+            if not (exists front window) then return
+            tell front window
+                set currentTabIndex to index of current tab
+                if currentTabIndex > 1 then
+                    move current tab to before tab (currentTabIndex - 1)
+                end if
+            end tell
+        end tell
+    ]]
+    hs.osascript.applescript(moveTabScript)
+end)
+
+-- Move the current Safari tab to the right
+hs.hotkey.bind({"cmd", "ctrl"}, "]", function()
+    local app = hs.application.frontmostApplication()
+    if app:title() == "Safari" then
+        local moveTabScript = [[
+            tell application "Safari"
+                if not (exists front window) then return
+                tell front window
+                    set tabCount to count of tabs
+                    set currentTabIndex to index of current tab
+                    if currentTabIndex < tabCount then
+                        move current tab to after tab (currentTabIndex)
+                    end if
+                end tell
+            end tell
+        ]]
+        hs.osascript.applescript(moveTabScript)
+    end
 end)
