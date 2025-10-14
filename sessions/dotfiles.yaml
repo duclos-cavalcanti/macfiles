@@ -1,7 +1,7 @@
 session_name: macfiles
 start_directory: ~/Documents/macfiles
 windows:
-  - window_name: zsh
+  - window_name: home
     layout: even-horizontal
     panes:
       - ls -l
