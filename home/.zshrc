@@ -1,3 +1,4 @@
+# Exports
 export TERM='screen-256color-bce'
 export VISUAL='nvim'
 export EDITOR="nvim"

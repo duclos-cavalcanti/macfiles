@@ -1,16 +1,19 @@
-session_name: kms
-start_directory: ~/Documents/work/kms/
+session_name: cba
+start_directory: ~/Documents/work/coinbase-adapter/
 windows:
   - window_name: home
+    layout: even-horizontal
     panes:
       - ls -l
       - nvim README.md
   - window_name: src
     layout: even-horizontal
     shell_command_before:
-      - cd kms-rs
+      - cd vault-core
     panes:
-      - nvim src/lib.rs
+      - nvim src/main.cc
   - window_name: zsh
+    layout: even-horizontal
     panes:
+      - ls -l
       - ls -l

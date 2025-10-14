@@ -1,7 +1,8 @@
 session_name: vault
 start_directory: ~/Documents/work/vault-releases/
 windows:
-  - window_name: zsh
+  - window_name: home
+    layout: even-horizontal
     panes:
       - ls -l
       - nvim README.md
@@ -11,6 +12,8 @@ windows:
       - cd vault-core
     panes:
       - nvim src/main.cc
-  - window_name: run
+  - window_name: zsh
+    layout: even-horizontal
     panes:
+      - ls -l
       - ls -l
