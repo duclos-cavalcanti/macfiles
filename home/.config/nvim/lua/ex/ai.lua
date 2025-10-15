@@ -1,36 +1,14 @@
-return {
-    "yetone/avante.nvim",
-    build = "make",
-    event = "VeryLazy",
-    version = false, -- Never set this value to "*"! Never!
-    ---@module 'avante'
-    ---@type avante.Config
-    opts = {
-        instructions_file = "avante.md",
-        provider = "gemini",
-        mode = "agentic",
-        auto_suggestions_provider = "gemini",
-    
-        providers = {
-          gemini = {
-            model = "gemini-2.5-pro",
-            extra_request_body = {
-              temperature = 0.75,
-              max_tokens = 4096,
-            },
-          },
-        },
-        behaviour = {
-          auto_suggestions = false, 
-        },
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "nvim-telescope/telescope.nvim",
-      "hrsh7th/nvim-cmp",
-      -- "stevearc/dressing.nvim",
-      -- "folke/snacks.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-},
+if os.getenv("USER") == "dduclos-cavalcanti" then
+    return {
+        'augmentcode/augment.vim',
+        config = function() 
+            vim.g.augment_workspace_folders = {
+                '/Users/dduclos-cavalcanti/Documents/macfiles',
+                '/Users/dduclos-cavalcanti/Documents/work/kms',
+                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold-bridge/',
+            }
+        end,
+    }
+else
+    return {}
+end

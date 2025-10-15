@@ -102,14 +102,14 @@ else
     zstyle ':vcs_info:*' check-for-changes true
     zstyle ':vcs_info:*' stagedstr '*'   # Symbol for staged files
     zstyle ':vcs_info:*' unstagedstr '!' # Symbol for unstaged/modified files
-    zstyle ':vcs_info:git*' formats 'on %B%F{red}%b%f %B%F{red}%c%u%f'
+    zstyle ':vcs_info:git*' formats 'on %B%F{red}%b%f %B%F{red}[%c%u]%f'
 
     # - %(?.<success>.<failure>): Conditional expression for the prompt symbol color.
     # - %B...%b: Makes text bold.
     # - %F{color}...%f: Sets text color.
     # - %3~: Truncates the path to the last 3 directories.
     # - ${vcs_info_msg_0_}: Inserts the formatted git string.
-    PROMPT='%B%(?.%F{green}➜.%F{red}➜)%b %B%F{cyan}%3~%f%b ${vcs_info_msg_0_} '
+    PROMPT='%B%(?.%F{green}➜.%F{red}➜)%b %B%F{cyan}%3~%f%b ${vcs_info_msg_0_} \$ '
 fi
 
 export PS2=">> "
@@ -159,6 +159,11 @@ if command -v lua &>/dev/null; then
   fi
 fi
 
+# csharp
+if command -v dotnet &>/dev/null; then
+    export PATH="$PATH:$HOME/.dotnet/tools"
+fi
+
 # Java
 if command -v java &>/dev/null; then
     if [[ -d /opt/homebrew ]]; then
@@ -172,6 +177,7 @@ fi
 if command -v ruby &>/dev/null; then
   export GEM_HOME="$HOME/.gems"
   export PATH=$PATH:${HOME}/.local/gem/ruby/3.0.0/bin:${HOME}/.gems/bin
+  export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 fi
 
 # Go

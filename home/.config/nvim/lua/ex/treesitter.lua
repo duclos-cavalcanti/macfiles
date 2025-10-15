@@ -16,6 +16,7 @@ require('nvim-treesitter.configs').setup({
     "javascript",
     "css",
     "c",
+    "c_sharp",
     "cpp",
     "cmake",
     "make",

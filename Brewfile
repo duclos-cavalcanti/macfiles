@@ -14,7 +14,6 @@ brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
 cask "hammerspoon"
 cask "font-hack-nerd-font"
-brew "zk"
 
 # dev
 brew "fzf"
@@ -42,6 +41,7 @@ brew "watch"
 brew "reattach-to-user-namespace"
 
 # system
+brew "caffeine"
 cask "maccy"
 brew "pass"
 brew "hugo"

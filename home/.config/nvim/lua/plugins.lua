@@ -181,6 +181,6 @@ local opts = {
 
 }
 
--- table.insert(plugins, require('ex.ai'))
+table.insert(plugins, require('ex.ai'))
 
 require("lazy").setup(plugins, opts)

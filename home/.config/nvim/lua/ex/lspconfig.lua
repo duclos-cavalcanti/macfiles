@@ -57,6 +57,8 @@ require'lspconfig'.metals.setup{}
 
 require'lspconfig'.marksman.setup{}
 
+vim.lsp.enable('csharp_ls')
+
 require'lspconfig'.rust_analyzer.setup{
     on_attach = _on_attach,
     capabilities = _capabilities,
