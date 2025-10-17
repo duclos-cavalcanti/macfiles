@@ -117,8 +117,6 @@ local plugins = {
                 },
         },
         config = function() 
-            -- vim.g.termguicolors=true
-
             require("bufferline").setup {
                 options = {
                     mode = "tabs"
@@ -182,7 +180,7 @@ local plugins = {
             }
 
         -- command line 
-        vim.api.nvim_set_keymap('n', '<CR>', '<cmd>FineCmdline<CR>', {noremap = true})
+        vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
         end,
     },
 }
