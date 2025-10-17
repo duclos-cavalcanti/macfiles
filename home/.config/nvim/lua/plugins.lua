@@ -108,6 +108,13 @@ local plugins = {
                     'norcalli/nvim-colorizer.lua',
                     config  = function() require('colorizer').setup() end,
                 },
+                {
+                  'VonHeikemen/fine-cmdline.nvim',
+                  opts = {},
+                  dependencies = {
+                    "MunifTanjim/nui.nvim",
+                    }
+                },
         },
         config = function() 
             -- vim.g.termguicolors=true
@@ -173,14 +180,35 @@ local plugins = {
                 tabline = {},
                 extensions = {}
             }
+
+        -- command line 
+        vim.api.nvim_set_keymap('n', '<CR>', '<cmd>FineCmdline<CR>', {noremap = true})
         end,
     },
 }
 
+-- work config
+if os.getenv("USER") == "dduclos-cavalcanti" then
+    table.insert(plugins, {
+        'augmentcode/augment.vim',
+        config = function() 
+            vim.g.augment_workspace_folders = {
+                '/Users/dduclos-cavalcanti/Documents/macfiles',
+                '/Users/dduclos-cavalcanti/Documents/work/kms',
+                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold-bridge/',
+                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold/',
+            }
+
+            vim.api.nvim_set_keymap('n', "<C-g>g", "<cmd>Augment signin<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', "<C-g>o", "<cmd>Augment chat-toggle<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', "<C-g>i", "<cmd>Augment chat<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', "<C-g>n", "<cmd>Augment chat-new<CR>", {noremap=true, silent=true})
+        end,
+    })
+end
+
 local opts = {
 
 }
-
-table.insert(plugins, require('ex.ai'))
 
 require("lazy").setup(plugins, opts)

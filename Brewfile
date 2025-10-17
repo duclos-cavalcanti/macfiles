@@ -4,6 +4,7 @@ cask_args appdir: '/Applications'
 tap "jesseduffield/lazydocker"
 
 # base
+brew "zen"
 brew "nvim"
 brew "tmux"
 brew "tmuxp"
