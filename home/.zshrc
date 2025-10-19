@@ -102,7 +102,7 @@ else
     zstyle ':vcs_info:*' check-for-changes true
     zstyle ':vcs_info:*' stagedstr '*'   # Symbol for staged files
     zstyle ':vcs_info:*' unstagedstr '!' # Symbol for unstaged/modified files
-    zstyle ':vcs_info:git*' formats 'on %B%F{red}%b%f %B%F{red}[%c%u]%f'
+    zstyle ':vcs_info:git*' formats 'on %B%F{red}%b%f%B%F{red}:[%c%u]%f'
 
     # - %(?.<success>.<failure>): Conditional expression for the prompt symbol color.
     # - %B...%b: Makes text bold.

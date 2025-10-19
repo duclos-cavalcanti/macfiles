@@ -108,13 +108,6 @@ local plugins = {
                     'norcalli/nvim-colorizer.lua',
                     config  = function() require('colorizer').setup() end,
                 },
-                {
-                  'VonHeikemen/fine-cmdline.nvim',
-                  opts = {},
-                  dependencies = {
-                    "MunifTanjim/nui.nvim",
-                    }
-                },
         },
         config = function() 
             require("bufferline").setup {
@@ -178,9 +171,6 @@ local plugins = {
                 tabline = {},
                 extensions = {}
             }
-
-        -- command line 
-        vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
         end,
     },
 }
