@@ -242,7 +242,6 @@ alias ga="git add"
 alias gc="git checkout"
 alias gcb="git checkout -b"
 alias gm="git commit"
-alias gmm="git commit -m"
 alias gl="git log"
 alias glo='git log --pretty="oneline"'
 alias glol='git log --graph --oneline --decorate'
@@ -251,6 +250,7 @@ alias gd="git diff --color=always"
 alias gdd="git diff HEAD~1 HEAD"
 alias gba="git branch --all"
 alias gb="git branch"
+alias -g gB='$(git rev-parse --abbrev-ref HEAD)'
 alias gbd="git branch -d"
 alias gbD="git push --delete origin"
 alias greset="git reset --hard"

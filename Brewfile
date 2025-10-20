@@ -4,7 +4,6 @@ cask_args appdir: '/Applications'
 tap "jesseduffield/lazydocker"
 
 # base
-brew "vivaldi"
 brew "nvim"
 brew "tmux"
 brew "tmuxp"
@@ -13,6 +12,7 @@ brew "lazydocker"
 brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
+case "qutebrowser"
 cask "hammerspoon"
 cask "font-hack-nerd-font"
 
