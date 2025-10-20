@@ -102,14 +102,14 @@ else
     zstyle ':vcs_info:*' check-for-changes true
     zstyle ':vcs_info:*' stagedstr '*'   # Symbol for staged files
     zstyle ':vcs_info:*' unstagedstr '!' # Symbol for unstaged/modified files
-    zstyle ':vcs_info:git*' formats 'on %B%F{yellow}%b%f%B%F{yellow}:(%c%u)%f'
+    zstyle ':vcs_info:git*' formats '%B%F{yellow}git:(%F{red}%b%f%F{yellow})%f%F{red} %B%c%u%f'
 
     # - %(?.<success>.<failure>): Conditional expression for the prompt symbol color.
     # - %B...%b: Makes text bold.
     # - %F{color}...%f: Sets text color.
     # - %3~: Truncates the path to the last 3 directories.
     # - ${vcs_info_msg_0_}: Inserts the formatted git string.
-    PROMPT='%B%(?.%F{green}➜.%F{red}➜)%b %B%F{cyan}%3~%f%b ${vcs_info_msg_0_} \$ '
+    PROMPT='%B%(?.%F{green}➜.%F{red}➜)%b %B%F{cyan}%3~%f%b ${vcs_info_msg_0_} '
 fi
 
 export PS2=">> "
