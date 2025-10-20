@@ -21,18 +21,3 @@ end)
 hs.hotkey.bind({'cmd', 'shift'}, '1', function()
     focusOrLaunch("Terminal")
 end)
-
--- Safari: Move to the next tab group
-hs.hotkey.bind({"cmd", "ctrl"}, "l", function()
-    local app = hs.application.frontmostApplication()
-    if app:title() ~= "Safari" then return end
-    app:selectMenuItem({"Window", "Go to Next Tab Group"})
-end)
-
--- Safari: Move to the prev tab group
-hs.hotkey.bind({"cmd", "ctrl"}, "h", function()
-    local app = hs.application.frontmostApplication()
-    if app:title() ~= "Safari" then return end
-    app:selectMenuItem({"Window", "Go to Previous Tab Group"})
-end)
-
