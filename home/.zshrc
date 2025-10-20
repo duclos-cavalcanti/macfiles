@@ -218,8 +218,8 @@ else
 fi
 
 
-alias '..'="cd .."
-alias '...'="cd ../.."
+alias ..="cd .."
+alias ...="cd ../.."
 
 alias mv="mv -i"
 alias cp="cp -i"
