@@ -12,7 +12,7 @@ brew "lazydocker"
 brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
-case "qutebrowser"
+cask "qutebrowser"
 cask "hammerspoon"
 cask "font-hack-nerd-font"
 

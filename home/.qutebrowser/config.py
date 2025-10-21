@@ -1,57 +1,29 @@
 config.load_autoconfig()
 config.source('theme.py')
 
-
-## Misc. ##
-
-# Always restore open sites when qutebrowser is reopened.
-c.auto_save.session = True
-
-# Prefer dark color schemes
-c.colors.webpage.preferred_color_scheme = 'dark'
-#c.colors.webpage.darkmode.enabled = True
-
-# Require a confirmation before quitting the application if downloads are active.
-c.confirm_quit = ["downloads"]
-
-# Use neovim in alacritty as an editor
-c.editor.command = ["alacritty", "-t", "qutebrowser editor", "-e",
-                    "nvim", "{}", "+call cursor({line},{column0})"]
-
-# Font settings
-c.fonts.default_family = 'Source Code Pro'
+c.fonts.default_family = 'Hack Nerd Font Mono'
 c.fonts.default_size   = '11pt'
-
-# Enable hidpi mode
 c.qt.highdpi = True
 
-# Enable smooth scrolling
 c.scrolling.smooth = True
 
-# Enable spellcheck
-c.spellcheck.languages = ['en-GB', 'sv-SE']
+c.colors.webpage.preferred_color_scheme = 'dark'
+c.auto_save.session = True
+c.confirm_quit = ["downloads"]
 
-c.fileselect.handler = 'external'
-c.fileselect.folder.command         = ["alacritty", "-e", "ranger", "--choosedir={}"]
-c.fileselect.multiple_files.command = ["alacritty", "-e", "ranger", "--choosefiles={}"]
-c.fileselect.single_file.command    = ["alacritty", "-e", "ranger", "--choosefile={}"]
+c.spellcheck.languages = ['en-US']
 
 
-## Binds ##
-
-# Bind for opening download immediately
 config.bind('<Ctrl-o>', 'prompt-open-download', mode='prompt')
 
 # Bind Ctrl-e in command mode to edit the current command
 config.bind('<Ctrl+e>', 'cmd-edit', mode='command')
 
 # Binds for moving through completion items
-config.bind('<Ctrl-j>', 'completion-item-focus next', mode='command')
-config.bind('<Ctrl-k>', 'completion-item-focus prev', mode='command')
+# config.bind('<Ctrl-n>', 'completion-item-focus next', mode='command')
+# config.bind('<Ctrl-p>', 'completion-item-focus prev', mode='command')
 
-# Rebind close tab to 'dd'
-config.unbind('d')
-config.bind('dd', 'tab-close')
+config.bind('<Ctrl-w>', 'tab-close')
 
 # Unbind home-page key
 config.unbind('<Ctrl+h>')

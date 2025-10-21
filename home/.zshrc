@@ -40,6 +40,7 @@ fi
 
 # Enable command auto-correction and completion
 autoload -Uz compinit && compinit
+autoload -z edit-command-line
 autoload -Uz vcs_info
 autoload -Uz is-at-least
 autoload -U colors && colors
@@ -84,6 +85,10 @@ if command -v brew &>/dev/null; then
             "^N"    .down-line-or-history \
             "^[OB"  .down-line-or-history \
             "^[[B"  .down-line-or-history
+
+
+        zle -N edit-command-line
+        bindkey -M emacs '^X^E' edit-command-line
     fi
 fi
 
