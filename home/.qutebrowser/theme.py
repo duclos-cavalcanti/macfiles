@@ -1,3 +1,6 @@
+c.fonts.default_family = 'Hack Nerd Font Mono'
+c.fonts.default_size   = '11pt'
+
 options = {}
 palette = {
     'background': '#282a36',
@@ -30,6 +33,8 @@ padding = options.get('padding', {
     'bottom': spacing['vertical'],
     'left': spacing['horizontal']
 })
+
+c.colors.webpage.preferred_color_scheme = 'dark'
 
 ## Background color of the completion widget category headers.
 c.colors.completion.category.bg = palette['background']
