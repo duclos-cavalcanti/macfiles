@@ -42,9 +42,7 @@ brew "reattach-to-user-namespace"
 
 # system
 brew "caffeine"
-cask "maccy"
 brew "pass"
-brew "hugo"
 cask "spotify"
 
 # work

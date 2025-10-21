@@ -14,7 +14,7 @@ windows:
   - window_name: tmux
     panes:
       - nvim home/.tmux.conf
-  - window_name: wm
+  - window_name: auto
     shell_command_before:
       - cd home/.hammerspoon
     panes:
