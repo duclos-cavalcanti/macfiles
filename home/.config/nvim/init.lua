@@ -1,7 +1,7 @@
 -- loads all configs
 
 if os.getenv("TMUX") == nil then
-    return 
+    return
 end
 
 require("settings")
