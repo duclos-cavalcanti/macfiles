@@ -18,14 +18,14 @@ hs.hotkey.bind({'cmd', 'shift'}, 'C', function()
 end)
 
 -- Safari: Move to the next tab group
-hs.hotkey.bind({"cmd", "ctrl"}, "l", function()
+hs.hotkey.bind({"cmd", "ctrl"}, "k", function()
     local app = hs.application.frontmostApplication()
     if app:title() ~= "Safari" then return end
     app:selectMenuItem({"Window", "Go to Next Tab Group"})
 end)
 
 -- Safari: Move to the prev tab group
-hs.hotkey.bind({"cmd", "ctrl"}, "h", function()
+hs.hotkey.bind({"cmd", "ctrl"}, "j", function()
     local app = hs.application.frontmostApplication()
     if app:title() ~= "Safari" then return end
     app:selectMenuItem({"Window", "Go to Previous Tab Group"})
