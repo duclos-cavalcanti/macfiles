@@ -183,6 +183,8 @@ if os.getenv("USER") == "dduclos-cavalcanti" then
             vim.g.augment_workspace_folders = {
                 '/Users/dduclos-cavalcanti/Documents/macfiles',
                 '/Users/dduclos-cavalcanti/Documents/work/kms',
+                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-bridge/',
+                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-core/',
                 '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold-bridge/',
                 '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold/',
             }
