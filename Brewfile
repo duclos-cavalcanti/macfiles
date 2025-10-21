@@ -12,7 +12,6 @@ brew "lazydocker"
 brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
-cask "qutebrowser"
 cask "hammerspoon"
 cask "font-hack-nerd-font"
 
