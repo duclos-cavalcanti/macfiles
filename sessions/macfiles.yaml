@@ -11,6 +11,11 @@ windows:
       - cd home/.config/nvim
     panes:
       - nvim init.lua
+  - window_name: term
+    shell_command_before:
+      - cd home/.config/wezterm
+    panes:
+      - nvim wezterm.lua
   - window_name: tmux
     panes:
       - nvim home/.tmux.conf
