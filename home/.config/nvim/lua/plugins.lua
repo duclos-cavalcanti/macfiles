@@ -116,11 +116,7 @@ local plugins = {
                 }
             }
 
-            if os.getenv("TMUX") == nil then
-                vim.opt.termguicolors = false
-            else
-                vim.opt.termguicolors = true
-            end
+            vim.opt.termguicolors = true
 
             M = {
                 base00 = '#131313', -- Background (Editor) -> ANSI 0 (Black)
@@ -193,8 +189,17 @@ if os.getenv("USER") == "dduclos-cavalcanti" then
             vim.api.nvim_set_keymap('n', "<C-g>g", "<cmd>Augment signin<CR>", {noremap=true, silent=true})
             vim.api.nvim_set_keymap('n', "<C-g>o", "<cmd>Augment chat-toggle<CR>", {noremap=true, silent=true})
             vim.api.nvim_set_keymap('n', "<C-g>i", "<cmd>Augment chat<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('v', "<C-g>i", ":Augment chat<CR>", {noremap=true, silent=true})
             vim.api.nvim_set_keymap('n', '<C-g>I', 'ggVG:Augment chat<CR>', {noremap=true, silent=true})
             vim.api.nvim_set_keymap('n', "<C-g>n", "<cmd>Augment chat-new<CR>", {noremap=true, silent=true})
+
+            local augmentResizeGroup = vim.api.nvim_create_augroup("AugmentResize", { clear = true })
+
+            vim.api.nvim_create_autocmd("BufWinEnter", {
+                group = augmentResizeGroup,
+                pattern = "AugmentChatHistory",
+                command = "wincmd =",
+            })
         end,
     })
 end
