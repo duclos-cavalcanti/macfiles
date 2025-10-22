@@ -21,6 +21,7 @@ local colors = {
     base0F = '#bd93f9'  -- Violet Accent (User Types, Exceptions) (Editor) -> ANSI 15 (Bright White)
 }
 
+config.bold_brightens_ansi_colors = false
 config.colors = {
     foreground = colors.base05,
     background = colors.base00,
@@ -34,48 +35,54 @@ config.colors = {
 
     ansi = {
         colors.base00, -- ANSI 0 (Black)
-        colors.base09, -- ANSI 9  (Bright Red)
-        colors.base01, -- ANSI 10 (Bright Green)
-        colors.base02, -- ANSI 11 (Bright Yellow)
-        colors.base04, -- ANSI 12 (Bright Blue)
-        colors.base06, -- ANSI 13 (Bright Magenta)
-        colors.base07, -- ANSI 14 (Bright Cyan)
-        colors.base05, -- ANSI 7 (White)
-    },
-
-    brights = {
-        colors.base03, -- ANSI 8  (Bright Black)
         colors.base08, -- ANSI 1 (Red)
         colors.base0B, -- ANSI 2 (Green)
         colors.base0A, -- ANSI 3 (Yellow)
         colors.base0D, -- ANSI 4 (Blue)
         colors.base0E, -- ANSI 5 (Magenta)
         colors.base0C, -- ANSI 6 (Cyan)
+        colors.base05, -- ANSI 7 (White)
+    },
+
+    brights = {
+        colors.base03, -- ANSI 8  (Bright Black)
+        colors.base09, -- ANSI 9  (Bright Red)
+        colors.base01, -- ANSI 10 (Bright Green)
+        colors.base02, -- ANSI 11 (Bright Yellow)
+        colors.base04, -- ANSI 12 (Bright Blue)
+        colors.base06, -- ANSI 13 (Bright Magenta)
+        colors.base07, -- ANSI 14 (Bright Cyan)
         colors.base0F, -- ANSI 15 (Bright White)
     },
 
-    -- You can also color other UI elements if needed
-    -- tab_bar = {
-    --     background = colors.base01,
-    --     active_tab = {
-    --         bg_color = colors.base00,
-    --         fg_color = colors.base05,
-    --     },
-    --     inactive_tab = {
-    --         bg_color = colors.base01,
-    --         fg_color = colors.base03,
-    --     },
-    -- },
+    tab_bar = {
+        background = colors.base01,
+        active_tab = {
+            bg_color = colors.base00,
+            fg_color = colors.base05,
+        },
+        inactive_tab = {
+            bg_color = colors.base01,
+            fg_color = colors.base03,
+        },
+    },
 }
 
 config.font = wezterm.font("Hack Nerd Font Mono")
-config.font_size = 11.1
+config.font_size = 10.5
 
 config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
+config.tab_bar_at_bottom = true
 
 config.window_decorations = "RESIZE"
 config.window_background_opacity = 1.0
 config.macos_window_background_blur = 10
+config.window_padding = {
+  left = 20,
+  right = 20,
+  top = 20,
+  bottom = 20,
+}
 
 return config

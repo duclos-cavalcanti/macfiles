@@ -1,118 +1,39 @@
-local function map(mode, lhs, rhs)
-    vim.api.nvim_set_keymap(mode, lhs, rhs, {silent =  true})
-end
-
-local function noremap(mode, lhs, rhs)
-    vim.api.nvim_set_keymap(mode, lhs, rhs, {noremap = true, silent = true})
-end
-
-local function exprnoremap(mode, lhs, rhs)
-    vim.api.nvim_set_keymap(mode, lhs, rhs, {noremap = true, silent = true, expr = true})
-end
-
-local function nmap(lhs, rhs) map('n', lhs, rhs) end
-local function xmap(lhs, rhs) map('x', lhs, rhs) end
-local function nnoremap(lhs, rhs) noremap('n', lhs, rhs) end
-local function vnoremap(lhs, rhs) noremap('v', lhs, rhs) end
-local function xnoremap(lhs, rhs) noremap('x', lhs, rhs) end
-local function inoremap(lhs, rhs) noremap('i', lhs, rhs) end
-local function tnoremap(lhs, rhs) noremap('t', lhs, rhs) end
-local function exprnnoremap(lhs, rhs) exprnoremap('n', lhs, rhs) end
-local function exprinoremap(lhs, rhs) exprnoremap('i', lhs, rhs) end
-
--------------------
--- KEY MAPPINGS
--------------------
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Utils
-nnoremap("z.", "zszH")
+vim.api.nvim_set_keymap("n", "z.", "zszH", {noremap=true, silent=true})
 
 -- Tabs
-nnoremap("<M-k>", ":tabnext<CR>")
-nnoremap("<M-j>", ":tabprev<CR>")
-nnoremap("<M-S-k>", ":tabmove +1<CR>")
-nnoremap("<M-S-j>", ":tabmove -1<CR>")
+vim.api.nvim_set_keymap("n", "<M-k>", ":tabnext<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<M-j>", ":tabprev<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<M-S-k>", ":tabmove +1<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<M-S-j>", ":tabmove -1<CR>", {noremap=true, silent=true})
 
 -- Terminal
-tnoremap("<ESC>", "<C-\\><C-n>")
-tnoremap("<C-w>", "<C-\\><C-N><C-w>")
-nnoremap("<leader><space>", ":split <BAR> :resize 20 <BAR> term<CR>i")
+vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("t", "<C-w>", "<C-\\><C-N><C-w>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader><space>", ":split <BAR> :resize 20 <BAR> term<CR>i", {noremap=true, silent=true})
 
 -- Tags 
-nnoremap("<leader><tab>", "<cmd>AerialToggle left<CR>")
+vim.api.nvim_set_keymap("n", "<leader><tab>", "<cmd>AerialToggle left<CR>", {noremap=true, silent=true})
 
 -- Telescope
-nnoremap("<leader>sf", "<cmd>lua require('telescope.builtin').find_files({})<CR>")
-nnoremap("<leader>sF", "<cmd>lua require('telescope.builtin').find_files({cwd=vim.fn.input('Path: ')})<CR>")
-nnoremap("<leader>si", "<cmd>lua require('telescope.builtin').find_files({no_ignore=true})<CR>")
-nnoremap("<leader>sb", "<cmd>lua require('telescope.builtin').buffers()<CR>")
-nnoremap("<leader>sl", "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>")
-nnoremap("<leader>sr", "<cmd>lua require('telescope.builtin').live_grep()<CR>")
-nnoremap("<leader>sR", "<cmd>lua require('telescope.builtin').grep_string({search=''})<CR>")
-nnoremap("<leader>sh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
-nnoremap("<leader>sm", "<cmd>lua require('telescope.builtin').man_pages({sections={'ALL'}})<CR>")
+vim.api.nvim_set_keymap("n", "<leader>sf", "<cmd>lua require('telescope.builtin').find_files({})<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader>sF", "<cmd>lua require('telescope.builtin').find_files({cwd=vim.fn.input('Path: ')})<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader>si", "<cmd>lua require('telescope.builtin').find_files({no_ignore=true})<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader>sb", "<cmd>lua require('telescope.builtin').buffers()<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader>sl", "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader>sr", "<cmd>lua require('telescope.builtin').live_grep()<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader>sR", "<cmd>lua require('telescope.builtin').grep_string({search=''})<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader>sh", "<cmd>lua require('telescope.builtin').help_tags()<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader>sm", "<cmd>lua require('telescope.builtin').man_pages({sections={'ALL'}})<CR>", {noremap=true, silent=true})
 
--- AI
-nnoremap("<C-g>g", "<cmd>Augment signin<CR>")
-nnoremap("<C-g>o", "<cmd>Augment chat-toggle<CR>")
-nnoremap("<C-g>i", "<cmd>Augment chat<CR>")
-nnoremap("<C-g>n", "<cmd>Augment chat-new<CR>")
+vim.api.nvim_set_keymap('n', '<C-m>t', '<cmd>tabnew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<C-m>v', '<cmd>vnew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<C-m>o', '<cmd>enew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
 
-function is_quickfix_open()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    if vim.api.nvim_buf_get_option(buf, "buftype") == "quickfix" then
-      return true
-    end
-  end
-  return false
-end
---
--- local list
-vim.keymap.set("n", "<leader>l", function()
-    vim.diagnostic.setloclist()
-end, 
-{ noremap = true, silent = true, desc = "Open Locallist"})
-
-
--- Quickfix list
-vim.keymap.set("n", "<leader>q", function()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    if vim.api.nvim_buf_get_option(buf, "buftype") == "quickfix" then
-      vim.api.nvim_set_current_win(win)
-      return
-    end
-  end
-  vim.cmd("copen")
-end, 
-{ noremap = true, silent = true, desc = "ToggleOrFocus Quickfixlist" })
-
-vim.keymap.set("n", "<C-n>", function()
-  if is_quickfix_open() then
-    vim.cmd("cnext")
-    vim.cmd("normal! zz")
-  else
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-n>", true, false, true), "n", true)
-  end
-end, 
-{ noremap = true, silent = true, desc = "Quickfix Next if Open" })
-
-vim.keymap.set("n", "<C-p>", function()
-  if is_quickfix_open() then
-    vim.cmd("cprev")
-    vim.cmd("normal! zz")
-  else
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-p>", true, false, true), "n", true)
-  end
-end,
-{ noremap = true, silent = true, desc = "Quickfix Prev if Open" })
-
--------------------
--- EVENT MAPPINGS
--------------------
+-- Events
 vim.cmd [[ autocmd Signal SIGWINCH wincmd = ]]
 vim.cmd [[ autocmd TermEnter term://* setlocal scl=no | setlocal nohidden | setlocal norelativenumber | setlocal nonu ]]
 vim.cmd [[ autocmd BufHidden term://* q! ]]

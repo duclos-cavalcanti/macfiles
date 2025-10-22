@@ -1,5 +1,5 @@
 # Exports
-export TERM='screen-256color-bce'
+export TERM='tmux-256color'
 export VISUAL='nvim'
 export EDITOR="nvim"
 export GIT_EDITOR='nvim'

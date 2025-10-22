@@ -175,7 +175,7 @@ local plugins = {
 if os.getenv("USER") == "dduclos-cavalcanti" then
     table.insert(plugins, {
         'augmentcode/augment.vim',
-        ft = { "rust", "python", "cpp" },
+        ft = { "rust", "python", "cpp", "cs" },
         config = function()
             vim.g.augment_workspace_folders = {
                 '/Users/dduclos-cavalcanti/Documents/macfiles',
@@ -192,6 +192,7 @@ if os.getenv("USER") == "dduclos-cavalcanti" then
             vim.api.nvim_set_keymap('v', "<C-g>i", ":Augment chat<CR>", {noremap=true, silent=true})
             vim.api.nvim_set_keymap('n', '<C-g>I', 'ggVG:Augment chat<CR>', {noremap=true, silent=true})
             vim.api.nvim_set_keymap('n', "<C-g>n", "<cmd>Augment chat-new<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', '<C-g>p', '<cmd>enew | setl buftype=nofile bufhidden=hide swapfile=off | %d | 0put +<CR>ggVG:Augment chat<CR>', {noremap=true, silent=true})
 
             local augmentResizeGroup = vim.api.nvim_create_augroup("AugmentResize", { clear = true })
 
