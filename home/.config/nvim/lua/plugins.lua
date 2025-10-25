@@ -79,6 +79,23 @@ local plugins = {
             ---@module 'render-markdown'
             ---@type render.md.UserConfig
             opts = {},
+            config = function()
+                local group = vim.api.nvim_create_augroup('RenderMarkdownKeymap', { clear = true })
+            
+                vim.api.nvim_create_autocmd('FileType', {
+                  group = group,
+                  pattern = 'markdown',
+                  callback = function(args)
+                    vim.keymap.set('n', '<C-m>', function()
+                      local render_md = require('render-markdown')
+                      render_md.set(not render_md.get())
+                    end, { 
+                      desc = 'Toggle Markdown Rendering',
+                      buffer = args.buf -- This makes the keymap buffer-local
+                    })
+                  end,
+                })
+              end,
         },
         {
             "iamcco/markdown-preview.nvim",
@@ -192,7 +209,7 @@ if os.getenv("USER") == "dduclos-cavalcanti" then
             vim.api.nvim_set_keymap('v', "<C-g>i", ":Augment chat<CR>", {noremap=true, silent=true})
             vim.api.nvim_set_keymap('n', '<C-g>I', 'ggVG:Augment chat<CR>', {noremap=true, silent=true})
             vim.api.nvim_set_keymap('n', "<C-g>n", "<cmd>Augment chat-new<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', '<C-g>p', '<cmd>enew | setl buftype=nofile bufhidden=hide swapfile=off | %d | 0put +<CR>ggVG:Augment chat<CR>', {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', '<C-g>p', '<cmd>enew | setl buftype=nofile bufhidden=hide | %d | 0put +<CR>ggVG:Augment chat<CR>', {noremap=true, silent=true})
 
             local augmentResizeGroup = vim.api.nvim_create_augroup("AugmentResize", { clear = true })
 

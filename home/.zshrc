@@ -268,6 +268,12 @@ cd() {
   builtin cd "$@" && ls --color=auto
 }
 
+if command -v jq &>/dev/null; then
+    js() {
+      cat "$1" | jq
+    }
+fi
+
 if command -v fzf &>/dev/null; then
     export FZF_DEFAULT_COMMAND="fd --follow --hidden --type f --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
     export FZF_ALT_C_COMMAND="fd --follow --hidden --type d --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
