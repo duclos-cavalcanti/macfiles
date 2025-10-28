@@ -108,7 +108,12 @@ else
     # - %F{color}...%f: Sets text color.
     # - %3~: Truncates the path to the last 3 directories.
     # - ${vcs_info_msg_0_}: Inserts the formatted git string.
-    PROMPT='%B%(?.%F{green}➜.%F{red}➜)%b %B%F{cyan}%3~%f%b ${vcs_info_msg_0_} '
+
+    local CHAR='%B%(?.%F{green}➜.%F{red}➜)%b'
+    local DIRECTORY='%B%F{cyan}%1~%f%b'
+    local GIT='${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}'
+
+    PROMPT="${CHAR} ${DIRECTORY}${GIT} "
 fi
 
 export PS2=">> "

@@ -192,7 +192,7 @@ local plugins = {
 if os.getenv("USER") == "dduclos-cavalcanti" then
     table.insert(plugins, {
         'augmentcode/augment.vim',
-        ft = { "rust", "python", "cpp", "cs", "javascript", "lua" },
+        cmd = { "AugmentLoad" },
         config = function()
             vim.g.augment_workspace_folders = {
                 '/Users/dduclos-cavalcanti/Documents/macfiles',
@@ -209,15 +209,38 @@ if os.getenv("USER") == "dduclos-cavalcanti" then
             vim.api.nvim_set_keymap('v', "<C-g>i", ":Augment chat<CR>", {noremap=true, silent=true})
             vim.api.nvim_set_keymap('n', '<C-g>I', 'ggVG:Augment chat<CR>', {noremap=true, silent=true})
             vim.api.nvim_set_keymap('n', "<C-g>n", "<cmd>Augment chat-new<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', '<C-g>p', '<cmd>enew | setl buftype=nofile bufhidden=hide | %d | 0put +<CR>ggVG:Augment chat<CR>', {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', '<C-g>p', '', {
+                noremap = true, 
+                silent = true,
+                callback = function() 
+                    local buf = vim.api.nvim_get_current_buf()
+
+                    vim.cmd('enew')
+                    vim.bo.buftype = 'nofile'
+                    vim.bo.bufhidden = 'hide'
+                    vim.cmd('%delete')
+                    vim.cmd('0put +')
+
+
+                    vim.cmd('normal! ggVG')
+                    vim.cmd('Augment chat')
+
+                    vim.cmd('bdelete!')
+                    vim.api.nvim_set_current_buf(buf)
+                end
+            })
 
             local augmentResizeGroup = vim.api.nvim_create_augroup("AugmentResize", { clear = true })
-
             vim.api.nvim_create_autocmd("BufWinEnter", {
                 group = augmentResizeGroup,
                 pattern = "AugmentChatHistory",
                 command = "wincmd =",
             })
+        end,
+        init = function()
+            vim.api.nvim_create_user_command('AugmentLoad', function()
+                require('lazy').load({ plugins = { 'augment.vim' } })
+            end, { desc = 'Load Augment plugin' })
         end,
     })
 end
