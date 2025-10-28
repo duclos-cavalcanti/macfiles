@@ -100,9 +100,9 @@ else
     zstyle ':vcs_info:*' use-simple true
     zstyle ':vcs_info:*' check-for-changes true
     zstyle ':vcs_info:*' stagedstr '*'   # Symbol for staged files
-    zstyle ':vcs_info:*' unstagedstr '!' # Symbol for unstaged/modified files
+    zstyle ':vcs_info:*' unstagedstr '✗' # Symbol for unstaged/modified files
     # zstyle ':vcs_info:git*' formats '%B%F{yellow}git:(%F{magenta}%b%f%F{yellow})%f%F{magenta} %B%c%u%f'
-    zstyle ':vcs_info:git*' formats '%B%F{yellow}git:(%F{magenta}%b%f%F{yellow})%f%F{magenta}%c%u%f'
+    zstyle ':vcs_info:git*' formats '%B%F{yellow}git:(%F{magenta}%b%f%F{yellow})%f %F{magenta}%c%u%f'
 
     # - %(?.<success>.<failure>): Conditional expression for the prompt symbol color.
     # - %B...%b: Makes text bold.
