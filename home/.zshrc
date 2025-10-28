@@ -32,12 +32,6 @@ export PYLINTHOME="${XDG_DATA_HOME}/pylint"
 export IPYTHONDIR="$HOME/.config/ipython/"
 export AWS_PROFILE=custo-eng-dev
 
-if [[ -f ~/.personal.env ]]; then 
-    source ~/.personal.env
-elif [[ -f ~/.work.env ]]; then 
-    source ~/.work.env
-fi
-
 # Enable command auto-correction and completion
 autoload -Uz compinit && compinit
 autoload -z edit-command-line

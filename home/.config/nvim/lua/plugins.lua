@@ -192,7 +192,7 @@ local plugins = {
 if os.getenv("USER") == "dduclos-cavalcanti" then
     table.insert(plugins, {
         'augmentcode/augment.vim',
-        ft = { "rust", "python", "cpp", "cs", "js" },
+        ft = { "rust", "python", "cpp", "cs", "javascript", "lua" },
         config = function()
             vim.g.augment_workspace_folders = {
                 '/Users/dduclos-cavalcanti/Documents/macfiles',
