@@ -69,7 +69,7 @@ config.colors = {
 }
 
 config.font = wezterm.font("Hack Nerd Font Mono")
-config.font_size = 10.5
+config.font_size = 10.4
 
 config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
