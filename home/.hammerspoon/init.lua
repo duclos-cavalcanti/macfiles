@@ -50,7 +50,6 @@ hs.hotkey.bind({"cmd", "ctrl"}, "o", function()
     local nextIndex = (currentIndex % #screens) + 1
     local nextScreen = screens[nextIndex]
     local nextScreenFrame = nextScreen:frame()
-    local nextSpace = hs.spaces.activeSpaceOnScreen(nextScreen)
 
     hs.mouse.setAbsolutePosition(hs.geometry.rectMidPoint(nextScreenFrame))
 
@@ -59,29 +58,6 @@ hs.hotkey.bind({"cmd", "ctrl"}, "o", function()
         if window:screen():id() == nextScreen:id() and window:isStandard() then
             window:focus()
             break
-        end
-    end
-end)
-
--- Rule
-local zoomWatcher = hs.window.filter.new("Zoom.us")
-zoomWatcher:subscribe(hs.window.filter.windowCreated, function(window, appName)
-    if not window:isStandard() then
-        return
-    end
-
-    local app = hs.application.get(appName)
-    if not app then return end
-
-    local targetSpaceUUID = nil
-
-    for _, otherWindow in ipairs(app:allWindows()) do
-        if otherWindow:isStandard() and otherWindow:id() ~= window:id() then
-            targetSpaceUUID = hs.spaces.spaceForWindow(otherWindow)
-            if targetSpaceUUID then
-                hs.spaces.moveWindowToSpace(window, targetSpaceUUID)
-                return
-            end
         end
     end
 end)
