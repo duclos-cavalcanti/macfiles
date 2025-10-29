@@ -59,6 +59,8 @@ require'lspconfig'.marksman.setup{}
 
 vim.lsp.enable('csharp_ls')
 
+vim.lsp.enable('denols')
+
 require'lspconfig'.rust_analyzer.setup{
     on_attach = _on_attach,
     capabilities = _capabilities,
