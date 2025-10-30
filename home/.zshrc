@@ -98,11 +98,20 @@ else
 
     zstyle ':vcs_info:*' enable git
     zstyle ':vcs_info:*' use-simple true
+    zstyle ':vcs_info:*' check-for-staged-changes true
     zstyle ':vcs_info:*' check-for-changes true
+    zstyle ':vcs_info:*' get-revision true
     zstyle ':vcs_info:*' stagedstr '*'   # Symbol for staged files
-    zstyle ':vcs_info:*' unstagedstr '✗' # Symbol for unstaged/modified files
-    # zstyle ':vcs_info:git*' formats '%B%F{yellow}git:(%F{magenta}%b%f%F{yellow})%f%F{magenta} %B%c%u%f'
-    zstyle ':vcs_info:git*' formats '%B%F{yellow}git:(%F{magenta}%b%f%F{yellow})%f %F{magenta}%c%u%f'
+    zstyle ':vcs_info:*' unstagedstr 'x' # Symbol for unstaged/modified files
+
+    local GIT_ON='%Bon '
+    local GIT_PREFIX='%B%F{yellow}git:'
+    local GIT_BRANCH='%F{magenta}%b'
+    local GIT_FLAGS='%F{magenta}[%c%u%a]'
+    local GIT_SUFFIX='%f%F{yellow}%f'
+    local GIT_PROMPT="${GIT_ON}${GIT_PREFIX}${GIT_BRANCH}${GIT_FLAGS}${GIT_SUFFIX}"
+    
+    zstyle ':vcs_info:git*' formats "${GIT_PROMPT}"
 
     # - %(?.<success>.<failure>): Conditional expression for the prompt symbol color.
     # - %B...%b: Makes text bold.
@@ -110,11 +119,12 @@ else
     # - %3~: Truncates the path to the last 3 directories.
     # - ${vcs_info_msg_0_}: Inserts the formatted git string.
 
-    local CHAR='%B%(?.%F{green}➜.%F{red}➜)%b'
+    # local CHAR='%B%(?.%F{green}➜.%F{red}➜)%b'
+    local CHAR='%B%(?.%F{white} $ .%F{red} $ )%b%f'
     local DIRECTORY='%B%F{cyan}%1~%f%b'
     local GIT='${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}'
 
-    PROMPT="${CHAR} ${DIRECTORY}${GIT} "
+    PROMPT="${DIRECTORY}${GIT}${CHAR}"
 fi
 
 export PS2=">> "

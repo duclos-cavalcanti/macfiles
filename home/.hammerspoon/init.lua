@@ -12,30 +12,6 @@ function focusOrLaunch(app_name)
   end
 end
 
-hs.hotkey.bind({"cmd", "shift"}, "1", function()
-    local currentWindow = hs.window.focusedWindow()
-    if not currentWindow then return end
-    hs.spaces.moveWindowToSpace(currentWindow, 1)
-end)
-
-hs.hotkey.bind({"cmd", "shift"}, "2", function()
-    local currentWindow = hs.window.focusedWindow()
-    if not currentWindow then return end
-    hs.spaces.moveWindowToSpace(currentWindow, 2)
-end)
-
-hs.hotkey.bind({"cmd", "shift"}, "3", function()
-    local currentWindow = hs.window.focusedWindow()
-    if not currentWindow then return end
-    hs.spaces.moveWindowToSpace(currentWindow, 3)
-end)
-
-hs.hotkey.bind({"cmd", "shift"}, "4", function()
-    local currentWindow = hs.window.focusedWindow()
-    if not currentWindow then return end
-    hs.spaces.moveWindowToSpace(currentWindow, 4)
-end)
-
 -- Safari: Move to the next tab group
 hs.hotkey.bind({"cmd", "ctrl"}, "k", function()
     local app = hs.application.frontmostApplication()
