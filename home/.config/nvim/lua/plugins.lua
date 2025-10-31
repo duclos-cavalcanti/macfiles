@@ -53,9 +53,18 @@ local plugins = {
     { -- snippets
         "L3MON4D3/LuaSnip",
         config = function() 
-            local s = require('ex.luasnip')
-            s.config()
-            s.setup()
+            local ls = require "luasnip"
+            ls.config.set_config {
+                history = true,
+                updateevents = "TextChanged,TextChangedI",
+                enable_autosnippets = true,
+            }
+            ls.cleanup()
+            -- read snippets lazily from the snippets folder besides init.lua
+            require("luasnip.loaders.from_snipmate").lazy_load()
+
+            -- examples inspired by
+            -- https://github.com/honza/vim-snippets/tree/master/snippets
         end,
     },
     { -- fuzzy finder

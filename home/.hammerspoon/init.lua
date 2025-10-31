@@ -3,7 +3,7 @@ function notification(text)
   hs.notify.new({title="Hammerspoon", informativeText=text}):send()
 end
 
-function focusOrLaunch(app_name)
+function launch(app_name)
     local app = hs.application.get(app_name)
     if app then
         app:activate()
