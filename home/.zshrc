@@ -107,7 +107,7 @@ else
     local GIT_ON='%Bon '
     local GIT_PREFIX='%B%F{yellow}git:'
     local GIT_BRANCH='%F{magenta}%b'
-    local GIT_FLAGS='%F{magenta}[%c%u%a]'
+    local GIT_FLAGS='%F{magenta}(%c%u%a)'
     local GIT_SUFFIX='%f%F{yellow}%f'
     local GIT_PROMPT="${GIT_ON}${GIT_PREFIX}${GIT_BRANCH}${GIT_FLAGS}${GIT_SUFFIX}"
     
