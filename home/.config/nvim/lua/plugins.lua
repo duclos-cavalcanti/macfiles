@@ -196,9 +196,8 @@ if os.getenv("USER") == "dduclos-cavalcanti" then
         config = function()
             vim.g.augment_workspace_folders = {
                 '/Users/dduclos-cavalcanti/Documents/macfiles',
-                '/Users/dduclos-cavalcanti/Documents/work/clone/windowmanagerplus/',
-                '/Users/dduclos-cavalcanti/Documents/work/clone/hs_workspaces.spoon/',
                 '/Users/dduclos-cavalcanti/Documents/work/kms',
+                '/Users/dduclos-cavalcanti/Documents/work/core-extensions/',
                 '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-bridge/',
                 '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-core/',
                 '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold-bridge/',
