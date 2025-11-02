@@ -5,6 +5,7 @@ tap "jesseduffield/lazydocker"
 
 # base
 brew "nvim"
+cask "wezterm"
 brew "tmux"
 brew "tmuxp"
 brew "lazygit"

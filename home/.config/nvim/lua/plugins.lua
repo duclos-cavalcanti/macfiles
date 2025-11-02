@@ -19,7 +19,47 @@ local plugins = {
         dependencies = {
             "windwp/nvim-ts-autotag",
         },
-        config = function() require('ex.treesitter') end,
+        config = function() 
+            vim.opt.runtimepath:append("$HOME/.local/share/treesitter")
+            require('nvim-treesitter.configs').setup({
+                parser_install_dir = "$HOME/.local/share/treesitter",
+            	highlight = {
+                    enable = true,
+                    additional_vim_regex_highlighting = false,
+                },
+                autotag = {
+                    enable = true,
+                    filetypes = {"js", "jsx", "javascript", "html", "xml", "markdown", "md"},
+                },
+            	ensure_installed = {
+                "bash",
+                "html",
+                "javascript",
+                "css",
+                "c",
+                "c_sharp",
+                "cpp",
+                "cmake",
+                "make",
+                "rust",
+                "python",
+                "lua",
+                "commonlisp",
+                "haskell",
+                "go",
+                "nix",
+                "gomod",
+                "gowork",
+                "java",
+                "json",
+                "yaml",
+                "vim",
+                "vimdoc",
+                "query",
+                "latex"
+            	},
+            })
+        end,
     },
     { -- lsp and completion
         "neovim/nvim-lspconfig",
@@ -62,10 +102,71 @@ local plugins = {
             ls.cleanup()
             -- read snippets lazily from the snippets folder besides init.lua
             require("luasnip.loaders.from_snipmate").lazy_load()
-
             -- examples inspired by
             -- https://github.com/honza/vim-snippets/tree/master/snippets
         end,
+    },
+    {
+        "folke/sidekick.nvim",
+        lazy = true,
+        cmd = "SidekickLoad",
+        opts = {
+          -- add any options here
+          cli = {
+            mux = {
+              backend = "tmux",
+              enabled = true,
+            },
+          },
+        },
+        keys = {
+            {
+                "<C-g>.",
+                function() require("sidekick.cli").toggle() end,
+                desc = "Sidekick Toggle",
+                mode = { "n", "t", "i", "x" },
+            },
+            {
+                "<C-g>n",
+                function()
+                  if not require("sidekick").nes_jump_or_apply() then
+                    return "<Tab>"
+                  end
+                end,
+                expr = true,
+                desc = "Goto/Apply Next Edit Suggestion",
+            },
+            { "<C-g>i", 
+              "<cmd>lua require('sidekick.cli').send({ msg = '{selection}' })<cr>", 
+              mode = "x", 
+              desc = "Send Visual Selection"
+            },
+        },
+        config = function()
+            vim.api.nvim_create_user_command(
+                "SidekickLoad",
+                function()
+                    require("sidekick.cli").toggle()
+                end,
+                { desc = "Load and Toggle Sidekick/Copilot" }
+            )
+            
+            require("sidekick").setup({})
+        end,
+        dependencies = {
+          { -- copilot
+            "zbirenbaum/copilot.lua",
+            lazy = true,
+            requires = {
+              "copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
+            },
+            cmd = "Copilot",
+            config = function()
+              require("copilot").setup({})
+            end,
+          },
+          { 'nvim-lua/plenary.nvim', }
+        }
     },
     { -- fuzzy finder
         'nvim-telescope/telescope.nvim',
@@ -74,54 +175,44 @@ local plugins = {
             'nvim-telescope/telescope-ui-select.nvim',
             'nvim-lua/plenary.nvim',
         },
-        config = function() require('ex.telescope') end,
-    },
-    { -- utils
-        { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
-        { "numToStr/Comment.nvim", config = function() require('ex.comment') end, },
-        { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },
-        { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, },
-        { 'ruifm/gitlinker.nvim', dependencies = 'nvim-lua/plenary.nvim', config = function() require"gitlinker".setup() end, },
-        {
-            'MeanderingProgrammer/render-markdown.nvim',
-            dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },
-            ---@module 'render-markdown'
-            ---@type render.md.UserConfig
-            opts = {},
-            config = function()
-                local group = vim.api.nvim_create_augroup('RenderMarkdownKeymap', { clear = true })
+        config = function() 
+            local actions = require('telescope.actions')
+            local action_state = require("telescope.actions.state")
             
-                vim.api.nvim_create_autocmd('FileType', {
-                  group = group,
-                  pattern = 'markdown',
-                  callback = function(args)
-                    vim.keymap.set('n', '<C-m>', function()
-                      local render_md = require('render-markdown')
-                      render_md.set(not render_md.get())
-                    end, { 
-                      desc = 'Toggle Markdown Rendering',
-                      buffer = args.buf -- This makes the keymap buffer-local
-                    })
-                  end,
-                })
-              end,
-        },
-        {
-            "iamcco/markdown-preview.nvim",
-            cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-            build = "cd app && yarn install",
-            init = function()
-                vim.g.mkdp_filetypes = { "markdown" }
-                vim.cmd[[ 
-                    function OpenMarkdownPreview (url)
-                        echo "Markdown Preview URL: " . a:url
-                        let @+ = a:url
-                    endfunction
-                    let g:mkdp_browserfunc = 'OpenMarkdownPreview'
-                ]]
-            end,
-            ft = { "markdown" },
-        },
+            require('telescope').setup({
+              defaults = {
+                sorting_strategy = "ascending",
+                mappings = {
+                  i = {
+                    ['<C-n>'] = actions.move_selection_next,
+                    ['<C-p>'] = actions.move_selection_previous,
+                    ['<C-c>'] = actions.close,
+                    ["<C-a>"] = actions.send_to_qflist,
+                    ["<C-q>"] = actions.send_selected_to_qflist,
+                  },
+                  n = {
+                    ['<C-c>'] = actions.close,
+                  },
+                },
+                layout_config = {
+                  horizontal ={
+                    height = 47,
+                    prompt_position = "top",
+                  }
+                }
+              },
+              extensions ={
+                  fzf = {
+                    fuzzy = true,                    -- false will only do exact matching
+                    override_generic_sorter = true,  -- override the generic sorter
+                    override_file_sorter = true,     -- override the file sorter
+                    case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                  },
+              },
+            })
+            require('telescope').load_extension('fzf')
+            require("telescope").load_extension("ui-select")
+        end,
     },
     { -- themes/ui
         "RRethy/base16-nvim",
@@ -195,65 +286,36 @@ local plugins = {
             }
         end,
     },
+    { -- utils
+        { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
+        { "numToStr/Comment.nvim", config = function() require('Comment').setup() end, },
+        { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },
+        { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, },
+        { 'ruifm/gitlinker.nvim', dependencies = 'nvim-lua/plenary.nvim', config = function() require"gitlinker".setup() end, },
+        { 'MeanderingProgrammer/render-markdown.nvim',
+            dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },
+            ---@module 'render-markdown'
+            ---@type render.md.UserConfig
+            opts = {},
+        },
+        {
+            "iamcco/markdown-preview.nvim",
+            cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+            build = "cd app && yarn install",
+            init = function()
+                vim.g.mkdp_filetypes = { "markdown" }
+                vim.cmd[[ 
+                    function OpenMarkdownPreview (url)
+                        echo "Markdown Preview URL: " . a:url
+                        let @+ = a:url
+                    endfunction
+                    let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+                ]]
+            end,
+            ft = { "markdown" },
+        },
+    },
 }
-
--- work config
-if os.getenv("USER") == "dduclos-cavalcanti" then
-    table.insert(plugins, {
-        'augmentcode/augment.vim',
-        cmd = { "AugmentLoad" },
-        config = function()
-            vim.g.augment_workspace_folders = {
-                '/Users/dduclos-cavalcanti/Documents/macfiles',
-                '/Users/dduclos-cavalcanti/Documents/work/kms',
-                '/Users/dduclos-cavalcanti/Documents/work/core-extensions/',
-                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-bridge/',
-                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-core/',
-                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold-bridge/',
-                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold/',
-            }
-
-            vim.api.nvim_set_keymap('n', "<C-g>g", "<cmd>Augment signin<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', "<C-g>o", "<cmd>Augment chat-toggle<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', "<C-g>i", "<cmd>Augment chat<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('v', "<C-g>i", ":Augment chat<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', '<C-g>I', 'ggVG:Augment chat<CR>', {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', "<C-g>n", "<cmd>Augment chat-new<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', '<C-g>p', '', {
-                noremap = true, 
-                silent = true,
-                callback = function() 
-                    local buf = vim.api.nvim_get_current_buf()
-
-                    vim.cmd('enew')
-                    vim.bo.buftype = 'nofile'
-                    vim.bo.bufhidden = 'hide'
-                    vim.cmd('%delete')
-                    vim.cmd('0put +')
-
-
-                    vim.cmd('normal! ggVG')
-                    vim.cmd('Augment chat')
-
-                    vim.cmd('bdelete!')
-                    vim.api.nvim_set_current_buf(buf)
-                end
-            })
-
-            local augmentResizeGroup = vim.api.nvim_create_augroup("AugmentResize", { clear = true })
-            vim.api.nvim_create_autocmd("BufWinEnter", {
-                group = augmentResizeGroup,
-                pattern = "AugmentChatHistory",
-                command = "wincmd =",
-            })
-        end,
-        init = function()
-            vim.api.nvim_create_user_command('AugmentLoad', function()
-                require('lazy').load({ plugins = { 'augment.vim' } })
-            end, { desc = 'Load Augment plugin' })
-        end,
-    })
-end
 
 local opts = {
 

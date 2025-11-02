@@ -1,2 +1,5 @@
 key
 home/*.env
+home/.config/.copilot
+home/.config/configstore/
+home/.config/github-copilot/

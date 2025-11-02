@@ -3,7 +3,6 @@ local ls = require "luasnip"
 
 cmp.setup({
     snippet = {
-        -- REQUIRED
         expand = function(args)
         require('luasnip').lsp_expand(args.body) -- luasnip users.
       end,
