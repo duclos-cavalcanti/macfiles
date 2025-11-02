@@ -5,8 +5,9 @@ if os.getenv("TMUX") == nil then
 end
 
 require("settings")
+require("keys")
 require("plugins")
-require("map")
+require("commands")
 
 -- vim.opt.runtimepath:append("$HOME/.config/nvim/pack/plugins/start/example")
 -- require("example").setup({})

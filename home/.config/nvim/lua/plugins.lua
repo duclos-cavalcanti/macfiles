@@ -65,7 +65,6 @@ local plugins = {
         "neovim/nvim-lspconfig",
         -- event = "InsertEnter",
         dependencies = {
-            -- "mrcjkb/rustaceanvim",
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
@@ -75,8 +74,8 @@ local plugins = {
             "saadparwaiz1/cmp_luasnip",
         },
         config = function() 
-            require('ex.completion') 
-            require('ex.lspconfig')
+            require('plug.completion') 
+            require('plug.lspconfig')
         end,
     },
     { -- tags
@@ -88,6 +87,7 @@ local plugins = {
       },
         config = function() 
             require("aerial").setup({ })
+            vim.api.nvim_set_keymap("n", "<leader><tab>", "<cmd>AerialToggle left<CR>", {noremap=true, silent=true})
         end,
     },
     { -- snippets
@@ -121,7 +121,7 @@ local plugins = {
         },
         keys = {
             {
-                "<C-g>.",
+                "<C-g>o",
                 function() require("sidekick.cli").toggle() end,
                 desc = "Sidekick Toggle",
                 mode = { "n", "t", "i", "x" },
@@ -136,10 +136,22 @@ local plugins = {
                 expr = true,
                 desc = "Goto/Apply Next Edit Suggestion",
             },
-            { "<C-g>i", 
-              "<cmd>lua require('sidekick.cli').send({ msg = '{selection}' })<cr>", 
-              mode = "x", 
-              desc = "Send Visual Selection"
+            {
+                "<C-g>i",
+                function() require("sidekick.cli").send({ msg = "{this}" }) end,
+                mode = { "x", "n" },
+                desc = "Send This",
+            },
+            {
+                "<C-g>f",
+                function() require("sidekick.cli").send({ msg = "{file}" }) end,
+                desc = "Send File",
+            },
+            {
+                "<C-g>p",
+                function() require("sidekick.cli").prompt() end,
+                mode = { "n", "x" },
+                desc = "Sidekick Select Prompt",
             },
         },
         config = function()
@@ -212,6 +224,16 @@ local plugins = {
             })
             require('telescope').load_extension('fzf')
             require("telescope").load_extension("ui-select")
+
+            vim.api.nvim_set_keymap("n", "<leader>sf", "<cmd>lua require('telescope.builtin').find_files({})<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap("n", "<leader>sF", "<cmd>lua require('telescope.builtin').find_files({cwd=vim.fn.input('Path: ')})<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap("n", "<leader>si", "<cmd>lua require('telescope.builtin').find_files({no_ignore=true})<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap("n", "<leader>sb", "<cmd>lua require('telescope.builtin').buffers()<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap("n", "<leader>sl", "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap("n", "<leader>sr", "<cmd>lua require('telescope.builtin').live_grep()<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap("n", "<leader>sR", "<cmd>lua require('telescope.builtin').grep_string({search=''})<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap("n", "<leader>sh", "<cmd>lua require('telescope.builtin').help_tags()<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap("n", "<leader>sm", "<cmd>lua require('telescope.builtin').man_pages({sections={'ALL'}})<CR>", {noremap=true, silent=true})
         end,
     },
     { -- themes/ui

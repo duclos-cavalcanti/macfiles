@@ -15,10 +15,9 @@ local function _on_attach(client, bufnr)
     bufnnoremap("gh",           "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
     bufnnoremap("GT",           "<Cmd>lua vim.lsp.buf.type_definition()<CR>")
     bufnnoremap("K",            "<Cmd>lua vim.lsp.buf.hover()<CR>")
-  --bufnnoremap("<leader>R",    "<Cmd>lua vim.lsp.buf.rename()<CR>")
+    bufnnoremap("<leader>R",    "<Cmd>lua vim.lsp.buf.rename()<CR>")
     bufnnoremap("gn",           "<Cmd>lua vim.diagnostic.goto_next()<CR>")
     bufnnoremap("gp",           "<Cmd>lua vim.diagnostic.goto_prev()<CR>")
-    bufnnoremap("gn",           "<Cmd>lua vim.diagnostic.goto_next()<CR>")
     bufnnoremap("gf",           "<Cmd>lua vim.diagnostic.open_float()<CR>")
 end
 
