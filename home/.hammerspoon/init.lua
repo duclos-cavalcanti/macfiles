@@ -23,6 +23,20 @@ function getScreens()
     return screens, currentIndex, nextIndex
 end
 
+-- Safari: Move to the next tab group
+hs.hotkey.bind({"cmd", "ctrl"}, "k", function()
+    local app = hs.application.frontmostApplication()
+    if app:title() ~= "Safari" then return end
+    app:selectMenuItem({"Window", "Go to Next Tab Group"})
+end)
+
+-- Safari: Move to the prev tab group
+hs.hotkey.bind({"cmd", "ctrl"}, "j", function()
+    local app = hs.application.frontmostApplication()
+    if app:title() ~= "Safari" then return end
+    app:selectMenuItem({"Window", "Go to Previous Tab Group"})
+end)
+
 -- Move to next screen
 hs.hotkey.bind({"cmd", "ctrl"}, "p", function()
     local currentWindow = hs.window.focusedWindow()
