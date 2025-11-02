@@ -122,7 +122,7 @@ local plugins = {
         keys = {
             {
                 "<C-g>o",
-                "<cmd>Sidekick cli toggle<CR>",
+                function() require("sidekick.cli").toggle() end,
                 desc = "Sidekick Toggle",
                 mode = { "n", "t", "i", "x" },
             },
@@ -153,6 +153,11 @@ local plugins = {
                 mode = { "n", "x" },
                 desc = "Sidekick Select Prompt",
             },
+            {
+                "<C-g>a",
+                function() require("sidekick.cli").accept() end,
+                desc = "Sidekick Accept Suggestion",
+            },
         },
         config = function()
             vim.api.nvim_create_user_command(
@@ -166,18 +171,28 @@ local plugins = {
             require("sidekick").setup({})
         end,
         dependencies = {
-          { -- copilot
-            "zbirenbaum/copilot.lua",
-            lazy = true,
-            requires = {
-              "copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
+            {
+                "zbirenbaum/copilot.lua",
+                cmd = "Copilot",
+                config = function()
+                    require("copilot").setup({
+                        suggestion = {
+                            enabled = true,
+                            auto_trigger = true,
+                            keymap = {
+                                accept = "<Tab>",
+                                accept_word = false,
+                                accept_line = false,
+                                next = "<M-]>",
+                                prev = "<M-[>",
+                                dismiss = "<C-]>",
+                            },
+                        },
+                        panel = { enabled = false },
+                    })
+                end,
             },
-            cmd = "Copilot",
-            config = function()
-              require("copilot").setup({})
-            end,
-          },
-          { 'nvim-lua/plenary.nvim', }
+            { 'nvim-lua/plenary.nvim', }
         }
     },
     { -- fuzzy finder
