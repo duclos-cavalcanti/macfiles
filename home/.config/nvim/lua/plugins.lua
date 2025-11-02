@@ -122,7 +122,7 @@ local plugins = {
         keys = {
             {
                 "<C-g>o",
-                function() require("sidekick.cli").toggle() end,
+                "<cmd>Sidekick cli toggle<CR>",
                 desc = "Sidekick Toggle",
                 mode = { "n", "t", "i", "x" },
             },
