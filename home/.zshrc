@@ -260,6 +260,7 @@ alias gm="git commit"
 alias gl="git log"
 alias glo='git log --pretty="oneline"'
 alias glol='git log --graph --oneline --decorate'
+alias gp="git pull"
 alias gpo="git push origin"
 alias gd="git diff --color=always"
 alias gdd="git diff HEAD~1 HEAD"
