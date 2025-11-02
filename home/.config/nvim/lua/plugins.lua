@@ -121,6 +121,12 @@ local plugins = {
         },
         keys = {
             {
+                "<C-g>w",
+                function() require("sidekick.cli").select() end,
+                desc = "Sidekick Select",
+                mode = { "n" },
+            },
+            {
                 "<C-g>o",
                 function() require("sidekick.cli").toggle() end,
                 desc = "Sidekick Toggle",
@@ -180,7 +186,7 @@ local plugins = {
                             enabled = true,
                             auto_trigger = true,
                             keymap = {
-                                accept = "<Tab>",
+                                accept = "<C-m>",
                                 accept_word = false,
                                 accept_line = false,
                                 next = "<M-]>",
