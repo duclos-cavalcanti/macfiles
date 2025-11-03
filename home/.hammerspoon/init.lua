@@ -24,14 +24,14 @@ function getScreens()
 end
 
 -- Safari: Move to the next tab group
-hs.hotkey.bind({"cmd", "ctrl"}, "k", function()
+hs.hotkey.bind({"cmd", "ctrl"}, "l", function()
     local app = hs.application.frontmostApplication()
     if app:title() ~= "Safari" then return end
     app:selectMenuItem({"Window", "Go to Next Tab Group"})
 end)
 
 -- Safari: Move to the prev tab group
-hs.hotkey.bind({"cmd", "ctrl"}, "j", function()
+hs.hotkey.bind({"cmd", "ctrl"}, "h", function()
     local app = hs.application.frontmostApplication()
     if app:title() ~= "Safari" then return end
     app:selectMenuItem({"Window", "Go to Previous Tab Group"})
@@ -47,6 +47,14 @@ hs.hotkey.bind({"cmd", "ctrl"}, "p", function()
 
     local nextScreen = screens[nextIndex]
     currentWindow:moveToScreen(nextScreen)
+end)
+
+-- Fill Window
+hs.hotkey.bind({"cmd", "shift"}, "f", function()
+    local app = hs.application.frontmostApplication()
+    if app then 
+        app:selectMenuItem({"Window", "Fill"})
+    end
 end)
 
 -- Focus on next screen
@@ -67,11 +75,6 @@ hs.hotkey.bind({"cmd", "shift"}, "p", function()
             break
         end
     end
-end)
-
--- Fill Window
-hs.hotkey.bind({"cmd", "shift"}, "f", function()
-    app:selectMenuItem({"Window", "Fill"})
 end)
 
 -- Screencapture
