@@ -277,8 +277,8 @@ local plugins = {
             }
 
             vim.opt.termguicolors = true
-            
-            local M = dofile(vim.fn.expand('~/Documents/macfiles/home/.config/wezterm/theme.lua')).get_colors()
+
+            local M = dofile(os.getenv("HOME") .. "/.config/wezterm/theme.lua").get_colors()
             require('base16-colorscheme').setup(M)
 
             -- statusline
