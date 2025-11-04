@@ -21,9 +21,9 @@ config.window_decorations = "RESIZE" -- "TITLE | RESIZE"
 config.window_background_opacity = 1.0
 config.macos_window_background_blur = 10
 config.window_padding = {
-  left = 20,
+  left = 30,
   right = 20,
-  top = 20,
+  top = 30,
   bottom = 20,
 }
 
