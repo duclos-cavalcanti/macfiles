@@ -5,12 +5,10 @@ local keys = require("keys")
 
 local config = wezterm.config_builder()
 
--- theme
-config = theme.setup(config)
-
--- fonts
+-- theme/font
 config.font = wezterm.font("Hack Nerd Font Mono")
 config.font_size = 11.0
+config = theme.setup(config)
 
 -- tab bar
 config.enable_tab_bar = true
@@ -29,12 +27,12 @@ config.window_padding = {
   bottom = 20,
 }
 
--- scrollback
-config.scrollback_lines = 3500
-
 -- keys
 if false then 
     config = keys.setup(config)
 end
+
+-- misc settings
+config.scrollback_lines = 3500
 
 return config
