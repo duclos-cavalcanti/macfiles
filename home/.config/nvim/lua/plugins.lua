@@ -61,7 +61,7 @@ local plugins = {
             })
         end,
     },
-    { -- lsp and completion
+    { -- lsp, completion, and snippets
         "neovim/nvim-lspconfig",
         -- event = "InsertEnter",
         dependencies = {
@@ -72,9 +72,109 @@ local plugins = {
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-nvim-lua",
             "saadparwaiz1/cmp_luasnip",
+            "L3MON4D3/LuaSnip",
         },
         config = function() 
-            require('plug.completion') 
+            local cmp = require'cmp'
+            local ls = require "luasnip"
+
+            ls.config.set_config {
+                history = true,
+                updateevents = "TextChanged,TextChangedI",
+                enable_autosnippets = true,
+            }
+            ls.cleanup()
+            -- read snippets lazily from the snippets folder besides init.lua
+            require("luasnip.loaders.from_snipmate").lazy_load()
+            -- examples inspired by
+            -- https://github.com/honza/vim-snippets/tree/master/snippets
+            
+            cmp.setup({
+                snippet = {
+                    expand = function(args)
+                    require('luasnip').lsp_expand(args.body) -- luasnip users.
+                  end,
+                },
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
+                },
+                mapping = {
+                    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+                    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+                    ['<C-y>'] = cmp.config.disable,
+                    ['<C-Space>'] = function(fallback)
+                                        if cmp.visible() then
+                                            cmp.close()
+                                        else
+                                            cmp.complete()
+                                        end
+                                     end,
+                    ['<C-n>'] = function(fallback)
+                                    if cmp.visible() then
+                                        cmp.select_next_item()
+                                    else
+                                        fallback()
+                                    end
+                                end,
+                    ['<C-p>'] = function(fallback)
+                                      if cmp.visible() then
+                                          cmp.select_prev_item()
+                                      else
+                                          fallback()
+                                      end
+                                  end,
+                    ['<C-k>'] = cmp.mapping(function(fallback)
+                                    if ls.expand_or_jumpable() then
+                                        ls.expand_or_jump()
+                                    else
+                                        fallback()
+                                    end
+                                  end, {"i", "s"}),
+                    ['<C-j>'] = cmp.mapping(function(fallback)
+                                    if ls.jumpable(-1) then
+                                        ls.jump(-1)
+                                    else
+                                        fallback()
+                                    end
+                                  end, {"i", "s"}),
+                    ['<C-l>'] = cmp.mapping(function(fallback)
+                                    if ls.choice_active() then
+                                        ls.change_choice(1)
+                                    else
+                                        fallback()
+                                    end
+                                  end, {"i", "s"}),
+                    ['<C-e>'] = cmp.mapping({
+                        i = cmp.mapping.abort(),
+                        c = cmp.mapping.close(),
+                    }),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item
+                },
+                sources = cmp.config.sources({
+                    { name = 'nvim_lsp' },
+                    { name = 'luasnip' },
+                }, {
+                    { name = 'buffer' },
+                })
+            })
+
+              -- Use buffer source for `/`
+            cmp.setup.cmdline('/', {
+                sources = {
+                    { name = 'buffer' }
+                }
+            })
+
+            -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+            cmp.setup.cmdline(':', {
+                sources = cmp.config.sources({
+                    { name = 'path' }
+                }, {
+                    { name = 'cmdline' }
+                })
+            })
+
             require('plug.lspconfig')
         end,
     },
@@ -90,23 +190,7 @@ local plugins = {
             vim.api.nvim_set_keymap("n", "<leader><tab>", "<cmd>AerialToggle left<CR>", {noremap=true, silent=true})
         end,
     },
-    { -- snippets
-        "L3MON4D3/LuaSnip",
-        config = function() 
-            local ls = require "luasnip"
-            ls.config.set_config {
-                history = true,
-                updateevents = "TextChanged,TextChangedI",
-                enable_autosnippets = true,
-            }
-            ls.cleanup()
-            -- read snippets lazily from the snippets folder besides init.lua
-            require("luasnip.loaders.from_snipmate").lazy_load()
-            -- examples inspired by
-            -- https://github.com/honza/vim-snippets/tree/master/snippets
-        end,
-    },
-    {
+    { -- ai 
         "folke/sidekick.nvim",
         lazy = true,
         cmd = "SidekickLoad",
@@ -200,6 +284,60 @@ local plugins = {
             },
             { 'nvim-lua/plenary.nvim', }
         }
+    },
+    {
+        'augmentcode/augment.vim',
+        cmd = { "AugmentLoad" },
+        config = function()
+            vim.g.augment_workspace_folders = {
+                '/Users/dduclos-cavalcanti/Documents/macfiles',
+                '/Users/dduclos-cavalcanti/Documents/work/kms',
+                '/Users/dduclos-cavalcanti/Documents/work/core-extensions/',
+                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-bridge/',
+                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-core/',
+                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold-bridge/',
+                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold/',
+            }
+        
+            vim.api.nvim_set_keymap('n', "<C-g>g", "<cmd>Augment signin<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', "<C-g>o", "<cmd>Augment chat-toggle<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', "<C-g>i", "<cmd>Augment chat<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('v', "<C-g>i", ":Augment chat<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', '<C-g>I', 'ggVG:Augment chat<CR>', {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', "<C-g>n", "<cmd>Augment chat-new<CR>", {noremap=true, silent=true})
+            vim.api.nvim_set_keymap('n', '<C-g>p', '', {
+                noremap = true, 
+                silent = true,
+                callback = function() 
+                    local buf = vim.api.nvim_get_current_buf()
+        
+                    vim.cmd('enew')
+                    vim.bo.buftype = 'nofile'
+                    vim.bo.bufhidden = 'hide'
+                    vim.cmd('%delete')
+                    vim.cmd('0put +')
+        
+        
+                    vim.cmd('normal! ggVG')
+                    vim.cmd('Augment chat')
+        
+                    vim.cmd('bdelete!')
+                    vim.api.nvim_set_current_buf(buf)
+                end
+            })
+        
+            local augmentResizeGroup = vim.api.nvim_create_augroup("AugmentResize", { clear = true })
+            vim.api.nvim_create_autocmd("BufWinEnter", {
+                group = augmentResizeGroup,
+                pattern = "AugmentChatHistory",
+                command = "wincmd =",
+            })
+        end,
+        init = function()
+            vim.api.nvim_create_user_command('AugmentLoad', function()
+                require('lazy').load({ plugins = { 'augment.vim' } })
+            end, { desc = 'Load Augment plugin' })
+        end,
     },
     { -- fuzzy finder
         'nvim-telescope/telescope.nvim',

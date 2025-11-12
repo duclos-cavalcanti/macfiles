@@ -19,8 +19,3 @@ vim.api.nvim_set_keymap("n", "<leader><space>", ":split <BAR> :resize 20 <BAR> t
 vim.api.nvim_set_keymap('n', '<C-m>t', '<cmd>tabnew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<C-m>v', '<cmd>vnew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<C-m>o', '<cmd>enew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
-
--- Events
-vim.cmd [[ autocmd Signal SIGWINCH wincmd = ]]
-vim.cmd [[ autocmd TermEnter term://* setlocal scl=no | setlocal nohidden | setlocal norelativenumber | setlocal nonu ]]
-vim.cmd [[ autocmd BufHidden term://* q! ]]
