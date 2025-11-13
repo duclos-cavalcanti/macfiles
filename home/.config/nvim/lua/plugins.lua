@@ -203,52 +203,6 @@ local plugins = {
             },
           },
         },
-        keys = {
-            {
-                "<C-g>w",
-                function() require("sidekick.cli").select() end,
-                desc = "Sidekick Select",
-                mode = { "n" },
-            },
-            {
-                "<C-g>o",
-                function() require("sidekick.cli").toggle() end,
-                desc = "Sidekick Toggle",
-                mode = { "n", "t", "i", "x" },
-            },
-            {
-                "<C-g>n",
-                function()
-                  if not require("sidekick").nes_jump_or_apply() then
-                    return "<Tab>"
-                  end
-                end,
-                expr = true,
-                desc = "Goto/Apply Next Edit Suggestion",
-            },
-            {
-                "<C-g>i",
-                function() require("sidekick.cli").send({ msg = "{this}" }) end,
-                mode = { "x", "n" },
-                desc = "Send This",
-            },
-            {
-                "<C-g>f",
-                function() require("sidekick.cli").send({ msg = "{file}" }) end,
-                desc = "Send File",
-            },
-            {
-                "<C-g>p",
-                function() require("sidekick.cli").prompt() end,
-                mode = { "n", "x" },
-                desc = "Sidekick Select Prompt",
-            },
-            {
-                "<C-g>a",
-                function() require("sidekick.cli").accept() end,
-                desc = "Sidekick Accept Suggestion",
-            },
-        },
         config = function()
             vim.api.nvim_create_user_command(
                 "SidekickLoad",
@@ -257,17 +211,30 @@ local plugins = {
                 end,
                 { desc = "Load and Toggle Sidekick/Copilot" }
             )
-            
+
             require("sidekick").setup({})
+
+            vim.api.nvim_set_keymap("n", "<C-g>w", "<cmd>lua require('sidekick.cli').select()<CR>", {noremap=true, silent=true, desc="Sidekick Select"})
+            vim.api.nvim_set_keymap("n", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
+            vim.api.nvim_set_keymap("i", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
+            vim.api.nvim_set_keymap("t", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
+            vim.api.nvim_set_keymap("x", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
+            vim.api.nvim_set_keymap("n", "<C-g>n", "<cmd>lua if not require('sidekick').nes_jump_or_apply() then return '<Tab>' end<CR>", {noremap=true, silent=true, expr=true, desc="Goto/Apply Next Edit Suggestion"})
+            vim.api.nvim_set_keymap("x", "<C-g>i", "<cmd>lua require('sidekick.cli').send({ msg = '{this}' })<CR>", {noremap=true, silent=true, desc="Send This"})
+            vim.api.nvim_set_keymap("n", "<C-g>f", "<cmd>lua require('sidekick.cli').send({ msg = '{file}' })<CR>", {noremap=true, silent=true, desc="Send File"})
+            vim.api.nvim_set_keymap("n", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
+            vim.api.nvim_set_keymap("x", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
+            vim.api.nvim_set_keymap("n", "<C-g>a", "<cmd>lua require('sidekick.cli').accept()<CR>", {noremap=true, silent=true, desc="Sidekick Accept Suggestion"})
         end,
         dependencies = {
             {
                 "zbirenbaum/copilot.lua",
                 cmd = "Copilot",
+                lazy = true,
                 config = function()
                     require("copilot").setup({
                         suggestion = {
-                            enabled = true,
+                            enabled = false,
                             auto_trigger = true,
                             keymap = {
                                 accept = "<C-m>",
