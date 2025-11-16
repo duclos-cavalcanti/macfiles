@@ -194,15 +194,6 @@ local plugins = {
         "folke/sidekick.nvim",
         lazy = true,
         cmd = "SidekickLoad",
-        opts = {
-          -- add any options here
-          cli = {
-            mux = {
-              backend = "tmux",
-              enabled = true,
-            },
-          },
-        },
         config = function()
             vim.api.nvim_create_user_command(
                 "SidekickLoad",
@@ -212,14 +203,35 @@ local plugins = {
                 { desc = "Load and Toggle Sidekick/Copilot" }
             )
 
-            require("sidekick").setup({})
+            local opts = {
+                nes = { enabled = false },
+                cli = {
+                    mux = {
+                        backend = "tmux",
+                        enabled = true,
+                    },
+                    tools = {
+                        auggie = {
+                            cmd = {"auggie"}
+                        }
+                    }
+                },
+            }
 
+            require("sidekick").setup(opts)
+
+            -- select
             vim.api.nvim_set_keymap("n", "<C-g>w", "<cmd>lua require('sidekick.cli').select()<CR>", {noremap=true, silent=true, desc="Sidekick Select"})
+
+            -- toggle
             vim.api.nvim_set_keymap("n", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
             vim.api.nvim_set_keymap("i", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
             vim.api.nvim_set_keymap("t", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
             vim.api.nvim_set_keymap("x", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
+
+            -- nes
             vim.api.nvim_set_keymap("n", "<C-g>n", "<cmd>lua if not require('sidekick').nes_jump_or_apply() then return '<Tab>' end<CR>", {noremap=true, silent=true, expr=true, desc="Goto/Apply Next Edit Suggestion"})
+
             vim.api.nvim_set_keymap("x", "<C-g>i", "<cmd>lua require('sidekick.cli').send({ msg = '{this}' })<CR>", {noremap=true, silent=true, desc="Send This"})
             vim.api.nvim_set_keymap("n", "<C-g>f", "<cmd>lua require('sidekick.cli').send({ msg = '{file}' })<CR>", {noremap=true, silent=true, desc="Send File"})
             vim.api.nvim_set_keymap("n", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
