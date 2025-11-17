@@ -6,9 +6,14 @@ local F = require("functions")
 local config = wezterm.config_builder()
 
 -- theme/font
+config.colors = theme.setup()
 config.font = wezterm.font("Hack Nerd Font Mono")
 config.font_size = 11.0
-config = theme.setup(config)
+config.bold_brightens_ansi_colors = false
+config.inactive_pane_hsb = {
+    saturation = 0.9,
+    brightness = 0.8,
+}
 
 -- tab bar
 config.enable_tab_bar = true
@@ -31,7 +36,7 @@ config.window_padding = {
 config.scrollback_lines = 3500
 
 -- keys
-config.leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 1000 }
+config.leader = { key = '`', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.keys = {
   { key = 'v', mods = 'LEADER', action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } },
   { key = 's', mods = 'LEADER', action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } },

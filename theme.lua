@@ -1,5 +1,5 @@
 local M = {
-    base00 = '#131313', -- Background (Editor) -> ANSI 0 (Black)
+    base00 = '#000000', -- Background (Editor) -> ANSI 0 (Black)
     base01 = '#363447', -- Lighter Background/UI elements (Editor) -> ANSI 10 (Bright Green)
     base02 = '#44475a', -- Selection/Highlight (Editor) -> ANSI 11 (Bright Yellow)
     base03 = '#606366', -- Comments/Faint Foreground (Editor) -> ANSI 8 (Bright Black/Dark Gray)
