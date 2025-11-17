@@ -23,6 +23,19 @@ function getScreens()
     return screens, currentIndex, nextIndex
 end
 
+function focusOrLaunch(name)
+    local app = hs.application.get(name)
+    if app then
+        app:activate()
+    else
+        hs.application.launchOrFocus(app_name)
+    end
+end
+
+-- Launch
+hs.hotkey.bind({'cmd', 'shift'}, '1', function() focusOrLaunch("Wezterm") end)
+hs.hotkey.bind({'cmd', 'shift'}, '2', function() focusOrLaunch("Safari") end)
+
 -- Safari: Move to the next tab group
 hs.hotkey.bind({"cmd", "ctrl"}, "l", function()
     local app = hs.application.frontmostApplication()
