@@ -46,6 +46,7 @@ brew "reattach-to-user-namespace"
 brew "caffeine"
 brew "pass"
 cask "spotify"
+brew "spotify_player"
 
 # work
 brew "kind"

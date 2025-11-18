@@ -88,7 +88,7 @@ local plugins = {
             require("luasnip.loaders.from_snipmate").lazy_load()
             -- examples inspired by
             -- https://github.com/honza/vim-snippets/tree/master/snippets
-            
+
             cmp.setup({
                 snippet = {
                     expand = function(args)
@@ -237,6 +237,12 @@ local plugins = {
             vim.api.nvim_set_keymap("n", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
             vim.api.nvim_set_keymap("x", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
             vim.api.nvim_set_keymap("n", "<C-g>a", "<cmd>lua require('sidekick.cli').accept()<CR>", {noremap=true, silent=true, desc="Sidekick Accept Suggestion"})
+
+            -- vim.api.nvim_create_autocmd("BufWinEnter", {
+            --     group = augmentResizeGroup,
+            --     pattern = "AugmentChatHistory",
+            --     command = "wincmd =",
+            -- })
         end,
         dependencies = {
             {
@@ -249,7 +255,7 @@ local plugins = {
                             enabled = true,
                             auto_trigger = true,
                             keymap = {
-                                accept = "<C-m>",
+                                accept = "<Tab>",
                                 accept_word = false,
                                 accept_line = false,
                                 next = "<M-]>",
@@ -263,60 +269,6 @@ local plugins = {
             },
             { 'nvim-lua/plenary.nvim', }
         }
-    },
-    {
-        'augmentcode/augment.vim',
-        cmd = { "AugmentLoad" },
-        config = function()
-            vim.g.augment_workspace_folders = {
-                '/Users/dduclos-cavalcanti/Documents/macfiles',
-                '/Users/dduclos-cavalcanti/Documents/work/kms',
-                '/Users/dduclos-cavalcanti/Documents/work/core-extensions/',
-                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-bridge/',
-                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-core/',
-                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold-bridge/',
-                '/Users/dduclos-cavalcanti/Documents/work/vault-releases/vault-cold/',
-            }
-        
-            vim.api.nvim_set_keymap('n', "<C-g>g", "<cmd>Augment signin<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', "<C-g>o", "<cmd>Augment chat-toggle<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', "<C-g>i", "<cmd>Augment chat<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('v', "<C-g>i", ":Augment chat<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', '<C-g>I', 'ggVG:Augment chat<CR>', {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', "<C-g>n", "<cmd>Augment chat-new<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap('n', '<C-g>p', '', {
-                noremap = true, 
-                silent = true,
-                callback = function() 
-                    local buf = vim.api.nvim_get_current_buf()
-        
-                    vim.cmd('enew')
-                    vim.bo.buftype = 'nofile'
-                    vim.bo.bufhidden = 'hide'
-                    vim.cmd('%delete')
-                    vim.cmd('0put +')
-        
-        
-                    vim.cmd('normal! ggVG')
-                    vim.cmd('Augment chat')
-        
-                    vim.cmd('bdelete!')
-                    vim.api.nvim_set_current_buf(buf)
-                end
-            })
-        
-            local augmentResizeGroup = vim.api.nvim_create_augroup("AugmentResize", { clear = true })
-            vim.api.nvim_create_autocmd("BufWinEnter", {
-                group = augmentResizeGroup,
-                pattern = "AugmentChatHistory",
-                command = "wincmd =",
-            })
-        end,
-        init = function()
-            vim.api.nvim_create_user_command('AugmentLoad', function()
-                require('lazy').load({ plugins = { 'augment.vim' } })
-            end, { desc = 'Load Augment plugin' })
-        end,
     },
     { -- fuzzy finder
         'nvim-telescope/telescope.nvim',

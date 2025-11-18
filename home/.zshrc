@@ -20,6 +20,7 @@ export XDG_CONFIG_HOME="$HOME/.config/"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 export MACFILES="$HOME/.macfiles"
+export TMUXP_CONFIGDIR="$HOME/Documents/macfiles/sessions"
 
 export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE=10000
@@ -27,8 +28,6 @@ export SAVEHIST=10000
 export LESSHISTFILE=-
 
 export BAT_THEME='ansi'
-export TMUXP_CONFIGDIR="$HOME/Documents/macfiles/sessions"
-
 export CARGO_HOME="$HOME/.cargo/"
 export PYLINTHOME="${XDG_DATA_HOME}/pylint"
 export IPYTHONDIR="$HOME/.config/ipython/"

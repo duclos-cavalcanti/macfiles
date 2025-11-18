@@ -1,31 +1,32 @@
 local wezterm = require("wezterm")
 local theme = require("theme")
+local config = require("config")
 
 local F = require("functions")
 
-local config = wezterm.config_builder()
+local c = wezterm.config_builder()
 
 -- theme/font
-config.colors = theme.setup()
-config.font = wezterm.font("Hack Nerd Font Mono")
-config.font_size = 11.0
-config.bold_brightens_ansi_colors = false
-config.inactive_pane_hsb = {
+c.colors = theme.setup()
+c.font = wezterm.font("Hack Nerd Font Mono")
+c.font_size = 11.0
+c.bold_brightens_ansi_colors = false
+c.inactive_pane_hsb = {
     saturation = 0.9,
     brightness = 0.8,
 }
 
 -- tab bar
-config.enable_tab_bar = true
-config.hide_tab_bar_if_only_one_tab = true
-config.tab_bar_at_bottom = true
-config.use_fancy_tab_bar = false
+c.enable_tab_bar = true
+c.hide_tab_bar_if_only_one_tab = false
+c.tab_bar_at_bottom = true
+c.use_fancy_tab_bar = false
 
 -- window
-config.window_decorations = "RESIZE" -- "TITLE | RESIZE"
-config.window_background_opacity = 1.0
-config.macos_window_background_blur = 10
-config.window_padding = {
+c.window_decorations = "RESIZE" -- "TITLE | RESIZE"
+c.window_background_opacity = 1.0
+c.macos_window_background_blur = 10
+c.window_padding = {
   left = 30,
   right = 20,
   top = 30,
@@ -33,11 +34,11 @@ config.window_padding = {
 }
 
 -- misc settings
-config.scrollback_lines = 3500
+c.scrollback_lines = 3500
 
 -- keys
-config.leader = { key = '`', mods = 'CTRL', timeout_milliseconds = 1000 }
-config.keys = {
+c.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
+c.keys = {
   { key = 'v', mods = 'LEADER', action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } },
   { key = 's', mods = 'LEADER', action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } },
   { key = 'x', mods = 'LEADER', action = wezterm.action.CloseCurrentPane { confirm = true } },
@@ -63,7 +64,7 @@ config.keys = {
   { key = 'L', mods = 'LEADER|SHIFT', action = F.CallbackAndEmit(F.SwitchToPreviousWorkspace, 'set-previous-workspace') },
 }
 
-config.key_tables = {
+c.key_tables = {
   copy_mode = wezterm.gui.default_key_tables().copy_mode,
   search_mode = wezterm.gui.default_key_tables().search_mode,
 }
@@ -72,4 +73,4 @@ config.key_tables = {
 wezterm.on('update-status', F.StatusLine)
 wezterm.on('set-previous-workspace', F.SetPreviousWorkspace)
 
-return config
+return c

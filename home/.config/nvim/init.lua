@@ -1,9 +1,5 @@
 -- loads all configs
 
-if os.getenv("TMUX") == nil then
-    return
-end
-
 require("settings")
 require("keys")
 require("commands")

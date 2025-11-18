@@ -9,8 +9,7 @@ end
 
 function M.setup()
     local colors = M.get_colors()
-    print(colors)
-    local ret =  {
+    return {
         foreground = colors.base05,
         background = colors.base00,
 
@@ -68,8 +67,6 @@ function M.setup()
         copy_mode_inactive_highlight_bg = { Color = colors.base04 },
         copy_mode_inactive_highlight_fg = { Color = colors.base0F },
     }
-
-    return ret
 end
 
 
