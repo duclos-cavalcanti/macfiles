@@ -57,6 +57,23 @@ function M.LaunchWorkspaceManager(window, pane)
     )
 end
 
+function M.LaunchNewWorkspace(window, pane)
+    window:perform_action(
+        wezterm.action.PromptInputLine {
+            description = 'Enter workspace name',
+            action = wezterm.action_callback(function(window, pane, line)
+                if line then
+                    window:perform_action(
+                        wezterm.action.SwitchToWorkspace { name = line },
+                        pane
+                    )
+                end
+            end),
+        },
+        pane
+    )
+end
+
 function M.SetPreviousWorkspace(window, pane)
     local current_workspace = window:active_workspace()
     if wezterm.GLOBAL.previous_workspace ~= current_workspace then
