@@ -1,4 +1,6 @@
-local F = require("functions")
+local config = require("config")
+
+local utils = config.utils
 
 -- Launch
 hs.hotkey.bind({'cmd', 'shift'}, '1', function() focusOrLaunch("Wezterm") end)
@@ -40,22 +42,6 @@ end)
 
 -- Focus on next screen
 hs.hotkey.bind({"cmd", "shift"}, "p", function()
-    local screens, currentIndex, nextIndex = getScreens()
-
-    if currentIndex == -1 then return end
-
-    local nextScreen = screens[nextIndex]
-    local nextScreenFrame = nextScreen:frame()
-
-    hs.mouse.absolutePosition(hs.geometry.rectMidPoint(nextScreenFrame))
-
-    local windows = hs.window.orderedWindows()
-    for _, window in ipairs(windows) do
-        if window:screen():id() == nextScreen:id() and window:isStandard() then
-            window:focus()
-            break
-        end
-    end
 end)
 
 -- Screencapture

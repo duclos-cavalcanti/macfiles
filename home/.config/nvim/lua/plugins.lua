@@ -381,6 +381,7 @@ local plugins = {
         end,
     },
     { -- utils
+        { "fasterius/simple-zoom.nvim", config = function() require('simple-zoom').setup({ hide_tabline = true }); vim.api.nvim_set_keymap("n", "<C-w>z", "<cmd>lua require('simple-zoom').toggle_zoom()<CR>", {noremap=true, silent=true}) end },
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('Comment').setup() end, },
         { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },

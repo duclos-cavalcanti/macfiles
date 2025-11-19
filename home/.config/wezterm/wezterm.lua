@@ -40,6 +40,7 @@ c.scrollback_lines = 3500
 c.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
 c.keys = {
     { key = 'a', mods = 'LEADER|CTRL', action = wezterm.action.SendKey { key = 'a', mods = 'CTRL' } },
+    { key = 'q', mods = 'LEADER', action = wezterm.action.PaneSelect { alphabet = 'hjklgui', mode = 'Activate', }},
     { key = 'v', mods = 'LEADER', action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } },
     { key = 's', mods = 'LEADER', action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } },
     { key = 'x', mods = 'LEADER', action = wezterm.action.CloseCurrentPane { confirm = true } },
@@ -48,6 +49,8 @@ c.keys = {
     { key = 'y', mods = 'LEADER', action = wezterm.action.ActivateCopyMode },
     { key = 'Y', mods = 'LEADER|SHIFT', action = wezterm.action.Search 'CurrentSelectionOrEmptyString' },
     { key = 'p', mods = 'LEADER', action = wezterm.action.PasteFrom 'Clipboard' },
+    { key = 'h', mods = 'ALT', action = wezterm.action.ActivateTabRelative(-1) },
+    { key = 'l', mods = 'ALT', action = wezterm.action.ActivateTabRelative(1) },
     { key = 'h', mods = 'LEADER', action = wezterm.action.ActivatePaneDirection 'Left' },
     { key = 'j', mods = 'LEADER', action = wezterm.action.ActivatePaneDirection 'Down' },
     { key = 'k', mods = 'LEADER', action = wezterm.action.ActivatePaneDirection 'Up' },

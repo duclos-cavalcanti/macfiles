@@ -1,19 +1,6 @@
 local M = {}
 
-function M.notification(text)
-  hs.notify.new({title="Hammerspoon", informativeText=text}):send()
-end
-
-function M.focusOrLaunchApp(name)
-    local app = hs.application.get(name)
-    if app then
-        app:activate()
-    else
-        hs.application.launchOrFocus(app_name)
-    end
-end
-
-function M.getScreens()
+local function getScreens()
     local screens = hs.screen.allScreens()
     if #screens <= 1 then 
         return screens, -1, -1
@@ -34,7 +21,7 @@ function M.getScreens()
 end
 
 function M.FocusNextScreen()
-    local screens, currentIndex, nextIndex = M.getScreens()
+    local screens, currentIndex, nextIndex = getScreens()
 
     if currentIndex == -1 then return end
 
