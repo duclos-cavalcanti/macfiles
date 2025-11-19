@@ -40,6 +40,7 @@ c.scrollback_lines = 3500
 c.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
 c.keys = {
     { key = 'a', mods = 'LEADER|CTRL', action = wezterm.action.SendKey { key = 'a', mods = 'CTRL' } },
+    { key = 'b', mods = 'LEADER|SHIFT', action = wezterm.action.SendKey { key = 'b', mods = 'CTRL' } },
     { key = 'q', mods = 'LEADER', action = wezterm.action.PaneSelect { alphabet = 'hjklgui', mode = 'Activate', }},
     { key = 'v', mods = 'LEADER', action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } },
     { key = 's', mods = 'LEADER', action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } },
