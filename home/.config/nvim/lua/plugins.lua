@@ -362,7 +362,7 @@ local plugins = {
                 sections = {
                     lualine_a = {'mode'},
                     lualine_b = { {'filename', path = 1}, 'diff'},
-                    lualine_c = {'branch'},
+                    lualine_c = {{'branch'}, { function() if vim.t['simple-zoom'] == nil then return '' elseif vim.t['simple-zoom'] == 'zoom' then return '󰍉' end end }},
                     lualine_x = {'location'},
                     lualine_y = {'progress'},
                     lualine_z = {'filetype'}

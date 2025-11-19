@@ -39,4 +39,15 @@ function M.FocusNextScreen()
     end
 end
 
+function M.MoveToNextScreen()
+    local currentWindow = hs.window.focusedWindow()
+    local screens, currentIndex, nextIndex = getScreens()
+
+    if currentIndex == -1 then return end
+    if not currentWindow then return end
+
+    local nextScreen = screens[nextIndex]
+    currentWindow:moveToScreen(nextScreen)
+end
+
 return M
