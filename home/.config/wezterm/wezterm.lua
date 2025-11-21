@@ -78,7 +78,7 @@ c.key_tables = {
 }
 
 -- events
-wezterm.on('update-status',           tab.Tabline)
-wezterm.on('set-previous-workspace',  workspace.SetPreviousWorkspace)
+wezterm.on('update-status',       tab.Tabline)
+wezterm.on('set-last-workspace',  workspace.SetLastWorkspace)
 
 return c

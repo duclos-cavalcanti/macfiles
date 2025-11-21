@@ -11,13 +11,14 @@ function M.Rename()
 end
 
 function M.Launch()
-    local event  = wezterm.action.EmitEvent("set-previous-workspace")
     local action = utils.Prompt('Enter workspace name', function(window, pane, line)
+        wezterm.emit("set-last-workspace", window, pane, window:active_workspace())
         window:perform_action(
             wezterm.action.SwitchToWorkspace { name = line },
             pane
         )
     end)
+    local event  = wezterm.action.EmitEvent("set-last-workspace")
     return wezterm.action.Multiple({event, action})
 end
 
@@ -28,6 +29,8 @@ function M.Manager()
         for _, name in ipairs(workspaces) do
             table.insert(choices, { label = name })
         end
+
+        wezterm.emit("set-last-workspace", window, pane, window:active_workspace())
 
         window:perform_action(
             wezterm.action.InputSelector {
@@ -47,30 +50,32 @@ function M.Manager()
         )
     end
 
-    local event  = wezterm.action.EmitEvent("set-previous-workspace")
     local action = wezterm.action_callback(fn)
-
-    return wezterm.action.Multiple({event, action})
+    return action
 end
 
 
-function M.SetPreviousWorkspace(window, pane)
-    local current_workspace = window:active_workspace()
-    if wezterm.GLOBAL.previous_workspace ~= current_workspace then
-        wezterm.GLOBAL.previous_workspace = current_workspace
-    end
+function M.SetLastWorkspace(window, pane, workspace)
+    local current_workspace = workspace or window:active_workspace()
+    wezterm.GLOBAL.previous_workspace = current_workspace
 end
 
 function M.SwitchToNext()
-    local event  = wezterm.action.EmitEvent("set-previous-workspace")
-    local action = wezterm.action.SwitchWorkspaceRelative(1)
-    return wezterm.action.Multiple({event, action})
+    local fn = function(window, pane)
+        local current_workspace = window:active_workspace()
+        wezterm.emit("set-last-workspace", window, pane, current_workspace)
+        window:perform_action(wezterm.action.SwitchWorkspaceRelative(1), pane)
+    end
+    return wezterm.action_callback(fn)
 end
 
 function M.SwitchToPrevious()
-    local event  = wezterm.action.EmitEvent("set-previous-workspace")
-    local action = wezterm.action.SwitchWorkspaceRelative(-1)
-    return wezterm.action.Multiple({event, action})
+    local fn = function(window, pane)
+        local current_workspace = window:active_workspace()
+        wezterm.emit("set-last-workspace", window, pane, current_workspace)
+        window:perform_action(wezterm.action.SwitchWorkspaceRelative(-1), pane)
+    end
+    return wezterm.action_callback(fn)
 end
 
 function M.SwitchToLast()
@@ -83,14 +88,16 @@ function M.SwitchToLast()
         end
 
         window:perform_action(
-            action.SwitchToWorkspace({
+            wezterm.action.SwitchToWorkspace({
               name = target_workspace,
             }),
             pane
         )
         wezterm.GLOBAL.previous_workspace = current_workspace
     end
-    return wezterm.action_callback(fn)
+
+    local action = wezterm.action_callback(fn)
+    return action
 end
 
 return M
