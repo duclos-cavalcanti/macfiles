@@ -41,6 +41,7 @@ brew "cmake"
 brew "gcc"
 brew "watch"
 brew "reattach-to-user-namespace"
+brew "protobuf"
 
 # system
 brew "caffeine"
