@@ -1,3 +1,6 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 local options = {
     backup = false,                                     -- creates a backup file
     path = ".,**",
@@ -62,3 +65,30 @@ vim.diagnostic.config {
     underline = true,            -- Keep error underline
     signs = true,                -- Keep gutter signs
 }
+
+-- buffer
+vim.api.nvim_set_keymap("n", "z.", "zszH", {noremap=true, silent=true})
+
+-- tabs
+vim.api.nvim_set_keymap("n", "<M-k>", ":tabnext<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<M-j>", ":tabprev<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<M-S-k>", ":tabmove +1<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<M-S-j>", ":tabmove -1<CR>", {noremap=true, silent=true})
+
+-- terminal
+vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("t", "<C-w>", "<C-\\><C-N><C-w>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader><space>", ":split <BAR> term<CR>i", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader>t", ":split <BAR> :resize 20 <BAR> term<CR>i", {noremap=true, silent=true})
+
+-- scratchpad
+vim.api.nvim_set_keymap('n', '<C-m>t', '<cmd>tabnew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<C-m>v', '<cmd>vnew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<C-m>o', '<cmd>enew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
+
+-- Netrw
+vim.api.nvim_set_keymap('n', '<leader>e', ':Vexplore! <BAR> :vertical resize 40', {noremap=true, silent=true})
+
+vim.cmd [[ autocmd Signal SIGWINCH wincmd = ]]
+vim.cmd [[ autocmd TermEnter term://* setlocal scl=no | setlocal nohidden | setlocal norelativenumber | setlocal nonu ]]
+vim.cmd [[ autocmd BufHidden term://* q! ]]

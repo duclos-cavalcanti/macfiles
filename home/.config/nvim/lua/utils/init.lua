@@ -1,6 +1,8 @@
+local M = {}
 
-P = function(v)
+function M.print(v)
     print(vim.inspect(v))
     return v
 end
 
+return M

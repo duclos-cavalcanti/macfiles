@@ -78,6 +78,47 @@ local plugins = {
             local cmp = require'cmp'
             local ls = require "luasnip"
 
+            vim.lsp.set_log_level 'info'
+            vim.diagnostic.config({ virtual_text = false })
+
+            vim.lsp.config('*', {
+              capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+            })
+
+            vim.api.nvim_create_autocmd("LspAttach", {
+                desc = "LSP actions",
+                callback = function(args)
+                    local bufnr = args.buf
+                    local opts = {noremap = true, silent = false}
+
+                    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "gd",        "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "gD",        "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "gi",        "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "gr",        "<cmd>Telescope lsp_references<CR>", opts)
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "gh",        "<Cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "GT",        "<Cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "K",         "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "<leader>R", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "gn",        "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "gp",        "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+                    vim.api.nvim_buf_set_keymap(bufnr, 'n', "gf",        "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
+                end,
+            })
+
+            vim.lsp.enable('clangd')
+            vim.lsp.enable('gopls')
+            vim.lsp.enable('metals')
+            vim.lsp.enable('marksman')
+            vim.lsp.enable('csharp_ls')
+            vim.lsp.enable('denols')
+            vim.lsp.enable('rust_analyzer')
+            vim.lsp.enable('cssls')
+            vim.lsp.enable('html')
+            vim.lsp.enable('pyright')
+            vim.lsp.enable('lua_ls')
+
             ls.config.set_config {
                 history = true,
                 updateevents = "TextChanged,TextChangedI",
@@ -174,8 +215,6 @@ local plugins = {
                     { name = 'cmdline' }
                 })
             })
-
-            require('plug.lspconfig')
         end,
     },
     { -- tags
@@ -237,12 +276,6 @@ local plugins = {
             vim.api.nvim_set_keymap("n", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
             vim.api.nvim_set_keymap("x", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
             vim.api.nvim_set_keymap("n", "<C-g>a", "<cmd>lua require('sidekick.cli').accept()<CR>", {noremap=true, silent=true, desc="Sidekick Accept Suggestion"})
-
-            -- vim.api.nvim_create_autocmd("BufWinEnter", {
-            --     group = augmentResizeGroup,
-            --     pattern = "AugmentChatHistory",
-            --     command = "wincmd =",
-            -- })
         end,
         dependencies = {
             {
@@ -280,7 +313,7 @@ local plugins = {
         config = function() 
             local actions = require('telescope.actions')
             local action_state = require("telescope.actions.state")
-            
+
             require('telescope').setup({
               defaults = {
                 sorting_strategy = "ascending",
