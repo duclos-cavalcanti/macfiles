@@ -7,13 +7,6 @@ function M.focusOrLaunchApp(name)
     end
 end
 
-function M.fillWindowApp()
-    local app = hs.application.frontmostApplication()
-    if app then 
-        app:selectMenuItem({"Window", "Fill"})
-    end
-end
-
 function M.SafariMoveToNextTabGroup()
     local app = hs.application.frontmostApplication()
     if app:title() ~= "Safari" then

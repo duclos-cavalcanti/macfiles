@@ -12,10 +12,6 @@ function M.task(program, args)
     hs.task.new(program, nil, args):start()
 end
 
-function M.taskWithCallback(program, args, callback)
-    hs.task.new(program, callback, args):start()
-end
-
 function M.lazy(fn, ...)
     local args = {...}
     return function()
