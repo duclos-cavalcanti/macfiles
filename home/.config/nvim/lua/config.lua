@@ -87,7 +87,7 @@ vim.api.nvim_set_keymap('n', '<C-m>v', '<cmd>vnew | setl buftype=nofile bufhidde
 vim.api.nvim_set_keymap('n', '<C-m>o', '<cmd>enew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
 
 -- Netrw
-vim.api.nvim_set_keymap('n', '<leader>e', ':Vexplore! <BAR> :vertical resize 40', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua require("utils").float("Explore")<CR>', {noremap=true, silent=true})
 
 vim.cmd [[ autocmd Signal SIGWINCH wincmd = ]]
 vim.cmd [[ autocmd TermEnter term://* setlocal scl=no | setlocal nohidden | setlocal norelativenumber | setlocal nonu ]]
