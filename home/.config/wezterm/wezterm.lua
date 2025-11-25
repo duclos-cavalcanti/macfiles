@@ -24,7 +24,7 @@ c.tab_bar_at_bottom = true
 c.use_fancy_tab_bar = false
 
 -- window
-c.window_decorations = "RESIZE" -- "TITLE | RESIZE"
+c.window_decorations = "RESIZE | TITLE" -- "TITLE | RESIZE"
 c.window_background_opacity = 1.0
 c.macos_window_background_blur = 10
 c.window_padding = {

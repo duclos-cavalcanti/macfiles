@@ -214,7 +214,6 @@ if command -v npm &>/dev/null; then
 fi
 
 # ALIASES
-alias e="vim"
 alias v="nvim"
 
 if command -v bat &>/dev/null || command -v batcat &>/dev/null; then

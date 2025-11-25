@@ -26,4 +26,29 @@ function M.float(cmd)
     local _buf = vim.api.nvim_win_get_buf(win)
 end
 
+function M.pick_dir(callback)
+    local home = vim.fn.expand('~')
+    require('telescope.builtin').find_files({
+        prompt_title = "Select Directory",
+        cwd = home,
+        find_command = {'fd', '--type', 'd', '--hidden', '--exclude', '.git', '--max-depth', '5'},
+        attach_mappings = function(prompt_bufnr, map)
+            local actions = require('telescope.actions')
+            local action_state = require('telescope.actions.state')
+
+            actions.select_default:replace(function()
+                local selection = action_state.get_selected_entry()
+                actions.close(prompt_bufnr)
+
+                if selection then
+                    local dir = selection.path or selection.value
+                    if callback then callback(dir) end
+                end
+            end)
+
+            return true
+        end,
+    })
+end
+
 return M

@@ -1,0 +1,197 @@
+*nvim-todo.txt*    A simple todo plugin for Neovim
+
+                    NVIM-TODO REFERENCE MANUAL
+
+==============================================================================
+CONTENTS                                                    *nvim-todo-contents*
+
+    1. Introduction ............................ |nvim-todo-introduction|
+    2. Installation ............................ |nvim-todo-installation|
+    3. Configuration ........................... |nvim-todo-configuration|
+    4. Commands ................................ |nvim-todo-commands|
+    5. Functions ............................... |nvim-todo-functions|
+    6. Keybindings ............................. |nvim-todo-keybindings|
+    7. Examples ................................ |nvim-todo-examples|
+
+==============================================================================
+1. INTRODUCTION                                         *nvim-todo-introduction*
+
+nvim-todo is a simple, lightweight todo plugin for Neovim that allows you to
+manage your tasks directly within your editor. It features:
+
+- Persistent storage in JSON format
+- Floating window UI
+- Priority levels (low, medium, high)
+- Customizable keybindings
+- Auto-save functionality
+- Vim commands for all operations
+
+==============================================================================
+2. INSTALLATION                                         *nvim-todo-installation*
+
+Using Neovim's built-in package management:
+
+Place the plugin in your pack directory:
+>
+    ~/.config/nvim/pack/plugins/start/nvim-todo/
+<
+
+Then add to your init.lua:
+>
+    require("nvim-todo").setup({
+        -- your configuration here
+    })
+<
+
+==============================================================================
+3. CONFIGURATION                                       *nvim-todo-configuration*
+
+Default configuration:
+>
+    require("nvim-todo").setup({
+        -- Storage settings
+        storage_path = vim.fn.stdpath("data") .. "/nvim-todo.json",
+        auto_save = true,
+        
+        -- UI settings
+        ui = {
+            width = 60,
+            height = 20,
+            border = "rounded",
+            title = " Todo List ",
+            position = "center", -- center, top, bottom
+        },
+        
+        -- Keybindings (set to false to disable)
+        keybindings = {
+            toggle_ui = "<leader>tt",
+            add_todo = "<leader>ta",
+            complete_todo = "<leader>tc",
+            delete_todo = "<leader>td",
+        },
+        
+        -- Todo settings
+        todo = {
+            max_todos = 100,
+            show_completed = true,
+            auto_archive_completed = false,
+            date_format = "%Y-%m-%d %H:%M",
+        },
+    })
+<
+
+==============================================================================
+4. COMMANDS                                                 *nvim-todo-commands*
+
+:TodoAdd [text]                                                      *:TodoAdd*
+    Add a new todo item. If [text] is provided, adds it directly.
+    Otherwise, prompts for input.
+
+:TodoList                                                           *:TodoList*
+    Show the todo list in a floating window.
+
+:TodoToggle                                                       *:TodoToggle*
+    Toggle the todo list window (show/hide).
+
+:TodoComplete [id]                                             *:TodoComplete*
+    Complete a todo item by ID. If [id] is not provided, shows a selection.
+
+:TodoDelete {id}                                                 *:TodoDelete*
+    Delete a todo item by ID.
+
+:TodoClear                                                         *:TodoClear*
+    Clear all todos (with confirmation prompt).
+
+:TodoSave                                                           *:TodoSave*
+    Manually save todos to file.
+
+:TodoInfo                                                           *:TodoInfo*
+    Show information about the todo plugin and storage.
+
+==============================================================================
+5. FUNCTIONS                                               *nvim-todo-functions*
+
+require("nvim-todo").add_todo(text, priority)              *nvim-todo.add_todo*
+    Add a new todo item programmatically.
+    
+    Parameters:~
+        {text}     (string) The todo text
+        {priority} (string) Priority level: "low", "medium", "high"
+    
+    Returns:~
+        {success} (boolean) Whether the operation succeeded
+        {message} (string) Success or error message
+
+require("nvim-todo").list_todos()                         *nvim-todo.list_todos*
+    Get all todo items.
+    
+    Returns:~
+        {todos} (table) Array of todo items
+
+require("nvim-todo").complete_todo(id)                 *nvim-todo.complete_todo*
+    Complete a todo item by ID.
+    
+    Parameters:~
+        {id} (number) The todo ID
+    
+    Returns:~
+        {success} (boolean) Whether the operation succeeded
+        {message} (string) Success or error message
+
+==============================================================================
+6. KEYBINDINGS                                             *nvim-todo-keybindings*
+
+Default keybindings (can be customized in setup):
+
+<leader>tt    Toggle todo list window
+<leader>ta    Add new todo (interactive)
+<leader>tc    Complete todo (interactive)
+<leader>td    Delete todo (interactive)
+
+In the todo list window:
+q             Close window
+<Esc>         Close window
+a             Add new todo
+<CR>          Toggle todo completion
+d             Delete todo
+
+==============================================================================
+7. EXAMPLES                                                 *nvim-todo-examples*
+
+Basic setup:
+>
+    require("nvim-todo").setup()
+<
+
+Custom configuration:
+>
+    require("nvim-todo").setup({
+        storage_path = "~/my-todos.json",
+        ui = {
+            width = 80,
+            height = 25,
+            position = "top",
+        },
+        keybindings = {
+            toggle_ui = "<F12>",
+            add_todo = "<leader>+",
+        },
+    })
+<
+
+Programmatic usage:
+>
+    local todo = require("nvim-todo")
+    
+    -- Add a high priority todo
+    todo.add_todo("Fix critical bug", "high")
+    
+    -- Get all todos
+    local todos = todo.list_todos()
+    
+    -- Complete todo with ID 1
+    todo.complete_todo(1)
+<
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:

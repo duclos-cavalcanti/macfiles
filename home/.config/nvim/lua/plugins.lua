@@ -276,6 +276,17 @@ local plugins = {
             vim.api.nvim_set_keymap("n", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
             vim.api.nvim_set_keymap("x", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
             vim.api.nvim_set_keymap("n", "<C-g>a", "<cmd>lua require('sidekick.cli').accept()<CR>", {noremap=true, silent=true, desc="Sidekick Accept Suggestion"})
+
+            vim.keymap.set("n", "<C-g>d", function()
+                local origin = vim.fn.getcwd()
+                require('utils').pick_dir(function(dir)
+                    vim.cmd('cd ' .. vim.fn.fnameescape(dir))
+                    require('sidekick.cli').select()
+                    vim.schedule(function()
+                        vim.cmd('cd ' .. vim.fn.fnameescape(origin))
+                    end)
+                end)
+            end, {noremap=true, silent=true, desc="Sidekick in Directory"})
         end,
         dependencies = {
             {
