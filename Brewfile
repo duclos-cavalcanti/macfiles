@@ -16,14 +16,24 @@ brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
 cask "font-hack-nerd-font"
 
-# dev
+# utils
+brew "curl"
+brew "wget"
 brew "fzf"
 brew "rg"
 brew "fd"
 brew "eza"
-brew "curl"
 brew "bat"
-brew "wget"
+brew "jq"
+brew "yq"
+brew "watch"
+brew "reattach-to-user-namespace"
+
+# dev
+brew "autoconf"
+brew "automake"
+brew "cmake"
+brew "gcc"
 brew "golang"
 brew "yarn"
 brew "node"
@@ -35,18 +45,12 @@ brew "pyright"
 brew "pyenv-virtualenv"
 brew "marksman"
 brew "luarocks"
-brew "autoconf"
-brew "automake"
-brew "cmake"
-brew "gcc"
-brew "watch"
-brew "reattach-to-user-namespace"
 brew "protobuf"
 
 # system
+brew "spotify_player"
 brew "caffeine"
 brew "pass"
-brew "spotify_player"
 
 # work
 brew "kind"

@@ -62,6 +62,8 @@ c.keys = {
     { key = "R",        mods = 'LEADER',            action = wezterm.action.RotatePanes("Clockwise") },
     { key = 'PageUp',   mods = 'CTRL|SHIFT',        action = wezterm.action.MoveTabRelative(-1) },
     { key = 'PageDown', mods = 'CTRL|SHIFT',        action = wezterm.action.MoveTabRelative(1) },
+    { key = '{',        mods = 'LEADER',            action = wezterm.action.PaneSelect { mode = 'SwapWithActive', alphabet='hjklgui' } },
+    { key = '!',        mods = 'LEADER|SHIFT',      action = wezterm.action.PaneSelect { mode = 'MoveToNewTab', alphabet='hjklgui' } },
     { key = 'z',        mods = 'CTRL',              action = wezterm.action.TogglePaneZoomState },
     { key = ',',        mods = 'LEADER',            action = tab.Rename() },
     { key = '$',        mods = 'LEADER|SHIFT',      action = workspace.Rename() },
