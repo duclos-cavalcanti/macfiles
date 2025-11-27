@@ -81,6 +81,9 @@ local plugins = {
             vim.lsp.set_log_level 'info'
             vim.diagnostic.config({ virtual_text = false })
 
+            vim.o.updatetime = 250
+            vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
             vim.lsp.config('*', {
               capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
             })
@@ -249,6 +252,18 @@ local plugins = {
                         backend = "tmux",
                         enabled = true,
                     },
+                    win = {
+                        layout = "float", -- Change from default "right" to "float"
+                        float = {
+                            width = 0.6,                -- 60% of screen width
+                            height = 0.6,               -- 60% of screen height
+                            row = 0.3,                  -- 20% from top (centers vertically: (100% - 60%) / 2 = 20%)
+                            col = 0.4,                  -- 20% from left (centers horizontally: (100% - 60%) / 2 = 20%)
+                            border = "rounded",         -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
+                            title = "AI",               -- Custom title
+                            title_pos = "center",      -- Title position: "left", "center",
+                        },
+                    },
                     tools = {
                         auggie = {
                             cmd = {"auggie"}
@@ -262,11 +277,8 @@ local plugins = {
             -- select
             vim.api.nvim_set_keymap("n", "<C-g>w", "<cmd>lua require('sidekick.cli').select()<CR>", {noremap=true, silent=true, desc="Sidekick Select"})
 
-            -- toggle
-            vim.api.nvim_set_keymap("n", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
-            vim.api.nvim_set_keymap("i", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
-            vim.api.nvim_set_keymap("t", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
-            vim.api.nvim_set_keymap("x", "<C-g>o", "<cmd>lua require('sidekick.cli').toggle()<CR>", {noremap=true, silent=true, desc="Sidekick Toggle"})
+            -- show
+            vim.api.nvim_set_keymap("n", "<C-g>o", "<cmd>lua require('sidekick.cli').show()<CR>", {noremap=true, silent=true, desc="Sidekick Show"})
 
             -- nes
             vim.api.nvim_set_keymap("n", "<C-g>n", "<cmd>lua if not require('sidekick').nes_jump_or_apply() then return '<Tab>' end<CR>", {noremap=true, silent=true, expr=true, desc="Goto/Apply Next Edit Suggestion"})
@@ -391,7 +403,7 @@ local plugins = {
 
             vim.opt.termguicolors = true
 
-            local M = dofile(os.getenv("MACFILES") .. "/theme.lua")
+            local M = dofile(os.getenv("MACFILES") .. "/themes/theme.lua")
             require('base16-colorscheme').setup(M)
 
             -- statusline

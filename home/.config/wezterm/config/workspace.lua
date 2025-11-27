@@ -54,6 +54,46 @@ function M.Manager()
     return action
 end
 
+function M.Delete()
+    local fn = function(window, pane)
+        local workspaces = wezterm.mux.get_workspace_names()
+        local current_workspace = window:active_workspace()
+        local choices = {}
+
+        for _, name in ipairs(workspaces) do
+            if name ~= current_workspace then
+                table.insert(choices, { label = name })
+            end
+        end
+
+        if #choices == 0 then
+            window:toast_notification("WezTerm", "No other workspaces to delete", nil, 4000)
+            return
+        end
+
+        window:perform_action(
+            wezterm.action.InputSelector {
+                title = 'Delete Workspace',
+                description = 'Select workspace to delete (current workspace excluded):',
+                choices = choices,
+                fuzzy = true,
+                action = wezterm.action_callback(function(window, pane, id, label)
+                    if label then
+                        local workspace = wezterm.mux.get_workspace(label)
+                        if workspace then
+                            workspace:remove()
+                            window:toast_notification("WezTerm", "Deleted workspace: " .. label, nil, 3000)
+                        end
+                    end
+                end),
+            },
+            pane
+        )
+    end
+
+    local action = wezterm.action_callback(fn)
+    return action
+end
 
 function M.SetLastWorkspace(window, pane, workspace)
     local current_workspace = workspace or window:active_workspace()

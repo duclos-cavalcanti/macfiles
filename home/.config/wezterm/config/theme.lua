@@ -4,7 +4,7 @@ local wezterm = require("wezterm")
 
 function M.get_colors()
     local base = os.getenv("MACFILES") or (wezterm.home_dir .. "/.macfiles")
-    return dofile(base .. "/theme.lua")
+    return dofile(base .. "/themes/theme.lua")
 end
 
 function M.setup()
