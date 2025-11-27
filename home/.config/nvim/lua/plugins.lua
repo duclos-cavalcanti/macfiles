@@ -232,10 +232,33 @@ local plugins = {
             vim.api.nvim_set_keymap("n", "<leader><tab>", "<cmd>AerialToggle left<CR>", {noremap=true, silent=true})
         end,
     },
-    { -- ai 
+    { -- ai
         "folke/sidekick.nvim",
         lazy = true,
         cmd = "SidekickLoad",
+        keys = {
+            { "<C-g>w", function() require('sidekick.cli').select() end, desc = "Sidekick Select" },
+            { "<C-g>o", function() require('sidekick.cli').show() end, desc = "Sidekick Show" },
+            { "<C-g>n", function()
+                if not require('sidekick').nes_jump_or_apply() then
+                    return '<Tab>'
+                end
+            end, expr = true, desc = "Goto/Apply Next Edit Suggestion" },
+            { "<C-g>i", function() require('sidekick.cli').send({ msg = '{this}' }) end, mode = "x", desc = "Send This" },
+            { "<C-g>f", function() require('sidekick.cli').send({ msg = '{file}' }) end, desc = "Send File" },
+            { "<C-g>p", function() require('sidekick.cli').prompt() end, mode = { "n", "x" }, desc = "Sidekick Select Prompt" },
+            { "<C-g>a", function() require('sidekick.cli').accept() end, desc = "Sidekick Accept Suggestion" },
+            { "<C-g>d", function()
+                local origin = vim.fn.getcwd()
+                require('utils').pick_dir(function(dir)
+                    vim.cmd('cd ' .. vim.fn.fnameescape(dir))
+                    require('sidekick.cli').select()
+                    vim.schedule(function()
+                        vim.cmd('cd ' .. vim.fn.fnameescape(origin))
+                    end)
+                end)
+            end, desc = "Sidekick in Directory" },
+        },
         config = function()
             vim.api.nvim_create_user_command(
                 "SidekickLoad",
@@ -273,32 +296,6 @@ local plugins = {
             }
 
             require("sidekick").setup(opts)
-
-            -- select
-            vim.api.nvim_set_keymap("n", "<C-g>w", "<cmd>lua require('sidekick.cli').select()<CR>", {noremap=true, silent=true, desc="Sidekick Select"})
-
-            -- show
-            vim.api.nvim_set_keymap("n", "<C-g>o", "<cmd>lua require('sidekick.cli').show()<CR>", {noremap=true, silent=true, desc="Sidekick Show"})
-
-            -- nes
-            vim.api.nvim_set_keymap("n", "<C-g>n", "<cmd>lua if not require('sidekick').nes_jump_or_apply() then return '<Tab>' end<CR>", {noremap=true, silent=true, expr=true, desc="Goto/Apply Next Edit Suggestion"})
-
-            vim.api.nvim_set_keymap("x", "<C-g>i", "<cmd>lua require('sidekick.cli').send({ msg = '{this}' })<CR>", {noremap=true, silent=true, desc="Send This"})
-            vim.api.nvim_set_keymap("n", "<C-g>f", "<cmd>lua require('sidekick.cli').send({ msg = '{file}' })<CR>", {noremap=true, silent=true, desc="Send File"})
-            vim.api.nvim_set_keymap("n", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
-            vim.api.nvim_set_keymap("x", "<C-g>p", "<cmd>lua require('sidekick.cli').prompt()<CR>", {noremap=true, silent=true, desc="Sidekick Select Prompt"})
-            vim.api.nvim_set_keymap("n", "<C-g>a", "<cmd>lua require('sidekick.cli').accept()<CR>", {noremap=true, silent=true, desc="Sidekick Accept Suggestion"})
-
-            vim.keymap.set("n", "<C-g>d", function()
-                local origin = vim.fn.getcwd()
-                require('utils').pick_dir(function(dir)
-                    vim.cmd('cd ' .. vim.fn.fnameescape(dir))
-                    require('sidekick.cli').select()
-                    vim.schedule(function()
-                        vim.cmd('cd ' .. vim.fn.fnameescape(origin))
-                    end)
-                end)
-            end, {noremap=true, silent=true, desc="Sidekick in Directory"})
         end,
         dependencies = {
             {
@@ -383,8 +380,8 @@ local plugins = {
         end,
     },
     { -- themes/ui
-        "RRethy/base16-nvim",
-        lazy = false,
+        'nvim-mini/mini.base16',
+        version = '*',
         dependencies = {
                 "nvim-lualine/lualine.nvim",
                 'kyazdani42/nvim-web-devicons', 
@@ -395,16 +392,25 @@ local plugins = {
                 },
         },
         config = function() 
+            vim.opt.termguicolors = true
+            local M = dofile(os.getenv("MACFILES") .. "/themes/theme.lua")
+
+            require('mini.base16').setup({
+              palette = M,
+              use_cterm = true,
+              plugins = {
+                default = false,
+                ['nvim-mini/mini.nvim'] = true,
+                ['akinsho/bufferline.nvim'] = true,
+                ['nvim-lualine/lualine.nvim'] = true,
+              },
+            })
+
             require("bufferline").setup {
                 options = {
                     mode = "tabs"
                 }
             }
-
-            vim.opt.termguicolors = true
-
-            local M = dofile(os.getenv("MACFILES") .. "/themes/theme.lua")
-            require('base16-colorscheme').setup(M)
 
             -- statusline
             require('lualine').setup {
