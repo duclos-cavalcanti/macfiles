@@ -3,3 +3,5 @@ home/*.env
 home/.config/.copilot
 home/.config/configstore/
 home/.config/github-copilot/
+
+home/.config/nvim/pack/plugins/start/nvim-todo/lua/dooing/

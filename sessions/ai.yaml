@@ -1,7 +1,0 @@
-session_name: ai
-start_directory: ~/Documents/
-windows:
-  - window_name: ai
-    layout: even-horizontal
-    panes:
-      - copilot

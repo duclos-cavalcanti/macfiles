@@ -1,7 +1,0 @@
-session_name: notes
-start_directory: ~/Documents/notes/
-windows:
-  - window_name: home
-    layout: even-horizontal
-    panes:
-      - nvim ToDo.md

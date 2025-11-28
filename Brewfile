@@ -2,6 +2,7 @@ cask_args appdir: '/Applications'
 
 # taps
 tap "jesseduffield/lazydocker"
+tap "brew tap d12frosted/emacs-plus"
 
 # base
 cask "hammerspoon"
@@ -14,7 +15,6 @@ brew "lazydocker"
 brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
-cask "font-hack-nerd-font"
 cask "font-iosevka-nerd-font"
 
 # utils
@@ -62,3 +62,6 @@ cask "docker"
 cask "postman"
 cask "postman-cli"
 cask "gemini-cli"
+
+# experiment
+brew "emacs-plus"
