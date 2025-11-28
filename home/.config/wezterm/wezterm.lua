@@ -9,7 +9,7 @@ local c = wezterm.config_builder()
 
 -- theme/font
 c.colors = theme.setup()
-c.font = wezterm.font("Hack Nerd Font Mono")
+c.font = wezterm.font("Iosevka Nerd Font Mono")
 c.font_size = 11.0
 c.bold_brightens_ansi_colors = false
 c.inactive_pane_hsb = {

@@ -14,4 +14,13 @@ function M.Prompt(description, callback)
     return action
 end
 
+function M.State()
+    local success, stdout = wezterm.run_child_process({ "/opt/homebrew/bin/wezterm", "cli", "list", "--format=json" })
+    if success then 
+        return wezterm.json_parse(stdout)
+    else
+        return nil
+    end
+end
+
 return M

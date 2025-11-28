@@ -15,6 +15,7 @@ brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
 cask "font-hack-nerd-font"
+cask "font-iosevka-nerd-font"
 
 # utils
 brew "curl"

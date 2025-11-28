@@ -67,7 +67,6 @@ function M.Delete()
         end
 
         if #choices == 0 then
-            window:toast_notification("WezTerm", "No other workspaces to delete", nil, 4000)
             return
         end
 
@@ -79,10 +78,26 @@ function M.Delete()
                 fuzzy = true,
                 action = wezterm.action_callback(function(window, pane, id, label)
                     if label then
-                        local workspace = wezterm.mux.get_workspace(label)
-                        if workspace then
-                            workspace:remove()
-                            window:toast_notification("WezTerm", "Deleted workspace: " .. label, nil, 3000)
+                        local workspace = {}
+                        local state = utils.State()
+                        if not state then return end
+
+                        for _, v in ipairs(state) do
+                            if v.workspace == label then 
+                                table.insert(workspace, v)
+                            end
+                        end
+
+                        if workspace then 
+                            for _, v in ipairs(workspace) do
+                                wezterm.log_info("PANE: " .. wezterm.to_string(v.pane_id))
+                                wezterm.run_child_process({
+				                    "/opt/homebrew/bin/wezterm",
+				                    "cli",
+				                    "kill-pane",
+				                    "--pane-id=" .. v.pane_id,
+			                    })
+                            end
                         end
                     end
                 end),

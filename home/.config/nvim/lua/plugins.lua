@@ -235,7 +235,6 @@ local plugins = {
     { -- ai
         "folke/sidekick.nvim",
         lazy = true,
-        cmd = "SidekickLoad",
         keys = {
             { "<C-g>w", function() require('sidekick.cli').select() end, desc = "Sidekick Select" },
             { "<C-g>o", function() require('sidekick.cli').show() end, desc = "Sidekick Show" },
@@ -260,14 +259,6 @@ local plugins = {
             end, desc = "Sidekick in Directory" },
         },
         config = function()
-            vim.api.nvim_create_user_command(
-                "SidekickLoad",
-                function()
-                    require("sidekick.cli").toggle()
-                end,
-                { desc = "Load and Toggle Sidekick/Copilot" }
-            )
-
             local opts = {
                 nes = { enabled = false },
                 cli = {
