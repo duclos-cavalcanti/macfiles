@@ -462,6 +462,13 @@ local plugins = {
             end,
             ft = { "markdown" },
         },
+        {
+            dir = vim.fn.stdpath("config") .. "/pack/plugins/start/moonspector",
+            name = "moonspector",
+            config = function()
+                require("moonspector").setup()
+            end,
+        },
     },
 }
 
