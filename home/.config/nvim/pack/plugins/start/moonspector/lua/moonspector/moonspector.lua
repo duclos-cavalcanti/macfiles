@@ -1,76 +1,55 @@
 local vim = vim 
 
-local M = {}
+local M = {
+    win = nil,
+    buf = nil,
+}
 
-local state = require('moonspector.state')
-local ui    = require('moonspector.ui')
+function M.create_buffer()
+    M.buf = vim.api.nvim_create_buf(false, true)
 
-function M.create()
-    state.buf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_option(state.buf, 'filetype', 'lua')
-    vim.api.nvim_buf_set_option(state.buf, 'buftype', 'nofile')
-    vim.api.nvim_buf_set_name(state.buf, '[Moonspector]')
+    vim.api.nvim_buf_set_option(M.buf, 'filetype', 'lua')
+    vim.api.nvim_buf_set_option(M.buf, 'buftype', 'acwrite')
+    vim.api.nvim_buf_set_name(M.buf, '[Moonspector]')
+
+    vim.api.nvim_create_autocmd("BufWriteCmd", {
+        buffer = M.buf,
+        callback = function()
+            vim.cmd('source')
+        end,
+        desc = "Moonspector: Source buffer on write attempt"
+    })
 end
 
-function M.execute()
-    -- validate buffer
-    if not state.buf or not vim.api.nvim_buf_is_valid(state.buf) then
-        return
-    end
+function M.create_win(opts)
+    local width = opts.width or math.floor(vim.o.columns * 0.8)
+    local height = opts.height or math.floor(vim.o.lines * 0.8)
+    local row = opts.row or math.floor((vim.o.lines - height) / 2)
+    local col = opts.col or math.floor((vim.o.columns - width) / 2)
 
-    local lines = vim.api.nvim_buf_get_lines(state.buf, 0, -1, false)
-    local code = table.concat(lines, '\n')
+    M.win = vim.api.nvim_open_win(M.buf, true, {
+        relative = 'editor',
+        width = width,
+        height = height,
+        row = row,
+        col = col,
+        style = 'minimal',
+        border = 'rounded',
+        title = 'Moonspector',
+        title_pos = 'center',
+    })
 
-    -- empty buffer check  
-    if code:match('^%s*$') then
-        return
-    end
-
-    local func, err = loadstring(code)
-    if not func then
-        print("Moonspector Error: " .. err)
-        return
-    end
-
-    local success, result = pcall(func)
-    if not success then
-        print("Moonspector Runtime Error: " .. result)
-    else
-        if result ~= nil then
-            print("Moonspector Result: " .. vim.inspect(result))
-        else
-            print("Moonspector: Code executed successfully")
-        end
-    end
-
-end
-
-function M.toggle()
-    -- close window if open
-    if ui.is_win(state.win) then
-        M.hide()
-        return
-    end
-
-    -- create buffer if doesn't exist
-    if not state.buf or not vim.api.nvim_buf_is_valid(state.buf) then
-        M.create()
-    end
-
-    M.show()
+    vim.api.nvim_win_set_option(M.win, 'number', true)
+    vim.api.nvim_win_set_option(M.win, 'relativenumber', false)
 end
 
 function M.show()
-    if not state.win then
-        state.win = ui.create_win(state.buf, {})
+    -- Create buffer if doesn't exist
+    if not M.buf or not vim.api.nvim_buf_is_valid(M.buf) then
+        M.create_buffer()
     end
-end
 
-function M.hide()
-    if state.win then
-        ui.close_win(state.win)
-        state.win = nil
-    end
+    M.create_win({})
 end
 
 return M

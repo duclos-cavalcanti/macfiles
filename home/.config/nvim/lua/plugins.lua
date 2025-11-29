@@ -467,6 +467,7 @@ local plugins = {
             name = "moonspector",
             config = function()
                 require("moonspector").setup()
+                vim.api.nvim_set_keymap("n", "<C-w>m", "<cmd>MoonLaunch<CR>", {noremap=true, silent=true})
             end,
         },
     },
