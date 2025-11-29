@@ -62,6 +62,10 @@ if command -v brew &>/dev/null; then
     fi
     
     if [[ -d $(brew --prefix)/share/zsh-autocomplete ]]; then
+        # Disable automatic expansion and real-time completion to prevent intrusive behavior
+        zstyle ':autocomplete:*' automatic-expansion off
+        zstyle ':autocomplete:*' real-time-completion off
+
         source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
         # zstyle ':autocomplete:list-choices:*' ignored-input '*'
