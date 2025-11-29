@@ -480,7 +480,12 @@ local plugins = {
                 { "<C-w>O", "<cmd>BulletLaunch<CR>", desc = "Sidekick Select" },
             },
             config = function()
-                local path = os.getenv("MACFILES") .. "/notes/"
+                local path = nil
+                if os.getenv("USER") == "dduclos-cavalcanti" then
+                    path = os.getenv("HOME") .. "/Documents/notes/"
+                else
+                    path = os.getenv("MACFILES") .. "/notes/"
+                end
                 local opts = {
                     notes_dir = path,
                 }

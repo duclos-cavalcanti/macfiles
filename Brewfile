@@ -47,6 +47,8 @@ brew "pyenv-virtualenv"
 brew "marksman"
 brew "luarocks"
 brew "protobuf"
+brew "pandoc"
+brew "tree-sitter-cli"
 
 # system
 brew "spotify_player"
