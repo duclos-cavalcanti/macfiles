@@ -462,12 +462,29 @@ local plugins = {
             end,
             ft = { "markdown" },
         },
+    }, 
+    { -- local
         {
             dir = vim.fn.stdpath("config") .. "/pack/plugins/start/moonspector",
             name = "moonspector",
             config = function()
                 require("moonspector").setup()
                 vim.api.nvim_set_keymap("n", "<C-w>m", "<cmd>MoonLaunch<CR>", {noremap=true, silent=true})
+            end,
+        },
+        {
+            dir = vim.fn.stdpath("config") .. "/pack/plugins/start/bullet",
+            name = "bullet",
+            lazy = "true",
+            keys = {
+                { "<C-w>O", "<cmd>BulletLaunch<CR>", desc = "Sidekick Select" },
+            },
+            config = function()
+                local path = os.getenv("MACFILES") .. "/notes/"
+                local opts = {
+                    notes_dir = path,
+                }
+                require("bullet").setup(opts)
             end,
         },
     },

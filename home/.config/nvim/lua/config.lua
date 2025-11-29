@@ -89,6 +89,23 @@ vim.api.nvim_set_keymap('n', '<C-m>o', '<cmd>enew | setl buftype=nofile bufhidde
 -- Netrw
 vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua require("utils").float("Explore")<CR>', {noremap=true, silent=true})
 
+-- Autocommands
 vim.cmd [[ autocmd Signal SIGWINCH wincmd = ]]
 vim.cmd [[ autocmd TermEnter term://* setlocal scl=no | setlocal nohidden | setlocal norelativenumber | setlocal nonu ]]
 vim.cmd [[ autocmd BufHidden term://* q! ]]
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.lua",
+    callback = function()
+        local cursor_pos = vim.api.nvim_win_get_cursor(0)
+
+        -- Remove trailing whitespace
+        vim.cmd([[%s/\s\+$//e]])
+
+        -- Remove blank lines at end of file
+        vim.cmd([[%s/\n\+\%$//e]])
+
+        -- Restore cursor position
+        pcall(vim.api.nvim_win_set_cursor, 0, cursor_pos)
+    end,
+    desc = "Remove trailing whitespace and blank lines at EOF for Lua files"
+})
