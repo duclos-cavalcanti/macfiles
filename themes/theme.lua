@@ -1,9 +1,8 @@
 local M = {
-    -- base00 = '#181818',
     base00 = '#000000', -- Background (Editor) -> ANSI 0 (Black) - Retro greyish background
     base01 = '#222222', -- Lighter Background/UI elements (Editor) -> ANSI 10 (Bright Green) - Lighter grey
     base02 = '#323232', -- Selection/Highlight (Editor) -> ANSI 11 (Bright Yellow) - Selection grey
-    base03 = '#3f3f3f', -- Comments/Faint Foreground (Editor) -> ANSI 8 (Bright Black/Dark Gray) - Medium grey
+    base03 = '#4f4f4f', -- Comments/Faint Foreground (Editor) -> ANSI 8 (Bright Black/Dark Gray) - Medium grey
     base04 = '#666666', -- Darker Foreground (Editor) -> ANSI 12 (Bright Blue) - Dark grey
     base05 = '#f8f8f2', -- Main Foreground (Editor) -> ANSI 7 (White)
     base06 = '#c6c6c6', -- Lighter Foreground/Delimiters (Editor) -> ANSI 13 (Bright Magenta) - Darker text
