@@ -83,12 +83,12 @@ function M.Delete()
                         if not state then return end
 
                         for _, v in ipairs(state) do
-                            if v.workspace == label then 
+                            if v.workspace == label then
                                 table.insert(workspace, v)
                             end
                         end
 
-                        if workspace then 
+                        if workspace then
                             for _, v in ipairs(workspace) do
                                 wezterm.log_info("PANE: " .. wezterm.to_string(v.pane_id))
                                 wezterm.run_child_process({
@@ -153,6 +153,17 @@ function M.SwitchToLast()
 
     local action = wezterm.action_callback(fn)
     return action
+end
+
+function M.SwitchToWorkspace(target_workspace)
+    local current_workspace = window:active_workspace()
+    window:perform_action(
+        wezterm.action.SwitchToWorkspace({
+          name = target_workspace,
+        }),
+        pane
+    )
+    wezterm.GLOBAL.previous_workspace = current_workspace
 end
 
 return M

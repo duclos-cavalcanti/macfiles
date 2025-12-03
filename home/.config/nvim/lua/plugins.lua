@@ -399,7 +399,8 @@ local plugins = {
 
             require("bufferline").setup {
                 options = {
-                    mode = "tabs"
+                    mode = "tabs",
+                    show_duplicate_prefix = false,
                 }
             }
 

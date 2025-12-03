@@ -289,6 +289,40 @@ if command -v jq &>/dev/null; then
     }
 fi
 
+if command -v docker &>/dev/null; then
+    dc() {
+        local file="${1}"
+
+        if [[ -z "$file" ]]; then
+            echo "Usage: dc <compose-file-path>"
+            echo "Toggles Docker Compose services: starts if stopped, stops if running"
+            return 1
+        fi
+
+        if [[ ! -f "$file" ]]; then
+            echo "Error: Compose file '$file' not found"
+            return 1
+        fi
+
+        # Get the directory of the compose file for context
+        local compose_dir=$(dirname "$file")
+        local compose_file=$(basename "$file")
+
+        # Check if services are running by looking for containers from this compose file
+        # We use the project name derived from the directory name
+        local project_name=$(basename "$compose_dir")
+        local running_containers=$(docker compose -f "$file" ps -q 2>/dev/null)
+
+        if [[ -n "$running_containers" ]]; then
+            echo "🛑 Stopping Docker Compose services from: $file"
+            docker compose -f "$file" down
+        else
+            echo "🚀 Starting Docker Compose services from: $file"
+            docker compose -f "$file" up -d
+        fi
+    }
+fi
+
 if command -v fzf &>/dev/null; then
     export FZF_DEFAULT_COMMAND="fd --follow --hidden --type f --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
     export FZF_ALT_C_COMMAND="fd --follow --hidden --type d --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
