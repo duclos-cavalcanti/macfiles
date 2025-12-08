@@ -304,20 +304,13 @@ if command -v docker &>/dev/null; then
             return 1
         fi
 
-        # Get the directory of the compose file for context
         local compose_dir=$(dirname "$file")
         local compose_file=$(basename "$file")
-
-        # Check if services are running by looking for containers from this compose file
-        # We use the project name derived from the directory name
-        local project_name=$(basename "$compose_dir")
         local running_containers=$(docker compose -f "$file" ps -q 2>/dev/null)
 
         if [[ -n "$running_containers" ]]; then
-            echo "🛑 Stopping Docker Compose services from: $file"
             docker compose -f "$file" down
         else
-            echo "🚀 Starting Docker Compose services from: $file"
             docker compose -f "$file" up -d
         fi
     }
