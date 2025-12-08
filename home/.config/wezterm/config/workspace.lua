@@ -155,15 +155,21 @@ function M.SwitchToLast()
     return action
 end
 
-function M.SwitchToWorkspace(target_workspace)
-    local current_workspace = window:active_workspace()
-    window:perform_action(
-        wezterm.action.SwitchToWorkspace({
-          name = target_workspace,
-        }),
-        pane
-    )
-    wezterm.GLOBAL.previous_workspace = current_workspace
+function M.SwitchToWorkspace(target)
+    local fn = function(window, pane)
+        local current_workspace = window:active_workspace()
+        local target_workspace = target
+        wezterm.emit("set-last-workspace", window, pane, current_workspace)
+        window:perform_action(
+            wezterm.action.SwitchToWorkspace({
+              name = target_workspace,
+            }),
+            pane
+        )
+    end
+
+    local action = wezterm.action_callback(fn)
+    return action
 end
 
 return M
