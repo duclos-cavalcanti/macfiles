@@ -19,7 +19,7 @@ local plugins = {
         dependencies = {
             "windwp/nvim-ts-autotag",
         },
-        config = function() 
+        config = function()
             vim.opt.runtimepath:append("$HOME/.local/share/treesitter")
             require('nvim-treesitter.configs').setup({
                 parser_install_dir = "$HOME/.local/share/treesitter",
@@ -74,7 +74,7 @@ local plugins = {
             "saadparwaiz1/cmp_luasnip",
             "L3MON4D3/LuaSnip",
         },
-        config = function() 
+        config = function()
             local cmp = require'cmp'
             local ls = require "luasnip"
 
@@ -227,7 +227,7 @@ local plugins = {
          "nvim-treesitter/nvim-treesitter",
          "nvim-tree/nvim-web-devicons"
       },
-        config = function() 
+        config = function()
             require("aerial").setup({ })
             vim.api.nvim_set_keymap("n", "<leader><tab>", "<cmd>AerialToggle left<CR>", {noremap=true, silent=true})
         end,
@@ -321,7 +321,7 @@ local plugins = {
             'nvim-telescope/telescope-ui-select.nvim',
             'nvim-lua/plenary.nvim',
         },
-        config = function() 
+        config = function()
             local actions = require('telescope.actions')
             local action_state = require("telescope.actions.state")
 
@@ -375,14 +375,14 @@ local plugins = {
         version = '*',
         dependencies = {
                 "nvim-lualine/lualine.nvim",
-                'kyazdani42/nvim-web-devicons', 
+                'kyazdani42/nvim-web-devicons',
                 {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
                 {
                     'norcalli/nvim-colorizer.lua',
                     config  = function() require('colorizer').setup() end,
                 },
         },
-        config = function() 
+        config = function()
             vim.opt.termguicolors = true
             local M = dofile(os.getenv("MACFILES") .. "/themes/theme.lua")
 
@@ -453,7 +453,7 @@ local plugins = {
             build = "cd app && yarn install",
             init = function()
                 vim.g.mkdp_filetypes = { "markdown" }
-                vim.cmd[[ 
+                vim.cmd[[
                     function OpenMarkdownPreview (url)
                         echo "Markdown Preview URL: " . a:url
                         let @+ = a:url
@@ -463,7 +463,7 @@ local plugins = {
             end,
             ft = { "markdown" },
         },
-    }, 
+    },
     { -- local
         {
             dir = vim.fn.stdpath("config") .. "/pack/plugins/start/moonspector",
@@ -478,7 +478,8 @@ local plugins = {
             name = "bullet",
             lazy = "true",
             keys = {
-                { "<C-w>O", "<cmd>BulletLaunch<CR>", desc = "Sidekick Select" },
+                { "<C-w>O", "<cmd>BulletLaunch<CR>", desc = "Bullet Launch project Note" },
+                { "<C-w><space>", "<cmd>BulletList<CR>", desc = "Bullet select Note" },
             },
             config = function()
                 local path = nil

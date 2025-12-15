@@ -10,11 +10,8 @@ function M.setup(opts)
 
     core.bootstrap(config.get())
 
-    vim.api.nvim_create_user_command('BulletLaunch', M.show, { desc = 'Launch bullet buffer' })
-end
-
-function M.show()
-    core.show()
+    vim.api.nvim_create_user_command('BulletLaunch', core.show, { desc = 'Launch bullet buffer' })
+    vim.api.nvim_create_user_command('BulletList', core.list, { desc = 'Launch bullet buffer' })
 end
 
 return M

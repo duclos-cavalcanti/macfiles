@@ -237,19 +237,18 @@ else
 fi
 
 
+# basic utils
 alias ..="cd .."
 alias ...="cd ../.."
-
 alias mv="mv -i"
 alias cp="cp -i"
-
 alias less='less -R'
 alias diff="diff --color=auto"
-
 alias grep='grep --colour=always'
 alias egrep='egrep --colour=always'
 alias fgrep='fgrep --colour=always'
 
+# git
 alias gupd="git add --all && git commit -m 'Update' && git push origin"
 alias grd="git add README.md && git commit -m 'Updated README' && git push origin"
 alias gi="git add .gitignore && git commit -m 'Updated gitignore' && git push origin"
@@ -276,8 +275,11 @@ alias gbD="git push --delete origin"
 alias greset="git reset --hard"
 alias greb="git rebase -i --root"
 
+# work
 alias azlog="az login"
 alias metlog="az acr login -n metacodev"
+alias cfmt="cargo +nightly fmt"
+alias cclip="cargo clippy --all-targets --all-features --no-deps --fix --allow-dirty"
 
 cd() {
   builtin cd "$@" && ls --color=auto
