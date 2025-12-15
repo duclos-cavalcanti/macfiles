@@ -478,8 +478,8 @@ local plugins = {
             name = "bullet",
             lazy = "true",
             keys = {
-                { "<C-w>O", "<cmd>BulletLaunch<CR>", desc = "Bullet Launch project Note" },
-                { "<C-w><space>", "<cmd>BulletList<CR>", desc = "Bullet select Note" },
+                { "<C-w><space>", "<cmd>BulletLaunch<CR>", desc = "Bullet Launch project Note" },
+                { "<C-w><enter>", "<cmd>BulletList<CR>", desc = "Bullet select Note" },
             },
             config = function()
                 local path = nil

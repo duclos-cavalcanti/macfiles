@@ -79,7 +79,6 @@ vim.api.nvim_set_keymap("n", "<M-S-j>", ":tabmove -1<CR>", {noremap=true, silent
 vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("t", "<C-w>", "<C-\\><C-N><C-w>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "<leader><space>", ":split <BAR> term<CR>i", {noremap=true, silent=true})
-vim.api.nvim_set_keymap("n", "<leader>t", ":split <BAR> :resize 20 <BAR> term<CR>i", {noremap=true, silent=true})
 
 -- scratchpad
 vim.api.nvim_set_keymap('n', '<C-m>t', '<cmd>tabnew | setl buftype=nofile bufhidden=hide ft=markdown | file Scratchpad<CR>', {noremap=true, silent=true})
