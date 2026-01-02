@@ -8,6 +8,7 @@ local M = {
 
 local defaults = {
     notes_dir = vim.fn.stdpath("data") .. "/bullet-notes/",
+    sticky = true,
 
     ui = {
         border = "rounded",

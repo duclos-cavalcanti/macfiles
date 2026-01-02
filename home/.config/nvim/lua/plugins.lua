@@ -121,6 +121,7 @@ local plugins = {
             vim.lsp.enable('html')
             vim.lsp.enable('pyright')
             vim.lsp.enable('lua_ls')
+            vim.lsp.enable('yamlls')
 
             ls.config.set_config {
                 history = true,
@@ -435,7 +436,12 @@ local plugins = {
         end,
     },
     { -- utils
-        { "fasterius/simple-zoom.nvim", config = function() require('simple-zoom').setup({ hide_tabline = true }); vim.api.nvim_set_keymap("n", "<C-w>z", "<cmd>lua require('simple-zoom').toggle_zoom()<CR>", {noremap=true, silent=true}) end },
+        {'akinsho/toggleterm.nvim', version = "*",
+            opts = {},
+            config = function()
+                vim.api.nvim_set_keymap("n", "<leader><tab>", "<cmd>AerialToggle left<CR>", {noremap=true, silent=true})
+            end,
+        },
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('Comment').setup() end, },
         { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },
@@ -478,8 +484,9 @@ local plugins = {
             name = "bullet",
             lazy = "true",
             keys = {
-                { "<C-w><space>", "<cmd>BulletLaunch<CR>", desc = "Bullet Launch project Note" },
-                { "<C-w><enter>", "<cmd>BulletList<CR>", desc = "Bullet select Note" },
+                { "<C-w><space>", "<cmd>BulletLaunch<CR>", desc = "Launch bullet project note" },
+                { "<C-w><enter>", "<cmd>BulletSticky<CR>", desc = "Launch bullet sticky note" },
+                { "<C-w><tab>", "<cmd>BulletList<CR>", desc = "Select bullet project notes" },
             },
             config = function()
                 local path = nil

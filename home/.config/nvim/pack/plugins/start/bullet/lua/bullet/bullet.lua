@@ -52,6 +52,25 @@ function M.show()
     end
 end
 
+function M.sticky()
+    local path = M.opts.notes_dir .. "sticky.md"
+    if not utils.is_file_writable(path) then
+        vim.fn.writefile({}, path)
+        if not utils.is_file_writable(path) then
+            utils.err("File is not writeable: " .. path)
+        end
+    end
+
+    if not M.buf or not vim.api.nvim_buf_is_valid(M.buf) then
+        M.buf = ui.create_buffer()
+    end
+
+    if not M.win or not vim.api.nvim_win_is_valid(M.win) then
+        M.win = ui.create_win(M.buf, M.opts.ui)
+        vim.cmd('edit ' .. path)
+    end
+end
+
 function M.list()
     local path = M.opts.notes_dir
     local handle = vim.loop.fs_scandir(path)
@@ -87,9 +106,8 @@ function M.list()
 
             if not M.win or not vim.api.nvim_win_is_valid(M.win) then
                 M.win = ui.create_win(M.buf, M.opts.ui)
+                vim.cmd('edit ' .. f_path)
             end
-
-            vim.cmd('edit ' .. f_path)
         end
     end)
 end
