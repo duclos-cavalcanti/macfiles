@@ -13,11 +13,6 @@ local browser="Safari"
 
 bind({"cmd", "shift"},      "p",        screen.FocusNextScreen)
 bind({"cmd", "ctrl"},       "p",        screen.MoveToNextScreen)
-bind({"cmd", "shift"},      "f",        ctrl.fillWindow)
-bind({"cmd", "shift"},      "Left",     ctrl.MoveWindowLeft)
-bind({"cmd", "shift"},      "Up",       ctrl.MoveWindowTop)
-bind({"cmd", "shift"},      "Down",     ctrl.MoveWindowBottom)
-bind({"cmd", "shift"},      "Right",    ctrl.MoveWindowRight)
 bind({"cmd", "ctrl"},       "h",        apps.SafariMoveToPreviousTabGroup)
 bind({"cmd", "ctrl"},       "l",        apps.SafariMoveToNextTabGroup)
 bind({"cmd", "shift"},      "c",        lazy(task, "/usr/sbin/screencapture", {"-i", "-c"}))
