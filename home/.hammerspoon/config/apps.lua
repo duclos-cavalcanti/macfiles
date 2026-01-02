@@ -1,6 +1,6 @@
 local M = {}
 
-local utils = require("config.utils")
+local _last = nil
 
 function M.focusBetweenApps(name_a, name_b)
     local app = hs.application.frontmostApplication()
@@ -11,15 +11,22 @@ function M.focusBetweenApps(name_a, name_b)
 
     if title == name_a then
         M.focusOrLaunchApp(name_b)
+        _last = name_b
         return
     end
 
     if title == name_b then
         M.focusOrLaunchApp(name_a)
+        _last = name_a
         return
     end
 
-    M.focusOrLaunchApp(name_a)
+    if _last == nil then
+        M.focusOrLaunchApp(name_a)
+        _last = name_a
+    else
+        M.focusOrLaunchApp(_last)
+    end
 end
 
 function M.focusOrLaunchApp(name)
