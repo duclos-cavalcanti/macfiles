@@ -36,20 +36,12 @@ function M.focusOrLaunchApp(name)
     end
 end
 
-function M.SafariMoveToNextTabGroup()
+function M.executeOnApp(name, callback)
     local app = hs.application.frontmostApplication()
-    if app:title() ~= "Safari" then
+    if app:title() ~= name then
         return
     end
-    app:selectMenuItem({"Window", "Go to Next Tab Group"})
-end
-
-function M.SafariMoveToPreviousTabGroup()
-    local app = hs.application.frontmostApplication()
-    if app:title() ~= "Safari" then
-        return
-    end
-    app:selectMenuItem({"Window", "Go to Previous Tab Group"})
+    callback(app)
 end
 
 return M

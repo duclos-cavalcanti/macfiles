@@ -14,5 +14,5 @@ bind({"cmd"},               "0",        lazy(apps.focusBetweenApps, terminal, br
 bind({"cmd", "shift"},      "c",        lazy(task, "/usr/sbin/screencapture", {"-i", "-c"}))
 bind({"cmd", "shift"},      "p",        screen.FocusNextScreen)
 bind({"cmd", "ctrl"},       "p",        screen.MoveToNextScreen)
-bind({"cmd", "ctrl"},       "h",        apps.SafariMoveToPreviousTabGroup)
-bind({"cmd", "ctrl"},       "l",        apps.SafariMoveToNextTabGroup)
+bind({"cmd", "ctrl"},       "h",        lazy(apps.executeOnApp, "Safari", function(app) app:selectMenuItem({"Window", "Go to Previous Tab Group"}) end))
+bind({"cmd", "ctrl"},       "l",        lazy(apps.executeOnApp, "Safari", function(app) app:selectMenuItem({"Window", "Go to Next Tab Group"}) end))
