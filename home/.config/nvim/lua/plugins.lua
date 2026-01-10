@@ -436,11 +436,28 @@ local plugins = {
         end,
     },
     { -- utils
-        {'akinsho/toggleterm.nvim', version = "*",
-            opts = {},
-            config = function()
-                vim.api.nvim_set_keymap("n", "<leader><tab>", "<cmd>AerialToggle left<CR>", {noremap=true, silent=true})
-            end,
+    {
+        "nvzone/floaterm",
+        dependencies = "nvzone/volt",
+        config = function()
+            require("floaterm").setup {
+                border = false,
+                size = { h = 80, w = 85 },
+
+                mappings = {
+                    sidebar = nil,
+                    term = nil
+                },
+
+                -- Default sets of terminals you'd like to open
+                terminals = {
+                  { name = "Terminal" },
+                },
+            }
+
+            vim.api.nvim_set_keymap("n", "<leader><space>", "<cmd>FloatermToggle<CR>", {noremap = true, silent = true})
+            vim.api.nvim_set_keymap("t", "<leader><space>", "<cmd>FloatermToggle<CR>", {noremap = true, silent = true})
+        end,
         },
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('Comment').setup() end, },
