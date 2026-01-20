@@ -78,12 +78,7 @@ vim.api.nvim_set_keymap("n", "<M-S-j>", ":tabmove -1<CR>", {noremap=true, silent
 -- terminal
 vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("t", "<C-w>", "<C-\\><C-N><C-w>", {noremap=true, silent=true})
--- vim.api.nvim_set_keymap("n", "<leader><space>", ":split <BAR> term<CR>i", {noremap=true, silent=true})
 
--- Netrw
-vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua require("utils").float("Explore")<CR>', {noremap=true, silent=true})
-
--- Autocommands
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.lua",
     callback = function()
@@ -100,7 +95,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
     desc = "Remove trailing whitespace and blank lines at EOF for Lua files"
 })
-
--- vim.cmd [[ autocmd Signal SIGWINCH wincmd = ]]
--- vim.cmd [[ autocmd TermEnter term://* setlocal scl=no | setlocal nohidden | setlocal norelativenumber | setlocal nonu ]]
--- vim.cmd [[ autocmd BufHidden term://* q! ]]

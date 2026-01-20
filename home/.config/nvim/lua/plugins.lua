@@ -221,18 +221,6 @@ local plugins = {
             })
         end,
     },
-    { -- tags
-      'stevearc/aerial.nvim',
-      opts = {},
-      dependencies = {
-         "nvim-treesitter/nvim-treesitter",
-         "nvim-tree/nvim-web-devicons"
-      },
-        config = function()
-            require("aerial").setup({ })
-            vim.api.nvim_set_keymap("n", "<leader><tab>", "<cmd>AerialToggle left<CR>", {noremap=true, silent=true})
-        end,
-    },
     { -- ai
         "folke/sidekick.nvim",
         lazy = true,
@@ -315,61 +303,97 @@ local plugins = {
             { 'nvim-lua/plenary.nvim', }
         }
     },
-    { -- fuzzy finder
-        'nvim-telescope/telescope.nvim',
-        dependencies = {
-            {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
-            'nvim-telescope/telescope-ui-select.nvim',
-            'nvim-lua/plenary.nvim',
+    {
+      "folke/snacks.nvim",
+      priority = 1000,
+      lazy = false,
+      ---@type snacks.Config
+      opts = {
+        bigfile = { enabled = true },
+        dashboard = { enabled = true },
+        explorer = { enabled = true },
+        indent = { enabled = true },
+        input = { enabled = true },
+        notifier = {
+          enabled = true,
+          timeout = 3000,
         },
-        config = function()
-            local actions = require('telescope.actions')
-            local action_state = require("telescope.actions.state")
+        picker = { enabled = true },
+        quickfile = { enabled = true },
+        scope = { enabled = true },
+        scroll = { enabled = true },
+        statuscolumn = { enabled = true },
+        words = { enabled = true },
+        styles = {
+          notification = {
+            -- wo = { wrap = true } -- Wrap notifications
+          }
+        }
+      },
+      keys = {
+        -- Top Pickers & Explorer
+        { "<leader>sf", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+        { "<leader>sb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+        { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+        { "<leader>sbd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+        { "<leader>sbr", function() Snacks.rename.rename_file() end, desc = "Rename File" },
+        { "<leader>sl", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+        { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
+        { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
+        { "<leader>sc", function() Snacks.picker.commands() end, desc = "Commands" },
+        { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
+        { "<leader>sD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
+        { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
+        { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Highlights" },
+        { "<leader>sL", function() Snacks.picker.loclist() end, desc = "Location List" },
+        { "<leader>sQ", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
+        { "<leader>sm", function() Snacks.picker.man() end, desc = "Man Pages" },
+        { "<leader>sM", function() Snacks.picker.marks() end, desc = "Marks" },
 
-            require('telescope').setup({
-              defaults = {
-                sorting_strategy = "ascending",
-                mappings = {
-                  i = {
-                    ['<C-n>'] = actions.move_selection_next,
-                    ['<C-p>'] = actions.move_selection_previous,
-                    ['<C-c>'] = actions.close,
-                    ["<C-a>"] = actions.send_to_qflist,
-                    ["<C-q>"] = actions.send_selected_to_qflist,
-                  },
-                  n = {
-                    ['<C-c>'] = actions.close,
-                  },
-                },
-                layout_config = {
-                  horizontal ={
-                    height = 47,
-                    prompt_position = "top",
-                  }
-                }
-              },
-              extensions ={
-                  fzf = {
-                    fuzzy = true,                    -- false will only do exact matching
-                    override_generic_sorter = true,  -- override the generic sorter
-                    override_file_sorter = true,     -- override the file sorter
-                    case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                  },
-              },
-            })
-            require('telescope').load_extension('fzf')
-            require("telescope").load_extension("ui-select")
+        { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
 
-            vim.api.nvim_set_keymap("n", "<leader>sf", "<cmd>lua require('telescope.builtin').find_files({})<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap("n", "<leader>sF", "<cmd>lua require('telescope.builtin').find_files({cwd=vim.fn.input('Path: ')})<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap("n", "<leader>si", "<cmd>lua require('telescope.builtin').find_files({no_ignore=true})<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap("n", "<leader>sb", "<cmd>lua require('telescope.builtin').buffers()<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap("n", "<leader>sl", "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap("n", "<leader>sr", "<cmd>lua require('telescope.builtin').live_grep()<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap("n", "<leader>sR", "<cmd>lua require('telescope.builtin').grep_string({search=''})<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap("n", "<leader>sh", "<cmd>lua require('telescope.builtin').help_tags()<CR>", {noremap=true, silent=true})
-            vim.api.nvim_set_keymap("n", "<leader>sm", "<cmd>lua require('telescope.builtin').man_pages({sections={'ALL'}})<CR>", {noremap=true, silent=true})
-        end,
+        { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+        { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+        { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+        { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+        { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+        { "gai", function() Snacks.picker.lsp_incoming_calls() end, desc = "C[a]lls Incoming" },
+        { "gao", function() Snacks.picker.lsp_outgoing_calls() end, desc = "C[a]lls Outgoing" },
+
+        { "<leader><Tab>", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+        { "<leader><S-Tab>", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+
+        { "<leader>Z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
+        { "<leader>z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
+
+        { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+        { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+        { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
+        { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
+      },
+      init = function()
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "VeryLazy",
+          callback = function()
+            -- Setup some globals for debugging (lazy-loaded)
+            _G.dd = function(...)
+              Snacks.debug.inspect(...)
+            end
+            _G.bt = function()
+              Snacks.debug.backtrace()
+            end
+
+            -- Override print to use snacks for `:=` command
+            if vim.fn.has("nvim-0.11") == 1 then
+              vim._print = function(_, ...)
+                dd(...)
+              end
+            else
+              vim.print = _G.dd
+            end
+          end,
+        })
+      end,
     },
     { -- themes/ui
         'nvim-mini/mini.base16',
@@ -449,11 +473,6 @@ local plugins = {
                 persist_size = true,
                 insert_mappings = true,
             }
-
-            local Terminal  = require('toggleterm.terminal').Terminal
-            local lazygit = Terminal:new({ cmd = "lazygit", count = 9 })
-
-            lazygit:spawn()
         end,
         },
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
