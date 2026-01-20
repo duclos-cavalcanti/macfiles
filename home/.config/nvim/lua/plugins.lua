@@ -436,27 +436,21 @@ local plugins = {
         end,
     },
     { -- utils
-    {
-        "nvzone/floaterm",
-        dependencies = "nvzone/volt",
+        {
+        'akinsho/toggleterm.nvim',
+        version = "*",
         config = function()
-            require("floaterm").setup {
-                border = false,
-                size = { h = 80, w = 85 },
+            vim.o.hidden = true
 
-                mappings = {
-                    sidebar = nil,
-                    term = nil
-                },
-
-                -- Default sets of terminals you'd like to open
-                terminals = {
-                  { name = "Terminal" },
-                },
+            require("toggleterm").setup{
+                open_mapping = [[<c-\>]],
+                direction = 'float',
+                persist_mode = true,
+                persist_size = true,
+                insert_mappings = true,
             }
-
-            vim.api.nvim_set_keymap("n", "<leader><space>", "<cmd>FloatermToggle<CR>", {noremap = true, silent = true})
-            vim.api.nvim_set_keymap("t", "<leader><space>", "<cmd>FloatermToggle<CR>", {noremap = true, silent = true})
+            -- vim.api.nvim_set_keymap("n", "<leader><space>", "<cmd>FloatermToggle<CR>", {noremap = true, silent = true})
+            -- vim.api.nvim_set_keymap("t", "<leader><space>", "<cmd>FloatermToggle<CR>", {noremap = true, silent = true})
         end,
         },
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
