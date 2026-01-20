@@ -449,8 +449,11 @@ local plugins = {
                 persist_size = true,
                 insert_mappings = true,
             }
-            -- vim.api.nvim_set_keymap("n", "<leader><space>", "<cmd>FloatermToggle<CR>", {noremap = true, silent = true})
-            -- vim.api.nvim_set_keymap("t", "<leader><space>", "<cmd>FloatermToggle<CR>", {noremap = true, silent = true})
+
+            local Terminal  = require('toggleterm.terminal').Terminal
+            local lazygit = Terminal:new({ cmd = "lazygit", count = 9 })
+
+            lazygit:spawn()
         end,
         },
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
