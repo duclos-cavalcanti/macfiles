@@ -99,7 +99,6 @@ local plugins = {
                     vim.api.nvim_buf_set_keymap(bufnr, 'n', "gd",        "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
                     vim.api.nvim_buf_set_keymap(bufnr, 'n', "gD",        "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
                     vim.api.nvim_buf_set_keymap(bufnr, 'n', "gi",        "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-                    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', "gr",        "<cmd>Telescope lsp_references<CR>", opts)
                     vim.api.nvim_buf_set_keymap(bufnr, 'n', "gh",        "<Cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
                     vim.api.nvim_buf_set_keymap(bufnr, 'n', "GT",        "<Cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
                     vim.api.nvim_buf_set_keymap(bufnr, 'n', "K",         "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
@@ -256,7 +255,7 @@ local plugins = {
                         enabled = true,
                     },
                     win = {
-                        layout = "float", -- Change from default "right" to "float"
+                        layout = "right", -- Change from default "right" to "float"
                         float = {
                             width = 0.6,                -- 60% of screen width
                             height = 0.6,               -- 60% of screen height

@@ -2,7 +2,6 @@ cask_args appdir: '/Applications'
 
 # taps
 tap "jesseduffield/lazydocker"
-tap "brew tap d12frosted/emacs-plus"
 
 # base
 cask "hammerspoon"
@@ -60,11 +59,9 @@ brew "pass"
 brew "kind"
 brew "grpcurl"
 brew "k9s"
+brew "glab"
 brew "awscli"
 cask "docker"
 cask "postman"
 cask "postman-cli"
 cask "gemini-cli"
-
-# experiment
-brew "emacs-plus"
