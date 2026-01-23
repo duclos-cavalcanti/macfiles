@@ -8,6 +8,7 @@ local task   = utils.task
 local lazy   = utils.lazy
 
 bind({"cmd", "shift"},      "c",        lazy(task, "/usr/sbin/screencapture", {"-i", "-c"}))
+
 bind({"cmd", "shift"},      "p",        screen.FocusNextScreen)
 bind({"cmd", "ctrl"},       "p",        screen.MoveToNextScreen)
 bind({"cmd", "ctrl"},       "h",        lazy(apps.executeOnApp, "Safari", function(app) app:selectMenuItem({"Window", "Go to Previous Tab Group"}) end))
