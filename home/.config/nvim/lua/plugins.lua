@@ -314,7 +314,7 @@ local plugins = {
         indent = { enabled = true },
         input = { enabled = true },
         notifier = {
-          enabled = true,
+          enabled = false,
           timeout = 3000,
         },
         picker = { enabled = true },
@@ -466,7 +466,7 @@ local plugins = {
             vim.o.hidden = true
 
             require("toggleterm").setup{
-                open_mapping = [[<c-\>]],
+                open_mapping = [[<space><space>]],
                 direction = 'float',
                 persist_mode = true,
                 persist_size = true,

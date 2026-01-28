@@ -278,8 +278,7 @@ alias greb="git rebase -i --root"
 # work
 alias azlog="az login"
 alias metlog="az acr login -n metacodev"
-alias cfmt="cargo +nightly fmt"
-alias cclip="cargo clippy --all-targets --all-features --no-deps --fix --allow-dirty"
+alias metfmt="cargo +nightly fmt && cargo clippy --all-targets --all-features --no-deps --fix --allow-dirty"
 
 cd() {
   builtin cd "$@" && ls --color=auto

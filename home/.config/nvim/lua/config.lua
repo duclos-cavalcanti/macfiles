@@ -79,6 +79,30 @@ vim.api.nvim_set_keymap("n", "<M-S-j>", ":tabmove -1<CR>", {noremap=true, silent
 vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("t", "<C-w>", "<C-\\><C-N><C-w>", {noremap=true, silent=true})
 
+-- quickfix navigation
+-- Function to check if quickfix window is open in current tab
+local function is_quickfix_open()
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        if vim.bo[buf].buftype == 'quickfix' then
+            return true
+        end
+    end
+    return false
+end
+
+vim.keymap.set('n', '<C-n>', function()
+    if is_quickfix_open() then
+        vim.cmd('cnext')
+    end
+end, {noremap=true, silent=true, desc="Next quickfix item (if quickfix is open)"})
+
+vim.keymap.set('n', '<C-p>', function()
+    if is_quickfix_open() then
+        vim.cmd('cprev')
+    end
+end, {noremap=true, silent=true, desc="Next quickfix item (if quickfix is open)"})
+
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.lua",
     callback = function()
