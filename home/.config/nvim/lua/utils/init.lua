@@ -51,4 +51,8 @@ function M.pick_dir(callback)
     })
 end
 
+function M.term_color(idx)
+    return vim.g['terminal_color_' .. idx]
+end
+
 return M

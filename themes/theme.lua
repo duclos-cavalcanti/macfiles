@@ -1,4 +1,4 @@
-local theme = "onedark-dark"
+local theme = "gruvbox"
 
 local path = "/Users/dduclos-cavalcanti/.macfiles/themes/" .. theme .. ".lua"
 
