@@ -418,6 +418,7 @@ local plugins = {
                 -- Error out if terminal colors aren't set
                 if not term_color(0) then
                     M = dofile(os.getenv("MACFILES") .. "/themes/theme.lua")
+                    M.base00 = "#282828"
                 else
                     M =  {
                     base00 = term_color(0),   -- black (background)

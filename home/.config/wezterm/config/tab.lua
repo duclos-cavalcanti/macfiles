@@ -19,12 +19,12 @@ function M.Tabline(window, pane)
 
     window:set_left_status(wezterm.format({
       { Foreground = { Color = colors.base08 } },
-      { Text = " " .. '[' .. workspace .. ']' .. " " },
+      { Text = " " .. workspace .. ':' .. " " },
     }))
 
     window:set_right_status(wezterm.format({
       { Foreground = { Color = colors.base0C } },
-      { Text = " " .. '[' .. user .. ']' .. " " },
+      { Text = " " ..  user  .. " " },
     }))
 end
 

@@ -20,7 +20,7 @@ c.inactive_pane_hsb = {
 -- tab bar
 c.enable_tab_bar = true
 c.hide_tab_bar_if_only_one_tab = false
-c.tab_bar_at_bottom = true
+c.tab_bar_at_bottom = false
 c.use_fancy_tab_bar = false
 
 -- window

@@ -36,11 +36,16 @@ function M.focusOrLaunchApp(name)
     end
 end
 
-function M.executeOnApp(name, callback)
+function M.executeOnTitle(name, callback)
     local app = hs.application.frontmostApplication()
     if app:title() ~= name then
         return
     end
+    callback(app)
+end
+
+function M.executeOnApp(callback)
+    local app = hs.application.frontmostApplication()
     callback(app)
 end
 

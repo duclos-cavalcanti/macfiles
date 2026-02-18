@@ -13,6 +13,7 @@ bind({"cmd", "shift"},      "c",        lazy(task, "/usr/sbin/screencapture", {"
 bind({"cmd", "shift"},      "p",        screen.FocusNextScreen)
 bind({"cmd", "ctrl"},       "p",        screen.MoveToNextScreen)
 
-bind({"cmd", "shift"},      "f",        lazy(apps.fillWindowApp))
-bind({"cmd", "ctrl"},       "h",        lazy(apps.executeOnApp, "Safari", function(app) app:selectMenuItem({"Window", "Go to Previous Tab Group"}) end))
-bind({"cmd", "ctrl"},       "l",        lazy(apps.executeOnApp, "Safari", function(app) app:selectMenuItem({"Window", "Go to Next Tab Group"}) end))
+bind({"cmd", "ctrl"},       "f",        lazy(apps.executeOnApp, function(app) app:selectMenuItem({"Window", "Fill"}) end))
+
+bind({"cmd", "ctrl"},       "h",        lazy(apps.executeOnTitle, "Safari", function(app) app:selectMenuItem({"Window", "Go to Previous Tab Group"}) end))
+bind({"cmd", "ctrl"},       "l",        lazy(apps.executeOnTitle, "Safari", function(app) app:selectMenuItem({"Window", "Go to Next Tab Group"}) end))
