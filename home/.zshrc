@@ -25,6 +25,8 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 export LESSHISTFILE=-
 
+export TMUXP_CONFIGDIR="$HOME/.macfiles/sessions"
+
 export BAT_THEME='ansi'
 export CARGO_HOME="$HOME/.cargo/"
 export PYLINTHOME="${XDG_DATA_HOME}/pylint"

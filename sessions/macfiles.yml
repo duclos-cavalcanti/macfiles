@@ -1,0 +1,26 @@
+session_name: macfiles
+start_directory: ~/Documents/macfiles
+windows:
+  - window_name: home
+    layout: even-horizontal
+    panes:
+      - ls -l
+      - nvim Brewfile -c ":tabedit ~/.zshrc"
+  - window_name: nvim
+    shell_command_before:
+      - cd home/.config/nvim
+    panes:
+      - nvim init.lua
+  - window_name: term
+    shell_command_before:
+      - cd home/.config/wezterm
+    panes:
+      - nvim wezterm.lua
+  - window_name: tmux
+    panes:
+      - nvim home/.tmux.conf
+  - window_name: auto
+    shell_command_before:
+      - cd home/.hammerspoon
+    panes:
+      - nvim init.lua
