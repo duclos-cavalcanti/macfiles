@@ -15,17 +15,13 @@ end
 
 function M.Tabline(window, pane)
     local workspace = window:active_workspace()
-    local user = os.getenv("USER") or "user"
+    -- local user = os.getenv("USER") or "user"
 
     window:set_left_status(wezterm.format({
       { Foreground = { Color = colors.base08 } },
-      { Text = " " .. workspace .. ':' .. " " },
+      { Text = " " ..  workspace .. ':' .. " " },
     }))
-
-    window:set_right_status(wezterm.format({
-      { Foreground = { Color = colors.base0C } },
-      { Text = " " ..  user  .. " " },
-    }))
+    window:set_right_status(wezterm.format({ }))
 end
 
 return M
