@@ -125,10 +125,10 @@
 	<data>
 	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
 	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGkCwwVFlUkbnVsbNQNDg8QERIT
-	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNAJgAAAAAAABAQgAKAA15TRk1v
-	bm8tUmVndWxhctIXGBkaWiRjbGFzc25hbWVYJGNsYXNzZXNWTlNGb250ohkbWE5TT2Jq
-	ZWN0CBEaJCkyN0lMUVNYXmdud36FjpCSlKOos7zDxgAAAAAAAAEBAAAAAAAAABwAAAAA
-	AAAAAAAAAAAAAADP
+	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNAJgAAAAAAABAQgAKAA1pJb3Nl
+	dmthTkZN0hcYGRpaJGNsYXNzbmFtZVgkY2xhc3Nlc1ZOU0ZvbnSiGRtYTlNPYmplY3QI
+	ERokKTI3SUxRU1heZ253foWOkJKUn6SvuL/CAAAAAAAAAQEAAAAAAAAAHAAAAAAAAAAA
+	AAAAAAAAAMs=
 	</data>
 	<key>ProfileCurrentVersion</key>
 	<real>2.0699999999999998</real>
@@ -153,8 +153,10 @@
 	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
 	</data>
 	<key>name</key>
-	<string>gruvbox</string>
+	<string>profile</string>
 	<key>type</key>
 	<string>Window Settings</string>
+	<key>useOptionAsMetaKey</key>
+	<true/>
 </dict>
 </plist>
