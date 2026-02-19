@@ -8,8 +8,6 @@ local bind   = utils.bind
 local task   = utils.task
 local lazy   = utils.lazy
 
-bind({"cmd", "shift"},      "c",        lazy(task, "/usr/sbin/screencapture", {"-i", "-c"}))
-
 bind({"cmd", "shift"},      "p",        screen.FocusNextScreen)
 bind({"cmd", "ctrl"},       "p",        screen.MoveToNextScreen)
 
