@@ -410,41 +410,8 @@ local plugins = {
             vim.opt.termguicolors = true
 
             -- Get base16 palette from terminal colors
-            local get_base16_simple = function()
-                local utils = require('utils')
-                local term_color = utils.term_color
-                local M = {}
-
-                -- Error out if terminal colors aren't set
-                if not term_color(0) then
-                    M = dofile(os.getenv("MACFILES") .. "/themes/theme.lua")
-                    M.base00 = "#282828"
-                else
-                    M =  {
-                    base00 = term_color(0),   -- black (background)
-                    base01 = term_color(10),  -- bright green (lighter bg)
-                    base02 = term_color(11),  -- bright yellow (selection)
-                    base03 = term_color(8),   -- bright black (comments)
-                    base04 = term_color(12),  -- bright blue (dark fg)
-                    base05 = term_color(7),   -- white (foreground)
-                    base06 = term_color(13),  -- bright magenta (light fg)
-                    base07 = term_color(15),  -- bright white (lightest)
-                    base08 = term_color(1),   -- red
-                    base09 = term_color(9),   -- bright red (orange)
-                    base0A = term_color(3),   -- yellow
-                    base0B = term_color(2),   -- green
-                    base0C = term_color(6),   -- cyan
-                    base0D = term_color(4),   -- blue
-                    base0E = term_color(5),   -- magenta
-                    base0F = term_color(14),  -- bright cyan (brown)
-                }
-                end
-
-                return M
-            end
-
-            -- Use terminal colors only, error if unavailable
-            local M = get_base16_simple()
+            local M = dofile(os.getenv("MACFILES") .. "/themes/theme.lua")
+            M.base00 = "#282828"
 
             require('mini.base16').setup({
               palette = M,

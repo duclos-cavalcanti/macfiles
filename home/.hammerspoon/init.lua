@@ -12,7 +12,6 @@ bind({"cmd", "shift"},      "p",        screen.FocusNextScreen)
 bind({"cmd", "ctrl"},       "p",        screen.MoveToNextScreen)
 
 bind({"cmd", "ctrl"},       "f",        lazy(apps.executeOnApp, function(app) app:selectMenuItem({"Window", "Fill"}) end))
-
 bind({"cmd", "ctrl"},       "h",        lazy(apps.executeOnApp, function(app) app:selectMenuItem({"Window", "Move & Resize", "Left"}) end))
 bind({"cmd", "ctrl"},       "j",        lazy(apps.executeOnApp, function(app) app:selectMenuItem({"Window", "Move & Resize", "Bottom"}) end))
 bind({"cmd", "ctrl"},       "k",        lazy(apps.executeOnApp, function(app) app:selectMenuItem({"Window", "Move & Resize", "Top"}) end))
