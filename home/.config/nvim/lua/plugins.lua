@@ -276,31 +276,6 @@ local plugins = {
 
             require("sidekick").setup(opts)
         end,
-        dependencies = {
-            {
-                "zbirenbaum/copilot.lua",
-                cmd = "Copilot",
-                lazy = true,
-                config = function()
-                    require("copilot").setup({
-                        suggestion = {
-                            enabled = true,
-                            auto_trigger = true,
-                            keymap = {
-                                accept = "<C-o>",
-                                accept_word = false,
-                                accept_line = false,
-                                next = "<M-]>",
-                                prev = "<M-[>",
-                                dismiss = "<C-]>",
-                            },
-                        },
-                        panel = { enabled = false },
-                    })
-                end,
-            },
-            { 'nvim-lua/plenary.nvim', }
-        }
     },
     {
       "folke/snacks.nvim",
@@ -479,6 +454,7 @@ local plugins = {
             }
         end,
         },
+        { "esmuellert/codediff.nvim", cmd = "CodeDiff", },
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('Comment').setup() end, },
         { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },
@@ -513,14 +489,6 @@ local plugins = {
         },
     },
     { -- local
-        {
-            dir = vim.fn.stdpath("config") .. "/pack/plugins/start/moonspector",
-            name = "moonspector",
-            config = function()
-                require("moonspector").setup()
-                vim.api.nvim_set_keymap("n", "<C-w>m", "<cmd>MoonLaunch<CR>", {noremap=true, silent=true})
-            end,
-        },
         {
             dir = vim.fn.stdpath("config") .. "/pack/plugins/start/bullet",
             name = "bullet",

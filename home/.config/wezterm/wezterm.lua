@@ -64,7 +64,7 @@ c.keys = {
     { key = 'PageDown', mods = 'CTRL|SHIFT',        action = wezterm.action.MoveTabRelative(1) },
     { key = 'r',        mods = 'LEADER',            action = wezterm.action.PaneSelect { mode = 'SwapWithActive', alphabet='hjklgui' } },
     { key = '!',        mods = 'LEADER|SHIFT',      action = wezterm.action.PaneSelect { mode = 'MoveToNewTab', alphabet='hjklgui' } },
-    { key = 'z',        mods = 'CTRL',              action = wezterm.action.TogglePaneZoomState },
+    { key = 'z',        mods = 'LEADER',            action = wezterm.action.TogglePaneZoomState },
     { key = ',',        mods = 'LEADER',            action = tab.Rename() },
     { key = '0',        mods = 'LEADER',            action = workspace.SwitchToWorkspace("macfiles") },
     { key = '$',        mods = 'LEADER|SHIFT',      action = workspace.Rename() },
