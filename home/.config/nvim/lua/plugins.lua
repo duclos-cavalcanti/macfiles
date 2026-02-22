@@ -251,7 +251,7 @@ local plugins = {
                 nes = { enabled = false },
                 cli = {
                     mux = {
-                        enabled = false,
+                        enabled = true,
                         backend = "tmux",
                     },
                     win = {
