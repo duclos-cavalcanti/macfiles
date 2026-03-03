@@ -257,8 +257,8 @@ local plugins = {
                     win = {
                         layout = "float", -- Change from default "right" to "float"
                         float = {
-                            width = 0.8,                -- 60% of screen width
-                            height = 0.6,               -- 60% of screen height
+                            width = 0.9,                -- 60% of screen width
+                            height = 0.9,               -- 60% of screen height
                             row = 0.3,                  -- 20% from top (centers vertically: (100% - 60%) / 2 = 20%)
                             col = 0.4,                  -- 20% from left (centers horizontally: (100% - 60%) / 2 = 20%)
                             border = "rounded",         -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
