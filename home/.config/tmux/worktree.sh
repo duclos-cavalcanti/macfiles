@@ -19,10 +19,7 @@ main() {
     local selection=$( { echo "$new_branch_label"; git -C "$git_folder_path" branch -a --format='%(refname:short)' \
         | sed 's|^origin/||' \
         | grep -v '^HEAD$' \
-        | sort -u \
-        | grep -vxFf <(git -C "$git_folder_path" worktree list --porcelain \
-            | grep '^branch' \
-            | sed 's|branch refs/heads/||'); } \
+        | sort -u; } \
         | fzf --layout=reverse --tmux center,60%,border-native --exit-0 --prompt="worktree > ")
 
     [[ -z "$selection" ]] && print_and_exit "No branch selected" 0
@@ -35,10 +32,7 @@ main() {
             --print-query --prompt="new branch name > " 2>/dev/null | head -1)
         [[ -z "$branch" ]] && print_and_exit "No branch name entered" 0
 
-        local default_branch=$(git -C "$git_folder_path" symbolic-ref refs/remotes/origin/HEAD 2>/dev/null \
-            | sed 's|refs/remotes/origin/||')
-        [[ -z "$default_branch" ]] && default_branch="main"
-
+        local default_branch="master"
         local branch_sanitized="${branch//\//-}"
         local worktree="${parent_path}/${project}-${branch_sanitized}"
         session="${project}-${branch_sanitized}"
@@ -52,18 +46,16 @@ main() {
         local worktree="${parent_path}/${project}-${branch_sanitized}"
         session="${project}-${branch_sanitized}"
 
-        if [[ ! -d "$worktree" ]]; then
+        local already_checked_out
+        already_checked_out=$(git -C "$git_folder_path" worktree list --porcelain \
+            | awk -v b="refs/heads/$branch" '/^worktree /{wt=substr($0,10)} $0=="branch " b {print wt}')
+
+        if [[ -z "$already_checked_out" ]]; then
             local err
             err=$(git -C "$git_folder_path" worktree add "$worktree" "$branch" 2>&1)
             [[ $? -ne 0 ]] && print_and_exit "Failed: $err" 1
         fi
     fi
-
-    if ! tmux has-session -t "$session" 2>/dev/null; then
-        tmux new-session -d -s "$session" -c "$worktree"
-    fi
-
-    tmux switch-client -t "$session"
 }
 
 main $@
