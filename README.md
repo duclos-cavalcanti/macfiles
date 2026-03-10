@@ -8,7 +8,7 @@
 
 OS | Terminal | Editor | Shell
 ---|---|---|---
-[macOS](https://www.apple.com) | [wezterm](https://wezterm.org/index.html) | [neovim](https://github.com/neovim/neovim) | [zsh](https://www.zsh.org)
+[macOS](https://www.apple.com) | [Tmux](http://linuxcommand.org/lc3_man_pages/tmux1.html) | [neovim](https://github.com/neovim/neovim) | [zsh](https://www.zsh.org)
 
 </div></p>
 
