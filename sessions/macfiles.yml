@@ -5,17 +5,17 @@ windows:
     layout: even-horizontal
     panes:
       - ls -l
-      - nvim Brewfile -c ":tabedit ~/.zshrc"
+      - nvim README.md -c ":tabedit Brewfile"
+  - window_name: shell
+    shell_command_before:
+      - cd home/
+    panes:
+      - nvim .zshrc
   - window_name: nvim
     shell_command_before:
       - cd home/.config/nvim
     panes:
       - nvim init.lua
-  - window_name: term
-    shell_command_before:
-      - cd home/.config/wezterm
-    panes:
-      - nvim wezterm.lua
   - window_name: tmux
     panes:
       - nvim home/.tmux.conf
