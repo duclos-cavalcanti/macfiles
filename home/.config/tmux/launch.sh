@@ -18,7 +18,9 @@ main() {
     local session=$(basename "$folder")
 
     if ! tmux has-session -t "$session" 2>/dev/null; then
-        tmux new-session -d -s "$session" -c "$folder"
+        pushd "$folder"
+        tmux new-session -d -s "$session"
+        popd
     fi
     
     tmux switch-client -t "$session"

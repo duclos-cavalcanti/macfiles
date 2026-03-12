@@ -278,6 +278,28 @@ local plugins = {
         end,
     },
     {
+      "wsdjeg/picker.nvim",
+      event = "VeryLazy",
+      config = function()
+        require("picker").setup({
+            mappings = {
+                close = '<Esc>',
+                next_item = '<C-n>',
+                previous_item = '<C-p>',
+                open_item = '<Enter>',
+                toggle_preview = '<C-o>',
+            },
+        })
+      end,
+      keys = {
+            -- Top Pickers & Explorer
+            { "<leader>sf", "<cmd>Picker files<CR>", desc = "Find Files" },
+            { "<leader>sf", "<cmd>Picker buffers<CR>", desc = "Find Buffers" },
+            { "<leader>sl", "<cmd>Picker lines<CR>", desc = "Find Lines" },
+            { "<leader>sr", "<cmd>Picker lines<CR>", desc = "Find Lines" },
+        }
+    },
+    {
       "folke/snacks.nvim",
       priority = 1000,
       lazy = false,
@@ -306,7 +328,7 @@ local plugins = {
       },
       keys = {
         -- Top Pickers & Explorer
-        { "<leader>sf", function() Snacks.picker.files() end, desc = "Find Files" },
+        -- { "<leader>sf", function() Snacks.picker.files() end, desc = "Find Files" },
         { "<leader>sb", function() Snacks.picker.buffers() end, desc = "Buffers" },
         { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
         { "<leader>sbd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
