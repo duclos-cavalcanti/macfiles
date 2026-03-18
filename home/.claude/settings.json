@@ -1,11 +1,11 @@
 {
-  "model": "sonnet[1m]",
-  "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true
-  },
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash /Users/dduclos-cavalcanti/.macfiles/home/.claude/scripts/statusline.sh"
+  },
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true
   }
 }
