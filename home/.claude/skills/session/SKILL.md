@@ -1,12 +1,12 @@
 ---
 name: session
-description: Create a tmux session anchored to a given working directory and switch to it
+description: Create a tmux session anchored to a given working directory
 allowed-tools: Bash(tmux *), Bash(basename *), Bash(printenv TMUX)
 ---
 
 # Session Skill
 
-Create a new tmux session rooted at a user-specified directory and switch to it. Accepts an optional session name — if omitted, derive one from the directory.
+Create a new tmux session rooted at a user-specified directory. Accepts an optional session name — if omitted, derive one from the directory. **Never switch to the session unless the user explicitly asks to switch, open, or launch it.**
 
 ## Arguments
 
@@ -37,12 +37,11 @@ Create a new tmux session rooted at a user-specified directory and switch to it.
    tmux new-session -d -s "<name>" -c "<path>"
    ```
 
-5. Optionally switch to the new session:
-   - If the user asked to "switch", "open", or "launch" the session — switch to it:
-     ```bash
-     tmux switch-client -t "<name>"
-     ```
-   - If the user only asked to "create" the session, or intent is unclear — leave it detached and report that it's available
+5. **Do NOT switch to the session by default.** Only switch if the user explicitly asked to "switch", "open", or "launch":
+   ```bash
+   tmux switch-client -t "<name>"
+   ```
+   Otherwise, leave it detached and report that it's available.
 
 6. Report the session name and path to the user.
 
@@ -51,4 +50,4 @@ Create a new tmux session rooted at a user-specified directory and switch to it.
 - Always use exact-match (`=` prefix) with `has-session` to avoid prefix collisions
 - Never attach (`attach-session`) from inside tmux — always use `switch-client`
 - If the target path does not exist, tell the user and stop — do not create directories
-- If a session already exists with that name, switch to it and inform the user it was already running
+- If a session already exists with that name, inform the user it's already running — only switch if explicitly asked
