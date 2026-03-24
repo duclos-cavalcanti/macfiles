@@ -37,13 +37,20 @@ Create a new tmux session rooted at a user-specified directory. Accepts an optio
    tmux new-session -d -s "<name>" -c "<path>"
    ```
 
-5. **Do NOT switch to the session by default.** Only switch if the user explicitly asked to "switch", "open", or "launch":
+5. Split the initial window vertically and launch `claude` in the left pane:
+   ```bash
+   tmux split-window -h -t "<name>:1" -c "<path>"
+   tmux send-keys -t "<name>:1.0" "claude" C-m
+   ```
+   This creates pane A (left, index 0) and pane B (right, index 1). Pane A runs `claude`, pane B is a shell.
+
+6. **Do NOT switch to the session by default.** Only switch if the user explicitly asked to "switch", "open", or "launch":
    ```bash
    tmux switch-client -t "<name>"
    ```
    Otherwise, leave it detached and report that it's available.
 
-6. Report the session name and path to the user.
+7. Report the session name and path to the user.
 
 ## Rules
 
