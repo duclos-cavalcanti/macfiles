@@ -1,7 +1,7 @@
 ---
 name: session
 description: Create a tmux session anchored to a given working directory
-allowed-tools: Bash(tmux *), Bash(basename *), Bash(printenv TMUX)
+allowed-tools: Bash(tmux *), Bash(basename *), Bash(printenv TMUX), Bash(git *), Bash(ls *)
 ---
 
 # Session Skill
@@ -11,7 +11,7 @@ Create a new tmux session rooted at a user-specified directory. Accepts an optio
 ## Arguments
 
 - **path** (required) — the working directory for the session
-- **name** (optional) — the session name; defaults to the basename of the path
+- **name** (optional) — the session name; read the basename of the path, if a ticket-id cannot be inferred by it, use the basename as a default name.
 
 ## Steps
 
@@ -37,12 +37,21 @@ Create a new tmux session rooted at a user-specified directory. Accepts an optio
    tmux new-session -d -s "<name>" -c "<path>"
    ```
 
-5. Split the initial window vertically and launch `claude` in the left pane:
+5. Split the initial window and launch `claude` in the original (left) pane:
+
+   **Important:** Pane indices are often 1-based (not 0-based) depending on `pane-base-index`. Always discover the actual pane IDs dynamically instead of hardcoding indices.
+
    ```bash
-   tmux split-window -h -t "<name>:1" -c "<path>"
-   tmux send-keys -t "<name>:1.0" "claude" C-m
+   # Discover the original pane before splitting
+   _pane=$(tmux list-panes -t "<name>" -F "#{pane_id}" | head -1)
+
+   # Split horizontally — the new pane appears on the right
+   tmux split-window -h -t "<name>" -c "<path>"
+
+   # Launch claude in the original (left) pane
+   tmux send-keys -t "$_pane" "claude" C-m
    ```
-   This creates pane A (left, index 0) and pane B (right, index 1). Pane A runs `claude`, pane B is a shell.
+   This creates pane A (left, original) and pane B (right, new shell).
 
 6. **Do NOT switch to the session by default.** Only switch if the user explicitly asked to "switch", "open", or "launch":
    ```bash
