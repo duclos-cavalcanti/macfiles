@@ -386,6 +386,12 @@ local plugins = {
             vim.o.background = "dark"
             vim.cmd([[colorscheme gruvbox]])
 
+            vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#cc241d", bg = "NONE" })
+            vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn",  { undercurl = true, sp = "#d79921", bg = "NONE" })
+            vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo",  { undercurl = true, sp = "#458588", bg = "NONE" })
+            vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint",  { undercurl = true, sp = "#689d6a", bg = "NONE" })
+            vim.api.nvim_set_hl(0, "DiagnosticUnderlineOk",    { undercurl = true, sp = "#98971a", bg = "NONE" })
+
             -- local M = dofile(os.getenv("MACFILES") .. "/themes/theme.lua")
             -- M.base00 = "#282828"
             --

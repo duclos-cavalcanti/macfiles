@@ -1,11 +1,11 @@
-session_name: macfiles
+session_name: MACFILES
 start_directory: ~/.macfiles
 windows:
   - window_name: home
     layout: even-horizontal
     panes:
       - ls -l
-      - nvim README.md -c ":tabedit Brewfile"
+      - nvim home/.claude
   - window_name: shell
     shell_command_before:
       - cd home/
