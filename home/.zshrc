@@ -38,9 +38,7 @@ autoload -Uz vcs_info
 autoload -Uz is-at-least
 autoload -U colors && colors
 
-# emacs mode for CLI
-set -o emacs
-
+set -o emacs # emacs mode for CLI
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
@@ -49,10 +47,6 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt INC_APPEND_HISTORY
 setopt PROMPT_SUBST
-
-if [[ -r /usr/share/git/completion/git-completion.zsh ]]; then
-  source /usr/share/git/completion/git-completion.zsh
-fi
 
 if command -v brew &>/dev/null; then
     if [[ -d $(brew --prefix)/share/zsh-autosuggestions ]]; then
@@ -89,15 +83,8 @@ if command -v brew &>/dev/null; then
     fi
 fi
 
-clear-and-fg() {
-  zle kill-whole-line
-  echo
-  clear
-  fg 2>/dev/null
-  zle reset-prompt
-}
-zle -N clear-and-fg
-bindkey '^\' clear-and-fg
+bring-to-foreground() { zle kill-whole-line; echo; clear; fg 2>/dev/null; zle reset-prompt; }
+zle -N bring-to-foreground && bindkey '^@' bring-to-foreground
 
 # PROMPTS
 if [[ -n "$SSH_CONNECTION" ]]; then
@@ -132,10 +119,9 @@ else
     # - %3~: Truncates the path to the last 3 directories.
     # - ${vcs_info_msg_0_}: Inserts the formatted git string.
 
-    # local CHAR='%B%(?.%F{green}➜.%F{red}➜)%b'
-    local CHAR='%B%(?.%F{white} $ .%F{red} $ )%b%f'
     local DIRECTORY='%B%F{cyan}%1~%f%b'
     local GIT='${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}'
+    local CHAR=' $ %(?..[%?] )%b%f'
 
     PROMPT="${DIRECTORY}${GIT}${CHAR}"
 fi
@@ -227,6 +213,7 @@ fi
 
 # ALIASES
 alias v="nvim"
+alias soz="source ~/.zshrc"
 
 if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
   alias cat="bat -p"
