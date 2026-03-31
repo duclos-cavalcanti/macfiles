@@ -3,7 +3,7 @@
 pane=$(tmux display-message -p '#{pane_id}')
 tmpfile=$(mktemp /tmp/scratch-XXXXXX.md)
 
-tmux display-popup -E -w 80% -h 80% "nvim '$tmpfile'"
+tmux display-popup -E -w 80% -h 80% "nvim +startinsert '$tmpfile'"
 
 if [[ -s "$tmpfile" ]]; then
     tmux load-buffer "$tmpfile"

@@ -1,12 +1,11 @@
 # Exports
-export TERMINAL='wezterm'
+export TERMINAL='Terminal'
 export TERM='tmux-256color'
 export VISUAL='nvim'
 export EDITOR="nvim"
 export GIT_EDITOR='nvim'
 export DIFFPROG='nvim'
 export PAGER='less'
-
 export XDG_DESKTOP_DIR="$HOME/Desktop"
 export XDG_DOCUMENTS_DIR="$HOME/Documents"
 export XDG_DOWNLOAD_DIR="$HOME/Downloads"
@@ -19,19 +18,18 @@ export XDG_DATA_HOME="$HOME/.local/"
 export XDG_CACHE_HOME="$HOME/.cache/"
 export XDG_CONFIG_HOME="$HOME/.config/"
 export XDG_STATE_HOME="$HOME/.local/state"
-
 export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE=10000
 export SAVEHIST=10000
 export LESSHISTFILE=-
-
-export TMUXP_CONFIGDIR="$HOME/.macfiles/sessions"
-
 export BAT_THEME='ansi'
 export CARGO_HOME="$HOME/.cargo/"
 export PYLINTHOME="${XDG_DATA_HOME}/pylint"
 export IPYTHONDIR="$HOME/.config/ipython/"
 export AWS_PROFILE=custo-eng-dev
+
+export MACFILES="$HOME/.macfiles"
+export TMUXP_CONFIGDIR="$HOME/.macfiles/sessions"
 
 # Enable command auto-correction and completion
 autoload -Uz compinit && compinit
@@ -39,8 +37,6 @@ autoload -z edit-command-line
 autoload -Uz vcs_info
 autoload -Uz is-at-least
 autoload -U colors && colors
-
-export MACFILES="$HOME/.macfiles"
 
 # emacs mode for CLI
 set -o emacs
@@ -92,6 +88,16 @@ if command -v brew &>/dev/null; then
         bindkey -M emacs '^X^E' edit-command-line
     fi
 fi
+
+clear-and-fg() {
+  zle kill-whole-line
+  echo
+  clear
+  fg 2>/dev/null
+  zle reset-prompt
+}
+zle -N clear-and-fg
+bindkey '^\' clear-and-fg
 
 # PROMPTS
 if [[ -n "$SSH_CONNECTION" ]]; then
@@ -282,9 +288,9 @@ alias azlog="az login"
 alias metlog="az acr login -n metacodev"
 alias metfmt="cargo +nightly fmt && cargo clippy --all-targets --all-features --no-deps --fix --allow-dirty"
 
-cd() {
-  builtin cd "$@" && ls --color=auto
-}
+# cd() {
+#   builtin cd "$@" && ls --color=auto
+# }
 
 if command -v jq &>/dev/null; then
     js() {

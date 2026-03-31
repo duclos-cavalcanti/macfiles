@@ -1,4 +1,11 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(glab *)",
+      "mcp__atlassian__*",
+      "mcp__claude_ai_Atlassian__*"
+    ]
+  },
   "model": "opus[1m]",
   "statusLine": {
     "type": "command",
@@ -9,12 +16,5 @@
     "pyright-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true
   },
-  "effortLevel": "medium",
-  "permissions": {
-    "allow": [
-      "Bash(glab *)",
-      "mcp__atlassian__*",
-      "mcp__claude_ai_Atlassian__*"
-    ]
-  }
+  "effortLevel": "high"
 }

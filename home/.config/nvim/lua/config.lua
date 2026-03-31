@@ -103,6 +103,10 @@ vim.keymap.set('n', '<C-p>', function()
     end
 end, {noremap=true, silent=true, desc="Next quickfix item (if quickfix is open)"})
 
+vim.api.nvim_create_autocmd("VimResized", {
+    command = "wincmd =",
+})
+
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.lua",
     callback = function()
