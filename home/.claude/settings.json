@@ -18,5 +18,18 @@
     "pyright-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true
   },
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/scripts/claude-signal.sh done",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
 }
