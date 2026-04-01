@@ -19,4 +19,4 @@ while read -r name; do
     fi
 done < <(tmux list-sessions -F '#{session_name}')
 
-echo "#[align=centre]$sessions"
+echo "#[align=left]$sessions"

@@ -306,7 +306,7 @@ local plugins = {
       },
       keys = {
         -- Top Pickers & Explorer
-        { "<leader>sf", function() Snacks.picker.files() end, desc = "Find Files" },
+        { "<leader>sf", function() Snacks.picker.files({ hidden = true }) end, desc = "Find Files" },
         { "<leader>sb", function() Snacks.picker.buffers() end, desc = "Buffers" },
         { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
         { "<leader>sbd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
