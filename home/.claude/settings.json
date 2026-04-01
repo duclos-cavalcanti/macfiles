@@ -2,6 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(glab *)",
+      "Bash(tmux *)",
+      "Bash(printenv TMUX)",
       "mcp__atlassian__*",
       "mcp__claude_ai_Atlassian__*"
     ]
