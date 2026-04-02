@@ -28,9 +28,8 @@ find_session_by_path() {
         | awk -F'|' -v p="$path" '$2 == p {print $1}'
 }
 
-create_worktree() {
+main() {
     local git_root=$(get_git_root)
-
     local worktree
     worktree=$(list_worktrees "$git_root" \
         | fzf --layout=reverse --tmux center,60%,border-native --exit-0 --prompt="worktree > ")
@@ -40,35 +39,7 @@ create_worktree() {
     local session
     session=$(find_session_by_path "$worktree")
 
-    if [[ -n "$session" ]]; then
-        tmux switch-client -t "$session"
-    else
-        session=$(basename "$worktree")
-        tmux new-session -d -s "$session" -c "$worktree"
-        tmux switch-client -t "$session"
-    fi
+    echo "${worktree},${session}"
 }
 
-delete_worktree() {
-    local git_root=$(get_git_root)
-
-    local worktree
-    worktree=$(list_worktrees "$git_root" | fzf --layout=reverse --tmux center,60%,border-native --exit-0 --prompt="delete worktree > ")
-
-    [[ -z "$worktree" ]] && print_and_exit "No worktree selected" 0
-
-    local err
-    err=$(git -C "$git_root" worktree remove "$worktree" 2>&1)
-    [[ $? -ne 0 ]] && print_and_exit "Failed: $err" 1
-
-    local session
-    session=$(find_session_by_path "$worktree")
-    [[ -n "$session" ]] && tmux kill-session -t "$session"
-
-    print_and_exit "Deleted: $(basename "$worktree")" 0
-}
-
-case "$1" in
-    delete) delete_worktree ;;
-    *)      create_worktree ;;
-esac
+main "$@"
