@@ -21,11 +21,14 @@ while read -r name; do
     sessions+=("$name")
 done < <(tmux list-sessions -F '#{session_name}')
 
-# Switch to first session with a "done" signal
+# Switch to first session with DONE or ATTENTION signals
 for name in "${sessions[@]}"; do
-    if [[ -f "$SIGNAL_DIR/$name" ]] && [[ "$(cat "$SIGNAL_DIR/$name")" == "done" ]]; then
-        tmux switch-client -t "$name"
-        exit 0
+    if [[ -f "$SIGNAL_DIR/$name" ]]; then 
+        val="$(cat "$SIGNAL_DIR/$name")"
+        if [[ "$val" == "DONE" ]] || [[ "$val" == "ATTENTION" ]]; then
+            tmux switch-client -t "$name"
+            exit 0
+        fi
     fi
 done
 

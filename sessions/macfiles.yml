@@ -5,21 +5,13 @@ windows:
     layout: even-horizontal
     panes:
       - claude
-      - cd home && nvim .
-  - window_name: shell
-    shell_command_before:
-      - cd home/
-    panes:
-      - nvim .zshrc
+      - cd home && nvim .tmux.conf -c ":tabedit .zshrc | tabedit .bashrc | tabnext"
   - window_name: nvim
     shell_command_before:
       - cd home/.config/nvim
     panes:
       - nvim init.lua
-  - window_name: tmux
-    panes:
-      - nvim home/.tmux.conf
-  - window_name: auto
+  - window_name: os
     shell_command_before:
       - cd home/.hammerspoon
     panes:

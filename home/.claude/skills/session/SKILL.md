@@ -37,20 +37,26 @@ Create a new tmux session rooted at a user-specified directory. Accepts an optio
    tmux new-session -d -s "<name>" -c "<path>"
    ```
 
-5. Split the initial window and launch `claude` in the original (left) pane:
+5. Split the initial window and launch `claude` in the original (left) pane.
 
-   **Important:** Pane indices are often 1-based (not 0-based) depending on `pane-base-index`. Always discover the actual pane IDs dynamically instead of hardcoding indices.
+   **Important:** Issue three **separate** Bash calls (each starting with `tmux`) so the existing `Bash(tmux *)` permission rule covers them. Never chain these into one command with variable assignment.
 
+   **Call 1** — discover the original pane ID:
    ```bash
-   # Discover the original pane before splitting
-   _pane=$(tmux list-panes -t "<name>" -F "#{pane_id}" | head -1)
-
-   # Split horizontally — the new pane appears on the right
-   tmux split-window -h -t "<name>" -c "<path>"
-
-   # Launch claude in the original (left) pane
-   tmux send-keys -t "$_pane" "claude" C-m
+   tmux list-panes -t "<name>" -F "#{pane_id}" | head -1
    ```
+   Save the output (e.g. `%42`) for Call 3.
+
+   **Call 2** — split horizontally (new pane appears on the right):
+   ```bash
+   tmux split-window -h -t "<name>" -c "<path>"
+   ```
+
+   **Call 3** — launch claude in the original (left) pane, using the pane ID from Call 1:
+   ```bash
+   tmux send-keys -t "%42" "claude" C-m
+   ```
+
    This creates pane A (left, original) and pane B (right, new shell).
 
 6. **Do NOT switch to the session by default.** Only switch if the user explicitly asked to "switch", "open", or "launch":

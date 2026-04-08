@@ -1,6 +1,6 @@
 <h1 align="center">(mac)files</h1>
 <p align="center">
-    Personal macOS dotfiles and system setup automation.
+    Personal dotfiles and system setup automation.
 </p>
 <br>
 
@@ -8,7 +8,7 @@
 
 OS | Terminal | Editor | Shell
 ---|---|---|---
-[macOS](https://www.apple.com) | [Tmux](http://linuxcommand.org/lc3_man_pages/tmux1.html) | [neovim](https://github.com/neovim/neovim) | [zsh](https://www.zsh.org)
+[macOS](https://www.apple.com) | [tmux](http://linuxcommand.org/lc3_man_pages/tmux1.html) | [neovim](https://github.com/neovim/neovim) | [zsh](https://www.zsh.org)
 
 </div></p>
 

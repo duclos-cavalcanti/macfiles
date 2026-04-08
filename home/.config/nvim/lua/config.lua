@@ -72,8 +72,8 @@ vim.api.nvim_set_keymap("n", "z.", "zszH", {noremap=true, silent=true})
 -- tabs
 vim.api.nvim_set_keymap("n", "<M-k>", ":tabnext<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "<M-j>", ":tabprev<CR>", {noremap=true, silent=true})
-vim.api.nvim_set_keymap("n", "<M-S-k>", ":tabmove +1<CR>", {noremap=true, silent=true})
-vim.api.nvim_set_keymap("n", "<M-S-j>", ":tabmove -1<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<M-l>", ":tabmove +1<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<M-h>", ":tabmove -1<CR>", {noremap=true, silent=true})
 
 -- terminal
 vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", {noremap=true, silent=true})

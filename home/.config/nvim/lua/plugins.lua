@@ -224,27 +224,14 @@ local plugins = {
         "folke/sidekick.nvim",
         lazy = true,
         keys = {
-            { "<C-g>w", function() require('sidekick.cli').select() end, desc = "Sidekick Select" },
-            { "<C-g>o", function() require('sidekick.cli').show() end, desc = "Sidekick Show" },
-            { "<C-g>n", function()
-                if not require('sidekick').nes_jump_or_apply() then
-                    return '<Tab>'
-                end
-            end, expr = true, desc = "Goto/Apply Next Edit Suggestion" },
-            { "<C-g>i", function() require('sidekick.cli').send({ msg = '{this}' }) end, mode = "x", desc = "Send This" },
-            { "<C-g>f", function() require('sidekick.cli').send({ msg = '{file}' }) end, desc = "Send File" },
-            { "<C-g>p", function() require('sidekick.cli').prompt() end, mode = { "n", "x" }, desc = "Sidekick Select Prompt" },
-            { "<C-g>a", function() require('sidekick.cli').accept() end, desc = "Sidekick Accept Suggestion" },
-            { "<C-g>d", function()
-                local origin = vim.fn.getcwd()
-                require('utils').pick_dir(function(dir)
-                    vim.cmd('cd ' .. vim.fn.fnameescape(dir))
-                    require('sidekick.cli').select()
-                    vim.schedule(function()
-                        vim.cmd('cd ' .. vim.fn.fnameescape(origin))
-                    end)
-                end)
-            end, desc = "Sidekick in Directory" },
+            { "<C-g>w", function() require('utils.ai').select() end, desc = "Sidekick Select" },
+            { "<C-g>o", function() require('utils.ai').show() end, desc = "Sidekick Show" },
+            { "<C-g>n", function() return require('utils.ai').jump_or_apply() end, expr = true, desc = "Goto/Apply Next Edit Suggestion" },
+            { "<C-g>i", function() require('utils.ai').send_this() end, mode = "x", desc = "Send This" },
+            { "<C-g>f", function() require('utils.ai').send_file() end, desc = "Send File" },
+            { "<C-g>p", function() require('utils.ai').prompt() end, mode = { "n", "x" }, desc = "Sidekick Select Prompt" },
+            { "<C-g>a", function() require('utils.ai').accept() end, desc = "Sidekick Accept Suggestion" },
+            { "<C-g>d", function() require('utils.ai').select_in_dir() end, desc = "Sidekick in Directory" },
         },
         config = function()
             local opts = {
