@@ -436,21 +436,6 @@ local plugins = {
         end,
     },
     { -- utils
-        {
-        'akinsho/toggleterm.nvim',
-        version = "*",
-        config = function()
-            vim.o.hidden = true
-
-            require("toggleterm").setup{
-                open_mapping = [[<space><space>]],
-                direction = 'float',
-                persist_mode = true,
-                persist_size = true,
-                insert_mappings = true,
-            }
-        end,
-        },
         { "esmuellert/codediff.nvim", cmd = "CodeDiff", },
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('Comment').setup() end, },
