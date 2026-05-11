@@ -167,6 +167,51 @@ source-file path                                   Load and execute a tmux confi
 if-shell shell-command command                     Run tmux command if shell command succeeds
 ```
 
+### `send-keys` gotcha — paste-detection suppresses auto-Enter for long prompts
+
+Some TUIs (Claude Code, some terminal editors) run paste-detection
+heuristics on incoming keystrokes. When a `send-keys "TEXT" C-m` call
+crosses an internal length/rate threshold, the TUI categorises the whole
+burst as a **pasted block** and intentionally strips the trailing newline
+to prevent accidental submission of multi-line paste content. The text
+lands in the input buffer but the app sits idle waiting for a real
+keystroke.
+
+Empirically validated against Claude Code:
+- Short prompts (e.g. ~20 chars) → single-call `send-keys "text" C-m` submits fine.
+- Long prompts (~180+ chars) → Enter is suppressed; user must press Enter manually.
+
+**Fix — split the text and the Enter into separate calls, with a sleep
+between them so the paste-detection window closes before C-m arrives:**
+
+```bash
+tmux send-keys -t "%42" "your long prompt here"
+sleep 1
+tmux send-keys -t "%42" C-m
+```
+
+For plain shells (bash/zsh), `send-keys "cmd" C-m` in one call works
+regardless of length — shells don't run paste-detection on send-keys
+input (tmux doesn't wrap the input in bracketed-paste markers).
+
+### `capture-pane` and TUIs
+
+`tmux capture-pane -p <target>` returns the visible content of a pane.
+**It works for TUIs** (Claude Code, vim, less, htop) — the pane's screen
+content is captured whether the TUI is using the primary or the
+alternate screen buffer.
+
+Useful flags:
+- `-p` print to stdout (most common)
+- `-S -<N>` include N lines of scrollback history
+- `-J` join wrapped lines
+- `-a` capture the alternate screen buffer specifically (only populated
+  if the TUI has flipped into it and is holding content there)
+
+If a capture comes back blank against a running TUI, it's typically
+a timing issue — the TUI was mid-redraw at capture time, not a
+fundamental limitation. Retry after a small sleep.
+
 ---
 
 ## Buffers & Clipboard

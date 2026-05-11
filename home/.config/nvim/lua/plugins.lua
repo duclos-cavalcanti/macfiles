@@ -442,33 +442,6 @@ local plugins = {
         { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },
         { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, },
         { 'ruifm/gitlinker.nvim', dependencies = 'nvim-lua/plenary.nvim', config = function() require"gitlinker".setup() end, },
-        { 'MeanderingProgrammer/render-markdown.nvim',
-            dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },
-            ---@module 'render-markdown'
-            ---@type render.md.UserConfig
-            opts = {},
-            config = function()
-                require('render-markdown').setup({
-                    enabled = false,
-                })
-            end
-        },
-        {
-            "iamcco/markdown-preview.nvim",
-            cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-            build = "cd app && yarn install",
-            init = function()
-                vim.g.mkdp_filetypes = { "markdown" }
-                vim.cmd[[
-                    function OpenMarkdownPreview (url)
-                        echo "Markdown Preview URL: " . a:url
-                        let @+ = a:url
-                    endfunction
-                    let g:mkdp_browserfunc = 'OpenMarkdownPreview'
-                ]]
-            end,
-            ft = { "markdown" },
-        },
     },
     { -- local
         {

@@ -1,0 +1,29 @@
+# Ghostty config — read by cmux on startup.
+# Reload from cmux: Cmd+Shift+, (reloadConfiguration).
+
+# Theme — Gruvbox Dark Hard, bundled with cmux.app.
+# Available variants: Gruvbox Dark, Gruvbox Dark Hard, Gruvbox Light,
+# Gruvbox Light Hard, Gruvbox Material, Gruvbox Material Dark,
+# Gruvbox Material Light.
+theme = Gruvbox Dark Hard
+
+# Font — installed via Brewfile (font-iosevka-nerd-font).
+font-family = Iosevka Nerd Font
+font-size = 12.5
+
+# Cursor.
+cursor-style = block
+cursor-style-blink = false
+
+# Padding around the terminal contents.
+window-padding-x = 6
+window-padding-y = 4
+window-padding-balance = true
+
+# Treat the macOS Option key as Alt so `M-` bindings (e.g. tmux M-Tab) work.
+macos-option-as-alt = true
+
+# Quality-of-life.
+mouse-hide-while-typing = true
+copy-on-select = clipboard
+confirm-close-surface = false

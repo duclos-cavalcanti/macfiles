@@ -9,6 +9,10 @@ export TMUXP_CONFIGDIR="$HOME/.macfiles/sessions"
 export BAT_THEME='ansi'
 export AWS_PROFILE=custo-eng-dev
 
+if [ -f "/Users/dduclos-cavalcanti/Work/zshenv" ]; then 
+    source "/Users/dduclos-cavalcanti/Work/zshenv"
+fi
+
 # XDG
 export XDG_DESKTOP_DIR="$HOME/Desktop"
 export XDG_DOCUMENTS_DIR="$HOME/Documents"
@@ -80,7 +84,23 @@ if command -v brew &>/dev/null; then
 fi
 
 # Keybindings & widgets
-bring-to-foreground() { zle kill-whole-line; echo; clear; fg 2>/dev/null; zle reset-prompt; }
+bring-to-foreground() {
+    zle kill-whole-line; echo; clear; 
+    local njobs=$(jobs | wc -l | tr -d ' ')
+    if [[ "$njobs" -eq 0 ]]; then
+        zle -M "No background jobs"
+        return
+    elif [[ "$njobs" -eq 1 ]]; then
+        fg 2>/dev/null; zle reset-prompt
+        return
+    fi
+    local selection=$(jobs -l | fzf --height=~40% --reverse --prompt="fg> " | sed 's/^\[//' | cut -d']' -f1)
+    if [[ -n "$selection" ]]; then
+        fg %"$selection" 2>/dev/null; zle reset-prompt
+    else
+        zle reset-prompt
+    fi
+}
 zle -N bring-to-foreground && bindkey '^@' bring-to-foreground
 
 # Prompt
