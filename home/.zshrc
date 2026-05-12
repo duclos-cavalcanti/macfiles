@@ -83,26 +83,6 @@ if command -v brew &>/dev/null; then
     fi
 fi
 
-# Keybindings & widgets
-bring-to-foreground() {
-    zle kill-whole-line; echo; clear; 
-    local njobs=$(jobs | wc -l | tr -d ' ')
-    if [[ "$njobs" -eq 0 ]]; then
-        zle -M "No background jobs"
-        return
-    elif [[ "$njobs" -eq 1 ]]; then
-        fg 2>/dev/null; zle reset-prompt
-        return
-    fi
-    local selection=$(jobs -l | fzf --height=~40% --reverse --prompt="fg> " | sed 's/^\[//' | cut -d']' -f1)
-    if [[ -n "$selection" ]]; then
-        fg %"$selection" 2>/dev/null; zle reset-prompt
-    else
-        zle reset-prompt
-    fi
-}
-zle -N bring-to-foreground && bindkey '^@' bring-to-foreground
-
 # Prompt
 if [[ -n "$SSH_CONNECTION" ]]; then
     export PS1="%n@%m: %~ \$ "
@@ -283,10 +263,31 @@ fi
 
 # Integrations — fzf
 if command -v fzf &>/dev/null; then
+
     export FZF_DEFAULT_COMMAND="fd --follow --hidden --type f --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
     export FZF_ALT_C_COMMAND="fd --follow --hidden --type d --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
     [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
     [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
+
+
+    bring-to-foreground() {
+        local njobs=$(jobs | wc -l | tr -d ' ')
+        if [[ "$njobs" -eq 0 ]]; then
+            echo "No background jobs"
+            return
+        elif [[ "$njobs" -eq 1 ]]; then
+            fg 2>/dev/null
+            return
+        fi
+
+        local selection=$(jobs -l | fzf --height=~40% --reverse --prompt="fg> " | sed 's/^\[//' | cut -d']' -f1)
+        if [[ -n "$selection" ]]; then
+            fg %"$selection" 2>/dev/null
+        else
+            zle reset-prompt
+        fi
+    }
+    alias Fg='bring-to-foreground'
 fi

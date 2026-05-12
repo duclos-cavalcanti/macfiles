@@ -27,3 +27,7 @@ macos-option-as-alt = true
 mouse-hide-while-typing = true
 copy-on-select = clipboard
 confirm-close-surface = false
+
+# Splits — keep unfocused panes readable while still signalling focus.
+# 1.0 disables dimming entirely; 0.92 leaves a subtle hint.
+unfocused-split-opacity = 0.92

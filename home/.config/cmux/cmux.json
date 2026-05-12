@@ -2,14 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
   "schemaVersion": 1,
 
-  // JSONC: comments and trailing commas allowed.
-  // Any key set here is file-managed and overrides the in-app Settings value.
-  // Remove a key to fall back to whatever Settings has saved.
-
   "app": {
     "appearance": "dark",
     "preferredEditor": "nvim",
     "openMarkdownInCmuxViewer": true,
+    "reorderOnNotification": false,              // keep workspaces pinned in sidebar order
     "warnBeforeQuit": true,
     "sendAnonymousTelemetry": false
   },
@@ -36,7 +33,7 @@
   "browser": {
     "defaultSearchEngine": "duckduckgo",
     "theme": "dark",
-    "openTerminalLinksInCmuxBrowser": false
+    "openTerminalLinksInCmuxBrowser": true
   },
 
   "automation": {
@@ -46,22 +43,34 @@
     "portRange": 10
   },
 
-  // Bindings — grouped by topic, mirroring the style of ~/.tmux.conf.
-  // Each line restates a cmux stock default from web/data/cmux-shortcuts.ts
-  // so this file doubles as a cheatsheet.
+  // Bindings
   "shortcuts": {
     "showModifierHoldHints": true,
     "bindings": {
+
       // Copy mode
       "toggleTerminalCopyMode":       "cmd+shift+m",
+
+      // Sidebar
+      "toggleSidebar":                "cmd+b",         // left sidebar
+      "toggleFileExplorer":           "cmd+e",         // right sidebar — experimental: not in schema enum, editor will warn
+      "focusRightSidebar":            "cmd+shift+e",
+
+      // Sidebar — modes (context: right sidebar focused)
+      "switchRightSidebarToFiles":    "ctrl+1",
+      "switchRightSidebarToFind":     "ctrl+2",
+      "switchRightSidebarToSessions": "ctrl+3",
+      "switchRightSidebarToFeed":     "ctrl+4",
+      "switchRightSidebarToDock":     "ctrl+5",
+
 
       // Splits (panes) — management
       "splitRight":                   "cmd+d",
       "splitDown":                    "cmd+shift+d",
-      "splitBrowserRight":            "opt+cmd+d",
-      "splitBrowserDown":             "opt+cmd+shift+d",
+      "splitBrowserRight":            "cmd+i",
+      "splitBrowserDown":             "cmd+shift+i",
       "equalizeSplits":               "cmd+ctrl+=",
-      "toggleSplitZoom":              "cmd+ctrl+return",
+      "toggleSplitZoom":              "cmd+z",
 
       // Splits (panes) — navigation
       "focusLeft":                    "cmd+ctrl+h",
@@ -71,10 +80,10 @@
 
       // Surfaces (windows) — management
       "newSurface":                   "cmd+t",
-      "closeTab":                     "cmd+w",
-      "closeOtherTabsInPane":         "opt+cmd+t",
       "renameTab":                    "cmd+r",             // context: terminal pane focused
-      "reopenClosedBrowserPanel":     "cmd+shift+t",
+      "closeTab":                     "cmd+w",
+      "closeOtherTabsInPane":         "cmd+ctrl+w",
+      "reopenClosedBrowserPanel":     "cmd+shift+z",
       "saveFilePreview":              "cmd+s",             // context: text preview focused
 
       // Surfaces (windows) — navigation
@@ -86,26 +95,15 @@
       "newTab":                       "cmd+n",             // legacy action id; actually "new workspace"
       "openFolder":                   "cmd+o",
       "closeWorkspace":               "cmd+shift+w",
-      "renameWorkspace":              "cmd+shift+r",
+      "renameWorkspace":              "cmd+ctrl+r",
       "editWorkspaceDescription":     "opt+cmd+e",
       "reopenPreviousSession":        "cmd+shift+o",
 
       // Workspaces (sessions) — navigation
       "goToWorkspace":                "cmd+p",             // workspace switcher
-      "nextSidebarTab":               "ctrl+cmd+]",        // next workspace
-      "prevSidebarTab":               "ctrl+cmd+[",        // prev workspace
+      "nextSidebarTab":               "ctrl+cmd+n",        // next workspace
+      "prevSidebarTab":               "ctrl+cmd+p",        // prev workspace
       "selectWorkspaceByNumber":      "cmd+1",             // covers cmd+1..9 internally
-
-      // Sidebar
-      "toggleSidebar":                "cmd+b",
-      "focusRightSidebar":            "cmd+shift+e",
-
-      // Sidebar — modes (context: right sidebar focused)
-      "switchRightSidebarToFiles":    "ctrl+1",
-      "switchRightSidebarToFind":     "ctrl+2",
-      "switchRightSidebarToSessions": "ctrl+3",
-      "switchRightSidebarToFeed":     "ctrl+4",
-      "switchRightSidebarToDock":     "ctrl+5",
 
       // Command palette
       "commandPalette":               "cmd+shift+p",
@@ -113,7 +111,7 @@
       "commandPalettePrevious":       "ctrl+p",            // context: palette open
 
       // Browser — navigation
-      "openBrowser":                  "cmd+shift+l",
+      "openBrowser":                  "cmd+shift+t",
       "focusBrowserAddressBar":       "cmd+l",
       "browserBack":                  "cmd+[",
       "browserForward":               "cmd+]",
@@ -133,12 +131,12 @@
       "find":                         "cmd+f",
       "findInDirectory":              "cmd+shift+f",
       "findNext":                     "cmd+g",
-      "findPrevious":                 "opt+cmd+g",
-      "hideFind":                     "opt+cmd+shift+f",
+      "findPrevious":                 "cmd+shift+g",
+      "hideFind":                     "opt+cmd+f",
       "useSelectionForFind":          "cmd+e",
 
       // Notifications
-      "showNotifications":            "cmd+i",
+      "showNotifications":            "cmd+m",
       "jumpToUnread":                 "cmd+shift+u",
       "triggerFlash":                 "cmd+shift+h",
 
