@@ -6,14 +6,13 @@
 
 <p><div align="center" width="100%">
 
-OS | Terminal | Editor | Shell
----|---|---|---
-[macOS](https://www.apple.com) | [tmux](http://linuxcommand.org/lc3_man_pages/tmux1.html) | [neovim](https://github.com/neovim/neovim) | [zsh](https://www.zsh.org)
+OS | Agentic-Tooling | Terminal | Editor | Shell
+---|---|---|---|---
+[macOS](https://www.apple.com)| [claude](https://platform.claude.com/docs/en/home) | [cmux](https://cmux.com/)/[tmux](http://linuxcommand.org/lc3_man_pages/tmux1.html) | [neovim](https://github.com/neovim/neovim) | [zsh](https://www.zsh.org)
 
 </div></p>
 
 ## 1. Installation
-
 
 ```bash
 ./install.sh
@@ -26,4 +25,3 @@ OS | Terminal | Editor | Shell
 - **fd** _(find)_
 - **eza** _(ls)_
 - **bat** _(cat)_
-- **Hammerspoon** _(automation)_

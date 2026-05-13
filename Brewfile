@@ -2,15 +2,16 @@ cask_args appdir: '/Applications'
 
 # taps
 tap "jesseduffield/lazydocker"
+tap "manaflow-ai/cmux"
 
 # base
-cask "hammerspoon"
 brew "nvim"
 cask "wezterm"
+cask "cmux"
 brew "tmux"
 brew "tmuxp"
 brew "lazygit"
-brew "lazydocker" 
+brew "lazydocker"
 brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"

@@ -356,10 +356,10 @@ local plugins = {
       end,
     },
     { -- themes/ui
-        'nvim-mini/mini.base16',
+        'ellisonleao/gruvbox.nvim',
         version = '*',
+        priority = 1000,
         dependencies = {
-                { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
                 "nvim-lualine/lualine.nvim",
                 'kyazdani42/nvim-web-devicons',
                 {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
@@ -383,20 +383,6 @@ local plugins = {
             vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo",  { underline = true, sp = "#458588" })
             vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint",  { underline = true, sp = "#689d6a" })
             vim.api.nvim_set_hl(0, "DiagnosticUnderlineOk",    { underline = true, sp = "#98971a" })
-
-            -- local M = dofile(os.getenv("MACFILES") .. "/themes/theme.lua")
-            -- M.base00 = "#282828"
-            --
-            -- require('mini.base16').setup({
-            --   palette = M,
-            --   use_cterm = true,
-            --   plugins = {
-            --     default = false,
-            --     ['nvim-mini/mini.nvim'] = true,
-            --     ['akinsho/bufferline.nvim'] = true,
-            --     ['nvim-lualine/lualine.nvim'] = true,
-            --   },
-            -- })
 
             require("bufferline").setup {
                 options = {

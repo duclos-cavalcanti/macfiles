@@ -49,6 +49,9 @@ function install_ai() {
 function main() {
     print_status "Starting macfiles setup..."
 
+    # Run from the repo root regardless of where the script is invoked from.
+    cd "$(dirname "$0")" || exit 1
+
     # Check if we're on macOS
     if [[ "$OSTYPE" != "darwin"* ]]; then
         echo "This script is designed for macOS only."
