@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Skip if not in a tmux session — keeps the cmux workflow noise-free.
+[[ -z "$TMUX" ]] && exit 0
+
 SIGNAL_DIR="$HOME/.cache/claude-signals"
 [[ -d "$SIGNAL_DIR" ]] || exit 0
 

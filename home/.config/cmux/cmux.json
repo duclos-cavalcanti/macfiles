@@ -70,7 +70,7 @@
       "splitBrowserRight":            "cmd+i",
       "splitBrowserDown":             "cmd+shift+i",
       "equalizeSplits":               "cmd+ctrl+m",
-      "toggleSplitZoom":              "cmd+z",
+      "toggleSplitZoom":              "cmd+ctrl+return",
 
       // Splits (panes) — navigation
       "focusLeft":                    "cmd+ctrl+h",
