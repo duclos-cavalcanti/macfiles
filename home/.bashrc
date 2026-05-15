@@ -81,23 +81,9 @@ if [[ -d /opt/homebrew ]]; then
     export DYLD_LIBRARY_PATH="$HOMEBREW_PREFIX/opt/sqlite/lib:$HOMEBREW_PREFIX/lib:/usr/local/lib"
 fi
 
-# Go
-if command -v go &>/dev/null; then
-    export GOPATH="$HOME/.go"
-    export PATH=$PATH:$GOPATH/bin
-fi
-
 # Rust
 export CARGO_HOME="$HOME/.cargo/"
 export PATH=$PATH:$HOME/.cargo/bin
-
-# Node.js
-if command -v npm &>/dev/null; then
-    export NPM_CONFIG_PREFIX="$HOME/.node_modules"
-    export N_PREFIX="$HOME/.n"
-    export NODE="$HOME/.n/bin/node"
-    export PATH=$PATH:$HOME/.n/bin:$HOME/.node_modules:$HOME/.node_modules/bin
-fi
 
 # Aliases — general
 alias v='nvim'
@@ -108,8 +94,6 @@ alias ll='ls -l --color=auto'
 
 alias ..='cd ..'
 alias ...='cd ../..'
-alias mv='mv -i'
-alias cp='cp -i'
 alias less='less -R'
 alias diff='diff --color=auto'
 alias grep='grep --colour=auto'
