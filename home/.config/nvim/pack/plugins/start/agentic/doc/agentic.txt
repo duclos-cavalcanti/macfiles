@@ -1,0 +1,45 @@
+*agentic.txt*    Send file/selection refs to a tmux/cmux agent pane
+
+==============================================================================
+INTRODUCTION                                              *agentic-introduction*
+
+agentic is a tiny local plugin that forwards a reference to the current file
+(or visual selection) into a running CLI agent (e.g. claude) on an adjacent
+tmux pane or cmux surface, then focuses that pane/surface.
+
+Reference format mirrors GitHub-style anchors:
+
+    @path/to/file              normal mode
+    @path/to/file#L4-6         visual selection (range)
+    @path/to/file#L4           visual selection (single line)
+
+Paths are relative to the git root when available, else to cwd.
+
+==============================================================================
+COMMANDS                                                      *agentic-commands*
+
+:AgenticSendFile                                            *:AgenticSendFile*
+    Send the current buffer's file reference.
+
+:AgenticSendSelection                                  *:AgenticSendSelection*
+    Send the current visual selection as a line-range reference.
+
+==============================================================================
+BACKENDS                                                      *agentic-backends*
+
+Detection order:
+
+    1. $TMUX set         → tmux backend
+    2. `cmux ping` ok   → cmux backend
+    3. otherwise         → vim.notify warning, no-op
+
+Tmux backend finds the target pane by scanning panes in the current session
+for one whose child process matches `claude`, then uses load-buffer +
+paste-buffer + send-keys Enter, then `select-pane`.
+
+Cmux backend parses `cmux top --processes --json` for a surface whose process
+tree contains a process at `/claude/`, restricted to the current workspace
+($CMUX_WORKSPACE_ID), then `cmux send` + `rpc surface.focus`.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:

@@ -220,50 +220,6 @@ local plugins = {
             })
         end,
     },
-    { -- ai
-        "folke/sidekick.nvim",
-        lazy = true,
-        keys = {
-            { "<C-g>w", function() require('utils.ai').select() end, desc = "Sidekick Select" },
-            { "<C-g>o", function() require('utils.ai').show() end, desc = "Sidekick Show" },
-            { "<C-g>n", function() return require('utils.ai').jump_or_apply() end, expr = true, desc = "Goto/Apply Next Edit Suggestion" },
-            { "<C-g>i", function() require('utils.ai').send_this() end, mode = "x", desc = "Send This" },
-            { "<C-g>f", function() require('utils.ai').send_file() end, desc = "Send File" },
-            { "<C-g>p", function() require('utils.ai').prompt() end, mode = { "n", "x" }, desc = "Sidekick Select Prompt" },
-            { "<C-g>a", function() require('utils.ai').accept() end, desc = "Sidekick Accept Suggestion" },
-            { "<C-g>d", function() require('utils.ai').select_in_dir() end, desc = "Sidekick in Directory" },
-        },
-        config = function()
-            local opts = {
-                nes = { enabled = false },
-                cli = {
-                    mux = {
-                        enabled = true,
-                        backend = "tmux",
-                    },
-                    win = {
-                        layout = "float", -- Change from default "right" to "float"
-                        float = {
-                            width = 0.9,                -- 60% of screen width
-                            height = 0.9,               -- 60% of screen height
-                            row = 0.3,                  -- 20% from top (centers vertically: (100% - 60%) / 2 = 20%)
-                            col = 0.4,                  -- 20% from left (centers horizontally: (100% - 60%) / 2 = 20%)
-                            border = "rounded",         -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
-                            title = "AI",               -- Custom title
-                            title_pos = "center",      -- Title position: "left", "center",
-                        },
-                    },
-                    tools = {
-                        auggie = {
-                            cmd = {"auggie"}
-                        }
-                    }
-                },
-            }
-
-            require("sidekick").setup(opts)
-        end,
-    },
     {
       "folke/snacks.nvim",
       priority = 1000,
@@ -437,25 +393,15 @@ local plugins = {
     },
     { -- local
         {
-            dir = vim.fn.stdpath("config") .. "/pack/plugins/start/bullet",
-            name = "bullet",
-            lazy = "true",
+            dir = vim.fn.stdpath("config") .. "/pack/plugins/start/agentic",
+            name = "agentic",
+            lazy = true,
             keys = {
-                { "<C-w><space>", "<cmd>BulletLaunch<CR>", desc = "Launch bullet project note" },
-                { "<C-w><enter>", "<cmd>BulletSticky<CR>", desc = "Launch bullet sticky note" },
-                { "<C-w><tab>", "<cmd>BulletList<CR>", desc = "Select bullet project notes" },
+                { "<C-g>f", "<cmd>AgenticSendFile<CR>", desc = "Send file ref to agent" },
+                { "<C-g>i", ":<C-u>AgenticSendSelection<CR>", mode = "x", desc = "Send selection ref to agent" },
             },
             config = function()
-                local path = nil
-                if os.getenv("USER") == "dduclos-cavalcanti" then
-                    path = os.getenv("HOME") .. "/Documents/notes/"
-                else
-                    path = os.getenv("MACFILES") .. "/notes/"
-                end
-                local opts = {
-                    notes_dir = path,
-                }
-                require("bullet").setup(opts)
+                require("agentic").setup()
             end,
         },
     },
