@@ -1,12 +1,14 @@
 #!/bin/bash
+#
+# Claude Code SessionStart hook orchestrator.
+# Dispatches to whichever agentic backend matches the current environment.
+# Backends exit 1 when not applicable (e.g. the tmux helper when not in
+# a tmux session). The hook itself always exits 0 — Claude Code doesn't
+# care about backend outcome.
 
-# Skip if not in a tmux session — keeps the cmux workflow noise-free.
-[[ -z "$TMUX" ]] && exit 0
+"$HOME/.tmux/agentic/claude-start-signal.sh"
 
-SIGNAL_DIR="$HOME/.cache/claude-signals"
-mkdir -p "$SIGNAL_DIR"
+# Future: peer cmux backend can hook in here.
+# "$HOME/.cmux/agentic/claude-start-signal.sh"
 
-SESSION=$(tmux display-message -p '#{session_name}' 2>/dev/null)
-[[ -z "$SESSION" ]] && exit 0
-
-touch "$SIGNAL_DIR/$SESSION"
+exit 0

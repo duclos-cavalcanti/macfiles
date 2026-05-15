@@ -5,7 +5,7 @@
 # Available variants: Gruvbox Dark, Gruvbox Dark Hard, Gruvbox Light,
 # Gruvbox Light Hard, Gruvbox Material, Gruvbox Material Dark,
 # Gruvbox Material Light.
-theme = Gruvbox Dark Hard
+Adwaita Dark
 
 # Font — installed via Brewfile (font-iosevka-nerd-font).
 font-family = Iosevka Nerd Font

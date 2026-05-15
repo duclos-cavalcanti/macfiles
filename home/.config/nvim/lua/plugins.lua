@@ -360,6 +360,7 @@ local plugins = {
         version = '*',
         priority = 1000,
         dependencies = {
+                { "Mofiqul/adwaita.nvim", lazy = false, priority = 1000, },
                 "nvim-lualine/lualine.nvim",
                 'kyazdani42/nvim-web-devicons',
                 {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
@@ -372,17 +373,22 @@ local plugins = {
             vim.opt.termguicolors = true
             vim.o.background = "dark"
 
-            require("gruvbox").setup({
-				transparent_mode = true,
-			})
+            -- require("gruvbox").setup({
+			-- 	transparent_mode = true,
+			-- })
 
-            vim.cmd([[colorscheme gruvbox]])
+            -- vim.cmd([[colorscheme gruvbox]])
+            -- vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { underline = true, sp = "#cc241d" })
+            -- vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn",  { underline = true, sp = "#d79921" })
+            -- vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo",  { underline = true, sp = "#458588" })
+            -- vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint",  { underline = true, sp = "#689d6a" })
+            -- vim.api.nvim_set_hl(0, "DiagnosticUnderlineOk",    { underline = true, sp = "#98971a" })
 
-            vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { underline = true, sp = "#cc241d" })
-            vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn",  { underline = true, sp = "#d79921" })
-            vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo",  { underline = true, sp = "#458588" })
-            vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint",  { underline = true, sp = "#689d6a" })
-            vim.api.nvim_set_hl(0, "DiagnosticUnderlineOk",    { underline = true, sp = "#98971a" })
+            vim.g.adwaita_darker = true
+            vim.g.adwaita_disable_cursorline = true
+            vim.g.adwaita_transparent = true
+
+            vim.cmd([[colorscheme adwaita]])
 
             require("bufferline").setup {
                 options = {

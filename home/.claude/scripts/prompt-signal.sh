@@ -1,12 +1,12 @@
 #!/bin/bash
+#
+# Claude Code UserPromptSubmit hook orchestrator.
+# Dispatches to whichever agentic backend matches the current environment.
+# Backends exit 1 when not applicable. The hook always exits 0.
 
-# Skip if not in a tmux session — keeps the cmux workflow noise-free.
-[[ -z "$TMUX" ]] && exit 0
+"$HOME/.tmux/agentic/claude-prompt-signal.sh"
 
-SIGNAL_DIR="$HOME/.cache/claude-signals"
-[[ -d "$SIGNAL_DIR" ]] || exit 0
+# Future: peer cmux backend can hook in here.
+# "$HOME/.cmux/agentic/claude-prompt-signal.sh"
 
-SESSION=$(tmux display-message -p '#{session_name}' 2>/dev/null)
-[[ -z "$SESSION" ]] && exit 0
-
-echo "ACTIVE" > "$SIGNAL_DIR/$SESSION"
+exit 0
