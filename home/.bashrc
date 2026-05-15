@@ -11,7 +11,6 @@ export VISUAL='nvim'
 export EDITOR='nvim'
 export PAGER='less'
 export MACFILES="$HOME/.macfiles"
-export TMUXP_CONFIGDIR="$HOME/.macfiles/sessions"
 export BAT_THEME='ansi'
 
 # XDG
