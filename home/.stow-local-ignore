@@ -1,6 +1,3 @@
-# Custom — skip hammerspoon
-\.hammerspoon
-
 # Restored from stow's built-in defaults
 # (presence of this file overrides them, so re-listed here)
 ^CVS$

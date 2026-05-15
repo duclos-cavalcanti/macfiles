@@ -11,8 +11,3 @@ windows:
       - cd home/.config/nvim
     panes:
       - nvim init.lua
-  - window_name: os
-    shell_command_before:
-      - cd home/.hammerspoon
-    panes:
-      - nvim init.lua
