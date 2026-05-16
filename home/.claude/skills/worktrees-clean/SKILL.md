@@ -1,30 +1,10 @@
 ---
-name: clean
-description: Generic cleanup of stale local artifacts. Each cleanup type is a sub-mode invoked by name. Currently supports `worktrees` (remove worktrees whose ticket is Done or MR is merged).
-argument-hint: <type>
+name: worktrees-clean
+description: Remove worktrees of the current repo whose Jira ticket is Done or whose MR is merged. Forces removal regardless of dirty state.
 allowed-tools: Bash(git *), Bash(glab *), mcp__claude_ai_Atlassian__getJiraIssue
 ---
 
-# Clean
-
-Generic cleanup of stale local artifacts in the current repo. Each cleanup type is a separate sub-mode below; new types can be added as their own `## <type>` section without changing the skill's invocation pattern.
-
-## Invocation
-
-- `/clean <type>` — run the named cleanup type.
-- `/clean` (no argument) — list the available types and ask which to run.
-
-## Available types
-
-| Type | What it cleans |
-|---|---|
-| `worktrees` | Worktrees of the current repo whose branch's Jira ticket is Done or whose MR is merged. Forces removal regardless of dirty state. |
-
-When adding a new type, register it in this table and add a matching `## <type>` section below.
-
----
-
-## worktrees
+# Worktrees Clean
 
 Inspect every worktree of the current repo, decide which are "retired" (Jira ticket Done OR MR merged), and force-remove them — even if the working tree is dirty.
 
@@ -34,7 +14,7 @@ A worktree retires if **either** condition is met:
 
 A worktree with no Jira match and no merged MR is preserved.
 
-### Steps
+## Steps
 
 1. Confirm we're inside a git repo: `git rev-parse --show-toplevel`. Abort if not.
 2. List worktrees: `git worktree list --porcelain`. Identify the main worktree (matches `git rev-parse --show-toplevel` from inside it, or is the first entry without a `detached` flag whose path equals the repo's primary). **Never act on the main worktree.**
@@ -57,7 +37,7 @@ A worktree with no Jira match and no merged MR is preserved.
 9. Optionally offer to delete the local branch too (`git branch -D <branch>`) for any purged worktree — ask once, batch the deletions.
 10. Report: counts of purged, kept, unknown — with one-line reason per kept/unknown row.
 
-### Notes
+## Notes
 
 - `--force` is intentional. The user has already accepted that uncommitted work in retired worktrees is forfeit.
 - Branch-name → ticket extraction is best-effort. Branches without a `<PROJECT>-<NUM>` shape only retire via the MR check.
