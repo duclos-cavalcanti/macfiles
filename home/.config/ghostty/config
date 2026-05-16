@@ -9,7 +9,7 @@ Adwaita Dark
 
 # Font — installed via Brewfile (font-iosevka-nerd-font).
 font-family = Iosevka Nerd Font
-font-size = 11.5
+font-size = 12.0
 
 # Cursor.
 cursor-style = block

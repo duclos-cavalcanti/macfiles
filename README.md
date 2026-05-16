@@ -6,7 +6,7 @@
 
 <p><div align="center" width="100%">
 
-OS | Agentic-Tooling | Terminal | Editor | Shell
+OS | AI | Terminal | Editor | Shell
 ---|---|---|---|---
 [macOS](https://www.apple.com)| [claude](https://platform.claude.com/docs/en/home) | [cmux](https://cmux.com/)/[tmux](http://linuxcommand.org/lc3_man_pages/tmux1.html) | [neovim](https://github.com/neovim/neovim) | [zsh](https://www.zsh.org)
 
