@@ -1,6 +1,9 @@
 local vim = vim
 
-local M = {}
+local M = {
+    name = "tmux",
+    scope = "session",
+}
 
 local function run(cmd, stdin)
     local out = vim.fn.system(cmd, stdin)
@@ -16,33 +19,47 @@ local function current_session()
     return out and vim.trim(out) or nil
 end
 
-local function find_agent_pane()
-    local sess = current_session()
-    if not sess then return nil end
-
-    local out = run({ "tmux", "list-panes", "-s", "-t", sess, "-F", "#{pane_id}:#{pane_pid}" })
-    if not out then return nil end
-
-    for line in out:gmatch("[^\n]+") do
-        local pane, pid = line:match("([^:]+):(%d+)")
-        if pane and pid then
-            vim.fn.system({ "pgrep", "-P", pid, "-f", "claude" })
-            if vim.v.shell_error == 0 then
-                return pane
-            end
-        end
-    end
-    return nil
+local function claude_pid_under(pane_pid)
+    local out = vim.fn.system({ "pgrep", "-P", pane_pid, "-f", "claude" })
+    if vim.v.shell_error ~= 0 then return nil end
+    out = vim.trim(out)
+    if out == "" then return nil end
+    return out:match("[^\n]+")
 end
 
-function M.send(text, press_enter)
-    local pane = find_agent_pane()
-    if not pane then
-        vim.notify("agentic.tmux: no claude pane found in current session", vim.log.levels.WARN)
-        return
-    end
+function M.list()
+    local sess = current_session()
+    if not sess then return {} end
 
+    local out = run({
+        "tmux", "list-panes", "-s", "-t", sess,
+        "-F", "#{pane_id}\t#{pane_pid}\t#{window_name}\t#{pane_current_path}",
+    })
+    if not out then return {} end
+
+    local targets = {}
+    for line in out:gmatch("[^\n]+") do
+        local pane, pid, win, cwd = line:match("([^\t]+)\t([^\t]+)\t([^\t]*)\t(.+)")
+        if pane and pid and claude_pid_under(pid) then
+            local main = (win and win ~= "" and win)
+                or (cwd and vim.fn.fnamemodify(cwd, ":~"))
+                or pane
+            table.insert(targets, {
+                id = pane,
+                pane = pane,
+                window_name = win,
+                cwd = cwd,
+                label = string.format("%s  (%s)", main, pane),
+            })
+        end
+    end
+    return targets
+end
+
+function M.send(target, text, press_enter)
+    local pane = target.pane
     local buffer = "agentic-" .. pane
+
     if not run({ "tmux", "load-buffer", "-b", buffer, "-" }, text) then return end
     if not run({ "tmux", "paste-buffer", "-b", buffer, "-d", "-r", "-t", pane }) then return end
     if press_enter then
