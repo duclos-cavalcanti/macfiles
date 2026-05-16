@@ -8,7 +8,6 @@
     "openMarkdownInCmuxViewer": true,
     "reorderOnNotification": false,              // keep workspaces pinned in sidebar order
     "warnBeforeQuit": true,
-    "warnBeforeClosingTab": false,
     "sendAnonymousTelemetry": false
   },
 

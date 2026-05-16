@@ -51,6 +51,14 @@ if [[ -r /usr/share/git/completion/git-completion.zsh ]]; then
     source /usr/share/git/completion/git-completion.zsh
 fi
 
+# Homebrew on PATH — must precede the plugin block below. Non-login shells
+# (e.g. cmux surfaces) skip /etc/zprofile, so path_helper never fires and
+# `command -v brew` would otherwise fail on first source. Full HOMEBREW_*
+# env setup still happens in the main Homebrew block further down.
+if [[ -d /opt/homebrew/bin ]]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+fi
+
 if command -v brew &>/dev/null; then
     if [[ -d $(brew --prefix)/share/zsh-autosuggestions ]]; then
         source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -110,6 +118,7 @@ else
     local CHAR=' $ %(?..[%?] )%b%f'
 
     PROMPT="${DIRECTORY}${GIT}${CHAR}"
+    RPROMPT='%(1j.%F{yellow}[%j job%(2j.s.)]%f.)'
 fi
 
 export PS2=">> "

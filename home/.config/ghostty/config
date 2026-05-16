@@ -1,11 +1,10 @@
 # Ghostty config — read by cmux on startup.
 # Reload from cmux: Cmd+Shift+, (reloadConfiguration).
 
-# Theme — Gruvbox Dark Hard, bundled with cmux.app.
-# Available variants: Gruvbox Dark, Gruvbox Dark Hard, Gruvbox Light,
-# Gruvbox Light Hard, Gruvbox Material, Gruvbox Material Dark,
-# Gruvbox Material Light.
-Adwaita Dark
+# Theme — Adwaita Dark, bundled with ghostty / cmux.app.
+# Available variants: Adwaita, Adwaita Dark.
+# Browse the full list with `ghostty +list-themes`.
+theme = Adwaita Dark
 
 # Font — installed via Brewfile (font-iosevka-nerd-font).
 font-family = Iosevka Nerd Font

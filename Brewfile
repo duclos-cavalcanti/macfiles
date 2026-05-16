@@ -56,6 +56,7 @@ brew "grip"
 brew "spotify_player"
 brew "caffeine"
 brew "pass"
+cask "obsidian"
 
 # work
 brew "kind"
