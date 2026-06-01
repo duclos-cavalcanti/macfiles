@@ -62,9 +62,9 @@ Your `home/.claude/scripts/{start,prompt,notif,stop}-signal.sh` already fire on 
 cmux markdown open ~/scratch/plan.md --focus false
 ```
 
-Auto-reloads on file change. Could be a `:AgenticPreview <file>` command in the plugin.
+Auto-reloads on file change. Implemented as `:AgenticPreview [path]` (defaults to current buffer; refuses cleanly on tmux backend).
 
-- [ ] Add command to `home/.config/nvim/pack/plugins/start/agentic/lua/agentic/init.lua`.
+- [x] Add command to `home/.config/nvim/pack/plugins/start/agentic/lua/agentic/init.lua`.
 
 ### 4. Pin your primary claude surface
 

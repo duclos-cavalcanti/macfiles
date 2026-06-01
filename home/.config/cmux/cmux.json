@@ -81,7 +81,7 @@
 
       // Surfaces (windows) — management
       "newSurface":                   "cmd+t",
-      "renameTab":                    "cmd+r",             // context: terminal pane focused
+      "renameTab":                    "cmd+ctrl+r",             // context: terminal pane focused
       "closeTab":                     "cmd+w",
       "closeOtherTabsInPane":         "cmd+ctrl+w",
       "reopenClosedBrowserPanel":     "cmd+shift+z",
@@ -96,7 +96,7 @@
       "newTab":                       "cmd+n",             // legacy action id; actually "new workspace"
       "openFolder":                   "cmd+o",
       "closeWorkspace":               "cmd+shift+w",
-      "renameWorkspace":              "cmd+ctrl+r",
+      "renameWorkspace":              "cmd+ctrl+shift+r",
       "editWorkspaceDescription":     "opt+cmd+e",
       "reopenPreviousSession":        "cmd+shift+o",
 
@@ -142,8 +142,8 @@
       "triggerFlash":                 "cmd+shift+h",
 
       // App — host windows
-      "newWindow":                    "cmd+shift+n",       // new OS window
-      "closeWindow":                  "ctrl+cmd+w",
+      "newWindow":                    "cmd+shift+ctrl+n",       // new OS window
+      "closeWindow":                  "cmd+shift+ctrl+w",
       "toggleFullScreen":             "ctrl+cmd+f",
       "showHideAllWindows":           "ctrl+opt+cmd+.",    // system-wide hotkey
       "quit":                         "cmd+q",

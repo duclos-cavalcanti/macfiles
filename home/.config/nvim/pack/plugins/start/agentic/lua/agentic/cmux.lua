@@ -71,6 +71,13 @@ function M.list()
     return targets
 end
 
+function M.preview(path)
+    local out = vim.fn.system({ "cmux", "markdown", "open", path, "--focus", "false" })
+    if vim.v.shell_error ~= 0 then
+        vim.notify("agentic.cmux: markdown open failed: " .. out, vim.log.levels.ERROR)
+    end
+end
+
 function M.send(target, text, press_enter)
     -- cmux send interprets the two-char sequence "\n" as Enter, so append it to auto-submit
     local payload = press_enter and (text .. "\\n") or text

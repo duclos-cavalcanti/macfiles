@@ -9,6 +9,7 @@
     - etc
 - Skip preamble and summaries, unless explicitly asked for.
 - When unsure, ask — don't guess.
+- Prefer shell one-liners over scripts when the task is simple.
 
 ## Git
 
@@ -16,7 +17,9 @@
 - Never `git add .` or `git add -A` —  stage files explicitly.
 - Use `glab` for GitLab operations.
 
-## Tools
+## Slack
 
-- Prefer shell one-liners over scripts when the task is simple.
-
+- Team Slack ID: `C0B3T0XK15J`
+- Bartis Slack ID:  `D08GS0GEX0Q`
+- Jack Slack ID:  `D08FMEL6NQN`
+- Praneeth Slack ID:  `D090WQQ9HHQ`

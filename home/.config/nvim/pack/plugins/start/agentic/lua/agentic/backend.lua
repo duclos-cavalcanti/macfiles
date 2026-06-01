@@ -75,6 +75,22 @@ function M.register()
     end)
 end
 
+function M.preview(path)
+    local backend = active_backend()
+    if not backend then
+        vim.notify("agentic: no tmux or cmux session detected", vim.log.levels.WARN)
+        return
+    end
+    if backend.name ~= "cmux" then
+        vim.notify(
+            ("agentic: backend '%s' does not support preview (cmux-only)"):format(backend.name),
+            vim.log.levels.WARN
+        )
+        return
+    end
+    backend.preview(path)
+end
+
 function M.current()
     return registered
 end

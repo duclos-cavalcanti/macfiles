@@ -5,11 +5,12 @@
       "Bash(tmux *)",
       "Bash(printenv TMUX)",
       "mcp__atlassian__*",
-      "mcp__claude_ai_Atlassian__*", 
+      "mcp__claude_ai_Atlassian__*",
       "Bash(aws cloudformation delete-stack:*)",
       "Bash(aws cloudformation continue-update-rollback:*)",
       "Bash(cdk destroy:*)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
   "model": "opus[1m]",
   "hooks": {
@@ -65,13 +66,24 @@
   "enabledPlugins": {
     "rust-analyzer-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true
+    "lua-lsp@claude-plugins-official": true,
+    "agentic-scale@ripple-ai-marketplace": true,
+    "planning-suite@ripple-ai-marketplace": true
+  },
+  "extraKnownMarketplaces": {
+    "ripple-ai-marketplace": {
+      "source": {
+        "source": "git",
+        "url": "git@gitlab.com:ripple/ai/claude-marketplace.git"
+      }
+    }
   },
   "effortLevel": "medium",
-  "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
   "voice": {
     "enabled": true,
     "mode": "hold"
-  }
+  },
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true,
+  "autoUpdatesChannel": "latest"
 }
