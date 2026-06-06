@@ -9,4 +9,4 @@ while IFS= read -r entry; do
         tmux select-pane -t "$pane"
         exit 0
     fi
-done < <(~/.tmux/agentic/find-agent.sh)
+done < <(~/.tmux/agentic/claude-find.sh)

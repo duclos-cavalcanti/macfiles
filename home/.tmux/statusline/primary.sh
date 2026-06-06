@@ -18,7 +18,7 @@ while IFS=$'\t' read -r idx name marked zoomed; do
 done < <(tmux list-windows -F "#{window_index}	#{window_name}	#{pane_marked}	#{window_zoomed_flag}")
 
 layout=$(~/.tmux/statusline/layout.sh)
-right="#[fg=green]$host "
-[ -n "$layout" ] && right="#[fg=yellow]$layout #[default]$right"
+right="#[fg=black]$host "
+[ -n "$layout" ] && right="#[fg=yellow]$layout #[fg=black]$right"
 
-echo "#[default]$windows#[align=right]$right"
+echo "$windows#[align=right]$right"

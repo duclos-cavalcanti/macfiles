@@ -1,0 +1,1 @@
+../../../../Work/mady/b2b-api-claude-skills-dev/tooling/mady/.claude/agents/worker.md

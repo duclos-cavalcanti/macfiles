@@ -7,7 +7,9 @@ local M = {
 
 local function find_claude_pid(node)
     if type(node) ~= "table" then return nil end
-    if node.kind == "process" and (node.path or ""):find("/claude/", 1, true) then
+    local name = type(node.name) == "string" and node.name or ""
+    local path = type(node.path) == "string" and node.path or ""
+    if node.kind == "process" and (name == "claude" or path:match("/claude$") or path:find("/claude/", 1, true)) then
         return node.pid
     end
     for _, v in pairs(node) do
@@ -30,6 +32,20 @@ local function lsof_cwd(pid)
     return nil
 end
 
+local function workspace_of_surface(data, surface_id)
+    if not surface_id then return nil end
+    for _, window in ipairs(data.windows or {}) do
+        for _, ws in ipairs(window.workspaces or {}) do
+            for _, pane in ipairs(ws.panes or {}) do
+                for _, surface in ipairs(pane.surfaces or {}) do
+                    if surface.id == surface_id then return ws.id end
+                end
+            end
+        end
+    end
+    return nil
+end
+
 function M.list()
     local out = vim.fn.system({ "cmux", "--id-format", "both", "top", "--processes", "--json" })
     if vim.v.shell_error ~= 0 then return {} end
@@ -37,8 +53,12 @@ function M.list()
     local ok, data = pcall(vim.json.decode, out)
     if not ok or type(data) ~= "table" then return {} end
 
-    local current_workspace = vim.env.CMUX_WORKSPACE_ID
+    local env_workspace = vim.env.CMUX_WORKSPACE_ID
     local current_surface = vim.env.CMUX_SURFACE_ID
+
+    -- Env var can be stale if the surface was moved between workspaces.
+    -- Derive workspace from current_surface; fall back to env var.
+    local current_workspace = workspace_of_surface(data, current_surface) or env_workspace
 
     local targets = {}
     for _, window in ipairs(data.windows or {}) do

@@ -54,9 +54,14 @@ function M.send(text, press_enter)
         vim.notify("agentic: no tmux or cmux session detected", vim.log.levels.WARN)
         return
     end
-    local cached = find_cached(backend)
-    if cached then
-        return backend.send(cached, text, press_enter)
+    local targets = backend.list()
+    -- Only honor the cached registration when there's exactly one candidate;
+    -- with multiple claudes always prompt so the user can fan out.
+    if #targets == 1 then
+        local cached = find_cached(backend)
+        if cached then
+            return backend.send(cached, text, press_enter)
+        end
     end
     pick(backend, function(target)
         backend.send(target, text, press_enter)

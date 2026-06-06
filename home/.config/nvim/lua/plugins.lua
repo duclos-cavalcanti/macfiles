@@ -229,6 +229,7 @@ local plugins = {
         bigfile = { enabled = true },
         dashboard = { enabled = true },
         explorer = { enabled = true },
+        gitbrowse = { enabled = true },
         indent = { enabled = true },
         input = { enabled = true },
         notifier = {
@@ -286,6 +287,8 @@ local plugins = {
         { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
         { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
         { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
+
+        { "<leader>gy", function() Snacks.gitbrowse() end, desc = "Git Browse (open in remote)", mode = { "n", "v" } },
       },
       init = function()
         vim.api.nvim_create_autocmd("User", {
@@ -378,7 +381,6 @@ local plugins = {
         { "numToStr/Comment.nvim", config = function() require('Comment').setup() end, },
         { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },
         { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, },
-        { 'ruifm/gitlinker.nvim', dependencies = 'nvim-lua/plenary.nvim', config = function() require"gitlinker".setup() end, },
     },
     { -- local
         {

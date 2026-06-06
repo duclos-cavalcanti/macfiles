@@ -6,7 +6,7 @@
 # a tmux session). The hook itself always exits 0 — Claude Code doesn't
 # care about backend outcome.
 
-"$HOME/.tmux/agentic/claude-start-signal.sh"
+# "$HOME/.tmux/agentic/claude-start-signal.sh"
 
 # Future: peer cmux backend can hook in here.
 # "$HOME/.cmux/agentic/claude-start-signal.sh"
