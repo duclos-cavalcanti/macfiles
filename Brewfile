@@ -55,7 +55,6 @@ brew "tree-sitter-cli"
 
 # system
 brew "spotify_player"
-brew "caffeine"
 brew "pass"
 
 # work

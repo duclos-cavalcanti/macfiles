@@ -40,12 +40,6 @@ function install_dotfiles() {
     fi
 }
 
-function install_ai() {
-    print_section "Installing AI tools"
-    npm install -g @augmentcode/auggie
-    npm install -g @github/copilot
-}
-
 function main() {
     print_status "Starting macfiles setup..."
 
@@ -61,7 +55,6 @@ function main() {
     install_brew
     install_packages
     install_dotfiles
-    install_ai
 
     print_status "Setup complete!"
     echo
