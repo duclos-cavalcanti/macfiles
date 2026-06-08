@@ -121,6 +121,7 @@ local plugins = {
             vim.lsp.enable('pyright')
             vim.lsp.enable('lua_ls')
             vim.lsp.enable('yamlls')
+            vim.lsp.enable('bashls')
 
             ls.config.set_config {
                 history = true,
@@ -220,7 +221,7 @@ local plugins = {
             })
         end,
     },
-    {
+    { -- Misc.
       "folke/snacks.nvim",
       priority = 1000,
       lazy = false,
@@ -376,11 +377,11 @@ local plugins = {
         end,
     },
     { -- utils
-        { "esmuellert/codediff.nvim", cmd = "CodeDiff", },
+        { 'diogo464/hotreload.nvim', opts = {} },
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('Comment').setup() end, },
-        { "lukas-reineke/indent-blankline.nvim", config = function() require("ibl").setup() end, },
         { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, },
+        { "folke/persistence.nvim", event = "BufReadPre", opts = {} },
     },
     { -- local
         {
