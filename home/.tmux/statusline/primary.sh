@@ -11,14 +11,11 @@ while IFS=$'\t' read -r idx name marked zoomed; do
         flags=""
         [[ "$marked" == "1" ]] && flags="+"  || flags="*"
         [[ "$zoomed" == "1" ]] && flags="$flags Z"
-        windows="$windows#[fg=white,bold] $idx:$name$flags "
+        windows="$windows#[fg=black,bold] $idx:$name$flags "
     else
         windows="$windows#[fg=brightblack,nobold] $idx:$name  "
     fi
 done < <(tmux list-windows -F "#{window_index}	#{window_name}	#{pane_marked}	#{window_zoomed_flag}")
 
-layout=$(~/.tmux/statusline/layout.sh)
 right="#[fg=black]$host "
-[ -n "$layout" ] && right="#[fg=yellow]$layout #[fg=black]$right"
-
 echo "$windows#[align=right]$right"

@@ -270,6 +270,7 @@ local plugins = {
         { "<leader>sM", function() Snacks.picker.marks() end, desc = "Marks" },
 
         { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
+        { "<leader>E", function() Snacks.explorer({ layout = { layout = { width = 0, height = 0 } } }) end, desc = "File Explorer (Fullscreen)" },
 
         { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
         { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
@@ -287,6 +288,7 @@ local plugins = {
 
         { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
         { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+        { "<leader>t",  function() Snacks.terminal() end, desc = "Toggle Terminal" },
         { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
 
         { "<leader>gy", function() Snacks.gitbrowse() end, desc = "Git Browse (open in remote)", mode = { "n", "v" } },
@@ -381,7 +383,14 @@ local plugins = {
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('Comment').setup() end, },
         { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, },
-        { "folke/persistence.nvim", event = "BufReadPre", opts = {} },
+        {
+            "esmuellert/codediff.nvim",
+            cmd = "CodeDiff",
+            opts = {},
+            keys = {
+                { "<leader>gd", "<cmd>CodeDiff<CR>", desc = "CodeDiff (changed files)" },
+            },
+        },
     },
     { -- local
         {

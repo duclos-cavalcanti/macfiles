@@ -50,7 +50,7 @@
     "bindings": {
 
       // Copy mode
-      "toggleTerminalCopyMode":       "cmd+shift+m",
+      "toggleTerminalCopyMode":       "cmd+ctrl+y",
 
       // Sidebar
       "toggleSidebar":                "cmd+b",         // left sidebar
@@ -71,7 +71,7 @@
       "splitBrowserRight":            "cmd+i",
       "splitBrowserDown":             "cmd+shift+i",
       "equalizeSplits":               "cmd+ctrl+m",
-      "toggleSplitZoom":              "cmd+ctrl+return",
+      "toggleSplitZoom":              "cmd+ctrl+z",
 
       // Splits (panes) — navigation
       "focusLeft":                    "cmd+ctrl+h",
@@ -81,7 +81,7 @@
 
       // Surfaces (windows) — management
       "newSurface":                   "cmd+t",
-      "renameTab":                    "cmd+ctrl+r",             // context: terminal pane focused
+      "renameTab":                    "cmd+ctrl+,",             // context: terminal pane focused
       "closeTab":                     "cmd+w",
       "closeOtherTabsInPane":         "cmd+ctrl+w",
       "reopenClosedBrowserPanel":     "cmd+shift+z",
@@ -96,7 +96,7 @@
       "newTab":                       "cmd+n",             // legacy action id; actually "new workspace"
       "openFolder":                   "cmd+o",
       "closeWorkspace":               "cmd+shift+w",
-      "renameWorkspace":              "cmd+ctrl+shift+r",
+      "renameWorkspace":              "cmd+ctrl+4",
       "editWorkspaceDescription":     "opt+cmd+e",
       "reopenPreviousSession":        "cmd+shift+o",
 
@@ -153,7 +153,7 @@
       "sendFeedback":                 "opt+cmd+f",
 
       // Source
-      "reloadConfiguration":          "cmd+shift+r"
+      "reloadConfiguration":          "cmd+ctrl+r"
     }
   }
 }

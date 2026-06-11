@@ -12,7 +12,6 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -78,12 +77,12 @@
       }
     }
   },
-  "effortLevel": "medium",
+  "effortLevel": "high",
+  "autoUpdatesChannel": "latest",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "autoUpdatesChannel": "latest"
+  "voiceEnabled": true
 }

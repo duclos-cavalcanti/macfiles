@@ -224,8 +224,6 @@ fi
 
 alias ..='cd ..'
 alias ...='cd ../..'
-alias mv='mv -i'
-alias cp='cp -i'
 alias less='less -R'
 alias diff='diff --color=auto'
 alias grep='grep --colour=auto'
@@ -298,4 +296,41 @@ if command -v fzf &>/dev/null; then
         fi
     }
     alias Fg='bring-to-foreground'
+
+    fzf-tmux-sessions() {
+        if ! command -v tmux &>/dev/null; then
+            zle -M "tmux not installed"
+            return
+        fi
+
+        local sessions
+        sessions=$(tmux list-sessions -F '#{session_name}' 2>/dev/null)
+        if [[ -z "$sessions" ]]; then
+            zle -M "no tmux sessions"
+            return
+        fi
+
+        local current=""
+        [[ -n "$TMUX" ]] && current=$(tmux display-message -p '#{session_name}')
+
+        local selection
+        selection=$(echo "$sessions" \
+            | grep -vFx "$current" \
+            | fzf --height=~40% --reverse --prompt="tmux> " --exit-0)
+
+        if [[ -n "$selection" ]]; then
+            if [[ -n "$TMUX" ]]; then
+                tmux switch-client -t "$selection"
+            else
+                BUFFER="tmux attach -t $selection"
+                zle accept-line
+                return
+            fi
+        fi
+        zle reset-prompt
+    }
+
+    zle -N fzf-tmux-sessions
+    bindkey '^G' fzf-tmux-sessions
 fi
+export JIRA_EMAIL=dduclos-cavalcanti@ripple.com
