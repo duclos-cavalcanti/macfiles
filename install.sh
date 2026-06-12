@@ -42,9 +42,9 @@ function install_dotfiles() {
 
 function install_git_config() {
     print_section "Configuring git difftool (codediff.nvim)"
-    git config --global diff.tool codediff
     # Branch on directory: git --dir-diff hands the tool two temp dirs (use `CodeDiff dir`),
     # otherwise two files (use `CodeDiff file`). `CodeDiff file` on a dir errors out.
+    git config --global diff.tool codediff
     git config --global difftool.codediff.cmd 'if [ -d "$LOCAL" ]; then nvim +"CodeDiff dir $LOCAL $REMOTE"; else nvim "$LOCAL" "$REMOTE" +"CodeDiff file $LOCAL $REMOTE"; fi'
     git config --global difftool.prompt false
     print_status "git difftool configured successfully"
