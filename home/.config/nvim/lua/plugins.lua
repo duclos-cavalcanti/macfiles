@@ -389,6 +389,32 @@ local plugins = {
             opts = {},
             keys = {
                 { "<leader>gd", "<cmd>CodeDiff<CR>", desc = "CodeDiff (changed files)" },
+                {
+                    "<leader>gD",
+                    function()
+                        local cur = vim.api.nvim_get_current_win()
+                        local files = {}
+                        for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                            -- only count real file windows (skip trees, floats, etc.)
+                            if vim.bo[vim.api.nvim_win_get_buf(w)].buftype == "" then
+                                table.insert(files, w)
+                            end
+                        end
+                        if #files ~= 2 then
+                            vim.notify("Need exactly two file windows open", vim.log.levels.WARN)
+                            return
+                        end
+                        local other = files[1] == cur and files[2] or files[1]
+                        local a = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(cur))
+                        local b = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(other))
+                        if a == "" or b == "" then
+                            vim.notify("Both windows must hold saved files", vim.log.levels.WARN)
+                            return
+                        end
+                        vim.cmd(("CodeDiff file %s %s"):format(vim.fn.fnameescape(a), vim.fn.fnameescape(b)))
+                    end,
+                    desc = "CodeDiff (two open windows)",
+                },
             },
         },
     },
