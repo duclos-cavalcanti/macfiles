@@ -1,6 +1,6 @@
 ---
 name: nvim
-description: Reference and assistant for launching Neovim and driving it via CLI flags, ex-commands, and this user's config. Use when asked to "open <file> at line N in nvim", "open these files in splits/tabs", or any request to put files in front of the user in Neovim.
+description: Reference and assistant for launching Neovim and driving it via CLI flags, ex-commands. Use when asked to "open <file> at line N in nvim", "open these files in splits/tabs", or any request to put files in front of the user in Neovim.
 allowed-tools: Bash(nvim *), Bash(tmux *), Bash(printenv TMUX), Bash(nvr *)
 ---
 
@@ -136,51 +136,6 @@ Window movement: `Ctrl-w h/j/k/l` move between splits, `Ctrl-w =` equalize sizes
 `Ctrl-w o` keep only current window.
 
 ---
-
-## This user's config (what's actually installed)
-
-- **Leader key is `<Space>`** (`vim.g.mapleader = " "`). So `<leader>sf` = `Space` then `s` then `f`.
-- Plugin manager: **lazy.nvim**. Plugins are lazy-loaded — a `cmd`/`keys`-triggered
-  plugin (like `CodeDiff`) isn't loaded until first used.
-- Picker/explorer/terminal: **snacks.nvim**. LSP: **nvim-lspconfig** + **nvim-cmp**.
-  Completion, treesitter, lualine, Comment.nvim, autopairs all present.
-
-### Key mappings (from `lua/plugins.lua`)
-
-| Keys | Action |
-|------|--------|
-| `<leader>sf` | Find files (snacks picker, hidden incl.) |
-| `<leader>sg` | Live grep |
-| `<leader>sw` | Grep word / visual selection |
-| `<leader>sb` | Buffers picker |
-| `<leader>sl` | Search lines in current buffer |
-| `<leader>sc` | Commands picker |
-| `<leader>sd` / `sD` | Diagnostics (workspace / buffer) |
-| `<leader>sh` | Help pages |
-| `<leader>e` / `E` | File explorer / fullscreen explorer |
-| `<leader><Tab>` / `<S-Tab>` | LSP symbols (doc / workspace) |
-| `<leader>t` | Toggle terminal |
-| `<leader>z` / `Z` | Zoom / Zen mode |
-| `<leader>.` | Scratch buffer |
-| `<leader>gy` | Git browse (open line in remote) |
-| `<leader>gd` | **CodeDiff** — diff git-changed files |
-| `<leader>gD` | **CodeDiff** — diff the two open file windows |
-| `gd` `gr` `gI` `gy` | LSP definition / references / impl / type-def |
-| `<C-g>f` / `<C-g>i` / `<C-g>o` | agentic.nvim: send file ref / selection ref / preview in cmux |
-
-### CodeDiff (esmuellert/codediff.nvim) — diffing files
-
-```
-:CodeDiff                       explorer of git-changed files
-:CodeDiff file HEAD~1           current buffer vs a git revision
-:CodeDiff file a.lua b.lua      diff two ARBITRARY files (non-git), side-by-side
-:CodeDiff dir d1 d2             diff two directories
-:CodeDiff history               file history (last 50 commits)
-:CodeDiff ... --inline | --side-by-side   force layout
-```
-
----
-
 ## Headless / scripted edits (no UI, safe for the agent to run directly)
 
 When the task is *edit a file*, not *show it to the user*, run nvim headless. This

@@ -388,9 +388,9 @@ local plugins = {
             cmd = "CodeDiff",
             opts = {},
             keys = {
-                { "<leader>gd", "<cmd>CodeDiff<CR>", desc = "CodeDiff (changed files)" },
+                { "<leader>cd", "<cmd>CodeDiff<CR>", desc = "CodeDiff (changed files)" },
                 {
-                    "<leader>gD",
+                    "<leader>cD",
                     function()
                         local cur = vim.api.nvim_get_current_win()
                         local files = {}
