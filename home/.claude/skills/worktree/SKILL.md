@@ -23,8 +23,8 @@ Create a worktree as a sibling directory to the current project, optionally on a
    - Project name: `basename <git-root>` (e.g. `myapp`)
    - Branch sanitized: replace every `/` in the branch name with `-` (e.g. `feature/auth` → `feature-auth`)
    - Final path: `<parent>/<project>-<branch-sanitized>` (e.g. `/home/user/work/myapp-feature-auth`)
-6. Confirm the worktree path and branch with the user before proceeding
+6. Confirm the worktree path and branch with the user before proceeding.
 7. Create the worktree:
    - Existing branch: `git worktree add <path> <branch>`
    - New branch: `git worktree add -b <branch> <path> <default-branch>`
-8. Report the full path of the created worktree to the user
+8. Report the full path of the created worktree to the user.
