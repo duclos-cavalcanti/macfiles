@@ -17,7 +17,8 @@ Create a worktree as a sibling directory to the current project, optionally on a
    - Ask the user to pick one (exclude any already checked out via `git worktree list --porcelain`)
 4. **If new branch:**
    - Ask the user for the new branch name
-   - Detect the default branch via `git symbolic-ref refs/remotes/origin/HEAD` (fall back to `main`)
+   - Detect the default branch name via `git symbolic-ref --short refs/remotes/origin/HEAD | sed 's|^origin/||'` (fall back to `main`)
+   - Fetch the latest remote tip so the fork point isn't stale: `git fetch origin <default-branch>`
 5. Derive the worktree path:
    - Parent directory: `dirname <git-root>` (e.g. git root `/home/user/work/myapp` → parent `/home/user/work`)
    - Project name: `basename <git-root>` (e.g. `myapp`)
@@ -26,5 +27,5 @@ Create a worktree as a sibling directory to the current project, optionally on a
 6. Confirm the worktree path and branch with the user before proceeding.
 7. Create the worktree:
    - Existing branch: `git worktree add <path> <branch>`
-   - New branch: `git worktree add -b <branch> <path> <default-branch>`
+   - New branch: `git worktree add -b <branch> <path> origin/<default-branch>` (always fork off the remote tip, never local)
 8. Report the full path of the created worktree to the user.
