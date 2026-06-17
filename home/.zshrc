@@ -4,12 +4,15 @@ export TERM='tmux-256color'
 export VISUAL='nvim'
 export EDITOR='nvim'
 export PAGER='less'
-export MACFILES="$HOME/.macfiles"
-export BAT_THEME='ansi'
-export AWS_PROFILE=custo-eng-dev
 
-if [ -f "/Users/dduclos-cavalcanti/Work/zshenv" ]; then 
-    source "/Users/dduclos-cavalcanti/Work/zshenv"
+# Custom
+export MACFILES="$HOME/.macfiles"
+
+# Configuration
+export BAT_THEME='ansi'
+
+if [ -f "/Users/dduclos-cavalcanti/Work/zshrc" ]; then 
+    source "/Users/dduclos-cavalcanti/Work/zshrc"
 fi
 
 # XDG
@@ -204,13 +207,14 @@ fi
 
 # Aliases — general
 alias v='nvim'
-alias sz='source ~/.zshrc'
+alias g='git status'
 
 if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
     alias cat='bat -p'
 fi
 
 if command -v eza &>/dev/null; then
+    alias l='eza'
     alias ls='eza'
     alias sl='eza'
     alias la='eza -la'
@@ -230,38 +234,6 @@ alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias fgrep='fgrep --colour=auto'
 
-# Aliases — git
-alias g='git status'
-alias ga='git add'
-alias gc='git checkout'
-alias gcb='git checkout -b'
-alias gm='git commit'
-alias gl='git log'
-alias glo='git log --pretty="oneline"'
-alias glol='git log --graph --oneline --decorate'
-alias gp='git pull'
-alias gpo='git push origin'
-alias gd='git diff --color=always'
-alias gdd='git diff HEAD~1 HEAD'
-alias gb='git branch'
-alias gba='git branch --all'
-alias -g gB='$(git rev-parse --abbrev-ref HEAD)'
-alias gbd='git branch -d'
-alias gbD='git push --delete origin'
-alias gada='git add --all && git commit'
-alias gupd='git add --all && git commit -m "Update" && git push origin'
-alias grd='git add README.md && git commit -m "Updated README" && git push origin'
-alias gi='git add .gitignore && git commit -m "Updated gitignore" && git push origin'
-alias gmk='git add Makefile && git commit -m "Updated Makefile" && git push origin'
-alias gunchange='git update-index --assume-unchanged'
-alias greset='git reset --hard'
-alias greb='git rebase -i --root'
-
-# Aliases — work
-alias azlog='az login'
-alias metlog='az acr login -n metacodev'
-alias metfmt='cargo +nightly fmt && cargo clippy --all-targets --all-features --no-deps --fix --allow-dirty'
-
 # Functions
 if command -v jq &>/dev/null; then
     js() { jq . "$1"; }
@@ -278,7 +250,7 @@ if command -v fzf &>/dev/null; then
     [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
 
 
-    bring-to-foreground() {
+    fzf-background-jobs() {
         local njobs=$(jobs | wc -l | tr -d ' ')
         if [[ "$njobs" -eq 0 ]]; then
             echo "No background jobs"
@@ -295,7 +267,7 @@ if command -v fzf &>/dev/null; then
             zle reset-prompt
         fi
     }
-    alias Fg='bring-to-foreground'
+    alias Fg='fzf-background-jobs'
 
     fzf-tmux-sessions() {
         if ! command -v tmux &>/dev/null; then
@@ -333,4 +305,3 @@ if command -v fzf &>/dev/null; then
     zle -N fzf-tmux-sessions
     bindkey '^G' fzf-tmux-sessions
 fi
-export JIRA_EMAIL=dduclos-cavalcanti@ripple.com
