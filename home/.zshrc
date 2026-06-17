@@ -164,20 +164,6 @@ if command -v lua &>/dev/null; then
     fi
 fi
 
-# C#
-if command -v dotnet &>/dev/null; then
-    export PATH=$PATH:$HOME/.dotnet/tools
-fi
-
-# Java
-if command -v java &>/dev/null; then
-    if [[ -d /opt/homebrew ]]; then
-        export JAVA_HOME='/opt/homebrew/opt/openjdk'
-    else
-        export JAVA_HOME='/usr/lib/jvm/java-18-openjdk/'
-    fi
-fi
-
 # Ruby
 if command -v ruby &>/dev/null; then
     export GEM_HOME="$HOME/.gems"
