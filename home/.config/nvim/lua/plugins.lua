@@ -288,7 +288,6 @@ local plugins = {
 
         { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
         { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
-        { "<leader>t",  function() Snacks.terminal() end, desc = "Toggle Terminal" },
         { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
 
         { "<leader>gy", function() Snacks.gitbrowse() end, desc = "Git Browse (open in remote)", mode = { "n", "v" } },

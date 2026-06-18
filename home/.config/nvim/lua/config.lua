@@ -79,6 +79,27 @@ vim.api.nvim_set_keymap("n", "<M-h>", ":tabmove -1<CR>", {noremap=true, silent=t
 vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("t", "<C-w>", "<C-\\><C-N><C-w>", {noremap=true, silent=true})
 
+-- toggle a single reusable terminal in a bottom split
+local function toggle_terminal()
+    local t = vim.g._term or {}
+    if t.win and vim.api.nvim_win_is_valid(t.win) then
+        vim.api.nvim_win_hide(t.win)              -- visible -> hide
+        t.win = nil
+    else
+        vim.cmd("botright 15split")               -- open a bottom split
+        if t.buf and vim.api.nvim_buf_is_valid(t.buf) then
+            vim.api.nvim_set_current_buf(t.buf)   -- reuse existing terminal
+        else
+            vim.cmd("terminal")                   -- first time: spawn shell
+            t.buf = vim.api.nvim_get_current_buf()
+        end
+        t.win = vim.api.nvim_get_current_win()
+        vim.cmd("startinsert")
+    end
+    vim.g._term = t
+end
+vim.keymap.set("n", "<leader>t", toggle_terminal, {noremap=true, silent=true, desc="Toggle Terminal"})
+
 -- quickfix navigation
 -- Function to check if quickfix window is open in current tab
 local function is_quickfix_open()
