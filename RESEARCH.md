@@ -1,57 +1,90 @@
-# Agentic Cycle → MADY Kit Mapping
+# Versioning AI Agent Assets as Dotfiles — Research
 
-**Companion, not a fork.** The canonical research already lives in the kit and is deeper + fully cited:
-- `~/Work/mady/b2b-api-claude-skills-dev/tooling/mady/RESEARCH.md` — F1–F5 findings (lean=capability, positional degradation, intent/env/mechanics split, script-the-routine, 3–5 fan-out), SDD framing, Caprock contrast.
-- `…/tooling/mady/SIMPLIFICATION.md` — 4-pass debloat roadmap (Pass 4 = escalation collapse / diagnosis-at-the-cog).
-- `…/tooling/mady/PEER-COMPARISON.md` — Caprock + Hive fleets, takeable directives.
+*Snapshot: June 2026. Deep-research pass (24 sources fetched, 112 claims extracted, 25 adversarially verified, 21 confirmed / 4 refuted).*
 
-This doc adds the one lens those don't use explicitly: the **plan → decompose → retrieve → act → verify** cycle, mapped onto the real cogs/files. Per your own F3/SDD rule (single source of truth), nothing here restates a contract — it points.
+**Question:** Are power developers now storing their AI coding agent assets — Claude Code skills, subagents, slash commands, hooks, CLAUDE.md / AGENTS.md, MCP configs, and multi-agent "swarm" systems — in dotfiles repos the same way they historically version-controlled vimrc, tmux.conf, and wm rc files?
 
----
-
-## The cycle is a context-engineering problem, not a workflow diagram
-
-Each of the five moves exists to keep the *act* step's context lean and correct. The loop degrades when the window fills with noise, not when the model gets dumb. Your kit already encodes this — below is where each stage lives and how strong it is.
-
-### Plan — externalize intent to disk (STRONG)
-- **Where:** foreman L1 → `/mady-evaluate-ticket` (clarity + dependency scan + complexity, emits `VERDICT`) → `bin/agents/foreman/classify.py` (dependency DAG) → **dispatch packet** (`schemas/dispatch.schema.json`).
-- The packet *is* the externalized spec. This is SDD done right (your RESEARCH.md: "the dispatch packet is a spec the worker derives from"). It survives compaction and seeds the worker at birth (`worker.md:19`).
-- Foreman writes intent, mutates nothing else (README §2) — clean intent/actuation split.
-
-### Decompose — atomic, isolated, independently verifiable (STRONG)
-- **Where:** foreman classifies `READY-CLEAN`/`READY-STACKED` + `block_on`; one ticket → one worker → one worktree (`worker.md:18` "no cross-ticket reasoning").
-- This is F5 (specialization + context isolation) made physical: git worktrees give each cog a wall it can't see past. Matches the literature's "3–5 specialist fan-out, isolate context to prevent hallucination."
-
-### Retrieve — just-in-time, not upfront (STRONG, with one known weak edge)
-- **Where:** ticket derived from `git branch --show-current` (`worker.md:55`); packet/status read on first tick; jira/glab CLIs fetch on demand; auditor reviews **by SHA in the master mirror — checkout-free** (README §2). Restart Awareness re-derives state from disk (`worker.md:100`), never from memory.
-- **Weak edge you've already flagged:** the perpetual singletons (foreman/overseer/auditor) accumulate their own transcript in-session — the Hive measured this shape at ~85% cache-read, quadratic in tick count (`SIMPLIFICATION.md` #19 cold-tick). That's a context-*lifespan* leak. The cogs are already disk-stateless (Restart Awareness), so the fix — fresh cold `claude` per tick, paced by a bash supervisor — is unblocked once cost instrumentation (#18) confirms the exposure.
-
-### Act — minimal, recoverable, committed (STRONG)
-- **Where:** worker `/mady-implement` (shape-routed logic/infra/docs/claude); commits + draft MR (**"the draft MR is the resume container"**, `worker.md:120`); `snapshot.sh` writes atomic status drops + append-only `.jsonl` per tick.
-- **git history + status JSONL = the agent's undo stack** — this is exactly Anthropic's long-running-harness trick ("git + progress file let the agent detect a broken state and revert"). Your Restart Awareness branch (`worker.md:112`) is the recovery procedure, more disciplined than the blog's `claude-progress.txt`.
-
-### Verify — adversarial, independent, default-to-skeptical (STRONG — your real edge)
-- **Where:** three independent layers.
-  1. `/mr-review` loop until nits-only (worker, in-context).
-  2. **auditor** — a *separate* singleton reviewing by SHA, posts what the SME fleet would catch (README §2). Independent context = real verification, not self-report theater.
-  3. **inspector** — ephemeral pre-escalation refuter, `subagent_type: inspector`, mandate **"refute, default to GENUINE"** (`worker.md:200`, `SIMPLIFICATION.md` Pass 4). This is the adversarial-verify / "default-to-refuted" pattern as a custody guard — *stronger* than the cold-overseer auto-drain it replaced, because the refute runs where the live context is.
-- The literature's headline ("the bottleneck moved from generation to verification; fast output isn't trustworthy output") is the thing your kit invests most in. Most setups skip it.
-- **The one genuine gap vs. the harness paper:** it pushes *behavioral* verification — exercise the artifact as a user would (e2e / browser-drive), mark done only after an observed green run. Your verify is review + CI + tests. For a Rust `b2b-api` that's largely covered by integration tests in CI — but it's worth a conscious check: does any MR land "reviewed + CI-green" without the running service ever being exercised end-to-end? If yes, that's the only stage where you trail the 2026 best practice.
+**Answer: Yes — emphatically.** It's now a recognized, named practice with dedicated tooling, mapping almost one-to-one onto the old dotfiles culture.
 
 ---
 
-## How "empowering the cycle" maps to your open roadmap
+## 1. The trend: `~/.claude` is the new `~/.vimrc`
 
-The external 2026 idioms aren't new asks for you — they're already tickets:
+Two dominant patterns, confirmed across multiple independent repos:
 
-| Idiom (external) | Your kit's stage it strengthens | Already tracked as |
-|---|---|---|
-| Lean prompts are a *capability* lever (not style); positional degradation | Plan/Act — unbury judgment | Pass 2 (thin agents); overseer 452→~250L |
-| Schema = single source of truth (SDD) | Plan — contract integrity | Pass 2 P0 (contracts → `schemas/*.json` descriptions) |
-| Reasoning lives with the data | Verify — diagnosis at the cog | Pass 4 (escalation collapse; `auto_resolve` deleted) |
-| Context lifespan / JIT retrieval | Retrieve — stop transcript bloat | #18 cost ledger → #19 cold-tick singletons |
-| Script the routine, keep the judgment | all stages — determinism boundary | F4; the "resist" list (conflict resolution, diagnosis stay LLM) |
+- **Track `~/.claude` directly as a Git repo** — often with a shell wrapper that auto-pulls on session open and auto-commits/pushes on close.
+- **Selective symlinking from a dotfiles repo** — version only the *portable* assets (`settings.json`, `agents/`, `commands/`, `skills/`) and exclude runtime junk (`history.jsonl`, `cache/`, `projects/`, session state). The cleaner pattern.
 
-**Verdict:** you don't need to *adopt* the frontier — you're at or ahead of it on plan/decompose/act/verify, and the two real frontiers (cold-tick the singletons, optional behavioral-verify) are already on the board. The highest-leverage move is finishing the dedup passes (Tier 1 removals) so the cogs' judgment stops sitting under contract-paraphrase where attention is weakest — which is precisely what `SIMPLIFICATION.md` ranks first.
+Key shift: people commit the *whole asset set* now (subagents, slash commands, hooks, skills, settings), not just `CLAUDE.md`. Storage format is the rc-file idiom: **markdown + YAML frontmatter, auto-discovered from directory layout**, with project-vs-global precedence (`.claude/agents/` overrides `~/.claude/agents/`) mirroring local-rc-beats-global-rc.
 
-If you want, I can: (a) sanity-check the behavioral-verify gap by tracing whether any `/mady-finish` path lands an MR without an e2e exercise, or (b) take the next unticked Tier-1 removal in `SIMPLIFICATION.md` and draft the diff. Say which.
+Links:
+- https://github.com/elizabethfuentes12/claude-code-dotfiles — auto-sync `~/.claude` via Git (pull on open, push on exit)
+- https://github.com/vsbuffalo/dotfiles/blob/main/docs/claude-code.md — selective symlink pattern; tracks `settings.json`/`agents/`/`commands/`/`skills/`, ignores runtime data
+- https://felipeelias.github.io/2026/02/27/version-your-claude-files.html — "You Should Be Versioning Your ~/.claude Config" (Feb 2026)
+- https://github.com/zircote/.claude — real-world `.claude` dotfiles repo
+- https://github.com/citypaul/.dotfiles — real-world dotfiles repo with agent assets
+- https://code.claude.com/docs/en/sub-agents — official docs: subagents = markdown + YAML frontmatter; check into version control
+- https://drmowinckels.io/blog/2026/dotfiles-coding-agents/
+- https://github.com/mfmezger/ai_agent_dotfiles
+- https://alexop.dev/posts/claude-code-customization-guide-claudemd-skills-subagents/
+- https://github.com/atxtechbro/dotfiles
+
+## 2. Agent swarms: a real, public category
+
+Multi-agent orchestration setups shared on GitHub like elaborate tmux/i3 configs. All store config as declarative, file-based, version-controlled artifacts (`swarm.yaml`, per-plugin `.claude/` dirs) auto-discovered from layout.
+
+- https://github.com/ruvnet/ruflo — `claude-flow` (~53K stars). Queen-led hierarchy; hierarchical/mesh/adaptive topologies; Raft/Byzantine/Gossip consensus; HNSW vector memory across sessions; 19 plugins / 64 skills. The heavyweight.
+- https://github.com/wshobson/agents — 192 subagents, 156 skills, 102 commands, 16 multi-agent orchestrators across 84 plugins.
+- https://github.com/affaan-m/claude-swarm — decomposes a task into a dependency graph, runs independent subtasks as parallel agents via the Claude Agent SDK.
+- https://github.com/dsifry/metaswarm — self-improving orchestration running across Claude Code + Gemini CLI + Codex CLI.
+- https://github.com/VoltAgent/awesome-claude-code-subagents — catalog of 154+ subagents (22K stars); "awesome-list" pattern for agents.
+- https://github.com/modu-ai/moai-adk — orchestrates 24 agents + 52 skills.
+- https://codex.danielvaughan.com/2026/04/11/agentmaxxing-parallel-multi-cli-orchestration/
+
+## 3. Portability — two standards, doing different jobs
+
+Don't conflate these — they operate at different layers:
+
+- **`AGENTS.md` + Anthropic Agent Skills (`SKILL.md`)** → portability of the *prompt/skill content*. `SKILL.md` (YAML frontmatter + markdown, spec published Dec 18 2025) designed to work across 30+ tools (Gemini CLI, Codex/ChatGPT, Cursor, VS Code/Copilot, JetBrains Junie, AWS Kiro, Block Goose) without modification. The **asset-level** standard.
+- **Agent Client Protocol (ACP)** → portability of the *editor↔agent connection*. JSON-RPC over stdio (local) / HTTP+WebSocket (remote), "LSP for coding agents." Decouples any ACP agent from any ACP editor. The **transport** layer — *not* skill portability. Created by Zed (Aug 2025); adopted by JetBrains, VS Code, OpenCode; 25+ agents.
+
+Rule: ACP makes your agent pluggable into any editor; AGENTS.md/SKILL.md makes your prompts and skills readable by any agent.
+
+Links:
+- https://agentclientprotocol.com/get-started/introduction — ACP spec
+- https://github.com/agentclientprotocol/agent-client-protocol
+- https://zed.dev/acp
+- https://www.morphllm.com/agents-md-guide
+- https://hivetrail.com/blog/agents-md-vs-claude-md-cross-tool-standard
+- https://codersera.com/blog/agents-md-vs-claude-md-cursor-rules-comparison-2026/
+- https://codex.danielvaughan.com/2026/05/27/agent-instruction-files-agents-md-claude-md-cross-tool-portability-codex-cli/
+- https://ossinsight.io/blog/agent-skills-explosion-2026
+
+## 4. Best practices for tool-agnostic porting
+
+Winning pattern: **one source of truth → sync/translate into each runtime's native format**, instead of maintaining parallel per-tool files.
+
+- https://github.com/numman-ali/openskills — "universal skills loader"; generates an `<available_skills>` XML block into `AGENTS.md` so any AGENTS.md-reading agent invokes a Claude-style skill via `npx openskills read <skill>` — no Claude Code required.
+- https://github.com/PMelch/agentdots — define rules/skills/commands/mcp once; emit native configs (`.claude/`, `.cursor/`, `copilot-instructions.md`, `GEMINI.md`). Two-tier global + project layout. *(Flagged early-development, not usable yet.)*
+- https://github.com/yelmuratoff/agent_sync — "Write AI rules once → sync to Claude, Cursor, Copilot, Gemini and 10 more tools."
+
+Conventions that hold up:
+- Markdown + YAML frontmatter for every asset; directory-based auto-discovery (`agents/`, `commands/`, `skills/`).
+- Two-tier precedence: global (`~/.claude/`, `~/.agentdots/`) + project (`.claude/`, `.agentdots/`), project wins.
+- `.gitignore` runtime state (history, cache, sessions); version only declarative config.
+- Treat `AGENTS.md` as the lowest-common-denominator interop layer; let a sync tool fan it out.
+
+## Caveats (the verifier killed 4 claims)
+
+- **"Power users do this" is asserted, not surveyed.** No telemetry quantifies adoption. The *practice* is well-documented; *prevalence* is inferred.
+- **Cross-runtime portability is interface-level, not behavior-tested.** No independent compatibility matrix proves a skill behaves identically across Claude Code, Cursor, Aider, Codex, Gemini. The claim "one markdown source is natively consumed unmodified across 5 non-Claude runtimes" was **refuted 0-3**.
+- **No single directory naming convention has converged.** Per-tool layouts persist; sync tools *are* the interop layer, not a shared standard.
+- Several swarm/sync projects are single-author, design-intent repos, not independently benchmarked.
+- Everything is a **June 2026 snapshot** of a fast-moving field (Agent Skills spec Dec 2025, ACP from Aug 2025).
+
+## Open questions
+
+- What share of developers actually version-control agent assets vs. traditional dotfiles? No survey data found.
+- How reliable is cross-runtime portability in practice? Interfaces defined; no tested end-to-end compatibility matrix.
+- Will one naming/directory convention converge, or will per-tool layouts + sync tools persist?
+- **Secrets / MCP credential handling when configs are committed/shared publicly** — underspecified in sources. `.gitignore` the cache, never commit secrets, but the safe pattern for sharing MCP config across machines/teams was not detailed. Worth nailing down before publishing any `~/.claude` config.
