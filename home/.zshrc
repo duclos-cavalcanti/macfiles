@@ -193,6 +193,7 @@ fi
 
 # Aliases — general
 alias v='nvim'
+alias tv='NVIM_APPNAME=nvim-test nvim'
 alias g='git status'
 
 if command -v bat &>/dev/null || command -v batcat &>/dev/null; then

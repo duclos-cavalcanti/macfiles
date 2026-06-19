@@ -98,7 +98,7 @@ local function toggle_terminal()
     end
     vim.g._term = t
 end
-vim.keymap.set("n", "<leader>t", toggle_terminal, {noremap=true, silent=true, desc="Toggle Terminal"})
+vim.keymap.set("n", "<leader><space>", toggle_terminal, {noremap=true, silent=true, desc="Toggle Terminal"})
 
 -- quickfix navigation
 -- Function to check if quickfix window is open in current tab
