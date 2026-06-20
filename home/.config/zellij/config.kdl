@@ -1,0 +1,57 @@
+// Zellij config — KDL. Overrides defaults only; any key left unset uses the
+// built-in default (Zellij merges this file over its defaults, it doesn't
+// replace them).
+//
+// Dump the full default reference any time with:  zellij setup --dump-config
+// Docs: https://zellij.dev/documentation/
+//
+// Evaluating Zellij as the work organizer over ghostty + tmux.
+//
+// NON-COLLIDING (unlock-first): `default_mode "locked"` is set at the bottom,
+// so Zellij BOOTS LOCKED — every key (Ctrl-p history, Ctrl-t/fzf, Ctrl-h
+// backspace, Alt-f word-motion, the tmux Ctrl-b prefix, …) passes straight
+// to your shell/programs; nothing is shadowed. Press the leader `Ctrl g` to
+// UNLOCK into Normal, drive Zellij with the keys below, then `Ctrl g` again
+// to re-lock. This mirrors tmux's one-prefix model. (In Locked mode only
+// `Ctrl g` is intercepted.)
+//
+// ───────────────────────── BASE KEYBINDINGS (v0.44 defaults) ─────────────
+// Zellij is MODAL. From the unlocked Normal mode you enter a sub-mode, press
+// single keys, then Esc/Enter back to Normal (Ctrl g to re-lock). Current
+// mode shows bottom-left in the status bar.
+//
+// ENTER A MODE (Ctrl g to unlock first) ─ each mode's enter-key also exits it:
+//   Ctrl p   Pane          Ctrl t   Tab           Ctrl n   Resize
+//   Ctrl h   Move          Ctrl s   Scroll/Search Ctrl o   Session
+//   Ctrl g   Locked (ignore all binds; press Ctrl g again to unlock)
+//   Ctrl q   Quit Zellij
+//
+// GLOBAL ─ work in any mode except Locked (no mode switch needed):
+//   Alt n            new pane            Alt f         toggle floating panes
+//   Alt h/j/k/l      focus pane (or tab at edge, via arrows too)
+//   Alt = / Alt -    grow / shrink pane  Alt [ / Alt ] prev / next swap layout
+//
+// PANE mode (Ctrl p):
+//   h/j/k/l move focus   n new   d down-split   r right-split   s stacked
+//   x close   f fullscreen   w floating   e embed<->float   z toggle frames
+//   c rename   i pin   p cycle focus
+//
+// TAB mode (Ctrl t):
+//   n new   x close   r rename   h/l (or arrows) prev/next   1-9 go to tab N
+//   Tab toggle last   s sync-input   b break pane to new tab   [ / ] break L/R
+//
+// RESIZE mode (Ctrl n):  h/j/k/l grow side · H/J/K/L shrink side · = grow · - shrink
+// MOVE mode  (Ctrl h):   h/j/k/l move pane · n/Tab cycle forward · p backward
+// SCROLL mode (Ctrl s):  j/k line · Ctrl f/b page · d/u half-page ·
+//                        s start search · e edit scrollback in $EDITOR ·
+//                        in search: n/p next/prev · c case · w wrap · o whole-word
+// SESSION mode (Ctrl o): d detach · w session-manager · c config · p plugin-manager
+//
+// NESTED tmux: because Zellij stays Locked by default, an attached tmux
+//   session inside a Zellij pane receives ALL keys — including its own
+//   Ctrl-b prefix. Only `Ctrl g` is intercepted. Unlock only when you want
+//   Zellij itself. (This is why unlock-first is the right fit here.)
+// ─────────────────────────────────────────────────────────────────────────
+
+// Boot in Locked mode → collision-free; `Ctrl g` toggles unlock (see above).
+default_mode "locked"
