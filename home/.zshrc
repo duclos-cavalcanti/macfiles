@@ -128,26 +128,11 @@ export PS2=">> "
 export PS4="> "
 
 # PATH & toolchains
-export PATH=$PATH:$HOME/.local/bin:$HOME/.bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.bin:$HOME/.scripts
 
 # Homebrew
 if [[ -d /opt/homebrew ]]; then
-    export HOMEBREW_PREFIX='/opt/homebrew'
-    export HOMEBREW_CACHE="$XDG_CACHE_HOME/homebrew"
-    export HOMEBREW_LOGS="$XDG_STATE_HOME/homebrew"
-
-    export CA_BUNDLE="$HOMEBREW_PREFIX/opt/ca-certificates/share/ca-certificates/cacert.pem"
-    export CURL_CA_BUNDLE="$CA_BUNDLE"
-
-    export PATH=$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$HOMEBREW_PREFIX/opt/curl/bin
-
-    export CPLUS_INCLUDE_PATH="$HOMEBREW_PREFIX/include:/usr/local/include"
-    export LDFLAGS="-L$HOMEBREW_PREFIX/lib -L$HOMEBREW_PREFIX/opt/libpq/lib -L$HOMEBREW_PREFIX/opt/curl/lib"
-    export CPPFLAGS="-I$HOMEBREW_PREFIX/include -I/usr/local/include -I$HOMEBREW_PREFIX/opt/libpq/include -I$HOMEBREW_PREFIX/opt/curl/include"
-    export LIBRARY_PATH="$HOMEBREW_PREFIX/lib:$HOMEBREW_PREFIX/opt/libpq/lib:/usr/local/lib:/usr/lib"
-    export LD_LIBRARY_PATH="$HOMEBREW_PREFIX/lib:/usr/local/lib:/usr/lib"
-    export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/curl/lib/pkgconfig"
-    export DYLD_LIBRARY_PATH="$HOMEBREW_PREFIX/opt/sqlite/lib:$HOMEBREW_PREFIX/lib:/usr/local/lib"
+    export PATH=$PATH:/opt/homebrew/bin:/opt/homebrew/sbin
 fi
 
 # Python
@@ -236,26 +221,6 @@ if command -v fzf &>/dev/null; then
     [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
     [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
 
-
-    fzf-background-jobs() {
-        local njobs=$(jobs | wc -l | tr -d ' ')
-        if [[ "$njobs" -eq 0 ]]; then
-            echo "No background jobs"
-            return
-        elif [[ "$njobs" -eq 1 ]]; then
-            fg 2>/dev/null
-            return
-        fi
-
-        local selection=$(jobs -l | fzf --height=~40% --reverse --prompt="fg> " | sed 's/^\[//' | cut -d']' -f1)
-        if [[ -n "$selection" ]]; then
-            fg %"$selection" 2>/dev/null
-        else
-            zle reset-prompt
-        fi
-    }
-    alias Fg='fzf-background-jobs'
-
     fzf-tmux-sessions() {
         if ! command -v tmux &>/dev/null; then
             zle -M "tmux not installed"
@@ -281,14 +246,12 @@ if command -v fzf &>/dev/null; then
             if [[ -n "$TMUX" ]]; then
                 tmux switch-client -t "$selection"
             else
-                BUFFER="tmux attach -t $selection"
-                zle accept-line
-                return
+                tmux attach -t "$selection"
             fi
         fi
+
         zle reset-prompt
     }
-
     zle -N fzf-tmux-sessions
-    bindkey '^G' fzf-tmux-sessions
+    bindkey '^Xt' fzf-tmux-sessions   # Ctrl-X t: pick/switch tmux session
 fi

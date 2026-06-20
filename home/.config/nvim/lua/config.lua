@@ -86,7 +86,7 @@ local function toggle_terminal()
         vim.api.nvim_win_hide(t.win)              -- visible -> hide
         t.win = nil
     else
-        vim.cmd("botright 15split")               -- open a bottom split
+        vim.cmd("botright 30 split")               -- open a bottom split
         if t.buf and vim.api.nvim_buf_is_valid(t.buf) then
             vim.api.nvim_set_current_buf(t.buf)   -- reuse existing terminal
         else

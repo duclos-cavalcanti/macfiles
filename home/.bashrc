@@ -10,7 +10,11 @@ export TERM='tmux-256color'
 export VISUAL='nvim'
 export EDITOR='nvim'
 export PAGER='less'
+
+# Custom
 export MACFILES="$HOME/.macfiles"
+
+# Configuration
 export BAT_THEME='ansi'
 
 # XDG
@@ -61,23 +65,8 @@ export PS4="> "
 export PATH=$PATH:$HOME/.local/bin:$HOME/.bin
 
 # Homebrew
-if [[ -d /opt/homebrew ]]; then
-    export HOMEBREW_PREFIX='/opt/homebrew'
-    export HOMEBREW_CACHE="$XDG_CACHE_HOME/homebrew"
-    export HOMEBREW_LOGS="$XDG_STATE_HOME/homebrew"
-
-    export CA_BUNDLE="$HOMEBREW_PREFIX/opt/ca-certificates/share/ca-certificates/cacert.pem"
-    export CURL_CA_BUNDLE="$CA_BUNDLE"
-
-    export PATH=$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$HOMEBREW_PREFIX/opt/curl/bin
-
-    export CPLUS_INCLUDE_PATH="$HOMEBREW_PREFIX/include:/usr/local/include"
-    export LDFLAGS="-L$HOMEBREW_PREFIX/lib -L$HOMEBREW_PREFIX/opt/libpq/lib -L$HOMEBREW_PREFIX/opt/curl/lib"
-    export CPPFLAGS="-I$HOMEBREW_PREFIX/include -I/usr/local/include -I$HOMEBREW_PREFIX/opt/libpq/include -I$HOMEBREW_PREFIX/opt/curl/include"
-    export LIBRARY_PATH="$HOMEBREW_PREFIX/lib:$HOMEBREW_PREFIX/opt/libpq/lib:/usr/local/lib:/usr/lib"
-    export LD_LIBRARY_PATH="$HOMEBREW_PREFIX/lib:/usr/local/lib:/usr/lib"
-    export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/curl/lib/pkgconfig"
-    export DYLD_LIBRARY_PATH="$HOMEBREW_PREFIX/opt/sqlite/lib:$HOMEBREW_PREFIX/lib:/usr/local/lib"
+if [[ -d /opt/homebrew/bin ]]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 fi
 
 # Rust
@@ -96,21 +85,3 @@ alias ...='cd ../..'
 alias less='less -R'
 alias diff='diff --color=auto'
 alias grep='grep --colour=auto'
-
-# Aliases — git
-alias g='git status'
-alias ga='git add'
-alias gc='git checkout'
-alias gcb='git checkout -b'
-alias gm='git commit'
-alias gl='git log'
-alias glo='git log --pretty="oneline"'
-alias glol='git log --graph --oneline --decorate'
-alias gp='git pull'
-alias gpo='git push origin'
-alias gd='git diff --color=always'
-alias gdd='git diff HEAD~1 HEAD'
-alias gb='git branch'
-alias gba='git branch --all'
-alias gbd='git branch -d'
-alias gbD='git push --delete origin'
