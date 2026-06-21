@@ -6,6 +6,7 @@ tap "manaflow-ai/cmux"
 
 # base
 brew "nvim"
+cask "ghostty"
 cask "cmux"
 brew "tmux"
 brew "tmuxp"
