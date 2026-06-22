@@ -1,6 +1,6 @@
 # Environment
 export TERMINAL='Terminal'
-export TERM='tmux-256color'
+export TERM='xterm-256color'
 export VISUAL='nvim'
 export EDITOR='nvim'
 export PAGER='less'
@@ -10,10 +10,6 @@ export MACFILES="$HOME/.macfiles"
 
 # Configuration
 export BAT_THEME='ansi'
-
-if [ -f "/Users/dduclos-cavalcanti/Work/zshrc" ]; then 
-    source "/Users/dduclos-cavalcanti/Work/zshrc"
-fi
 
 # XDG
 export XDG_DESKTOP_DIR="$HOME/Desktop"
@@ -62,6 +58,7 @@ if [[ -d /opt/homebrew/bin ]]; then
     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 fi
 
+# zsh
 if command -v brew &>/dev/null; then
     if [[ -d $(brew --prefix)/share/zsh-autosuggestions ]]; then
         source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -93,7 +90,7 @@ if command -v brew &>/dev/null; then
     fi
 fi
 
-# Prompt
+# prompt
 if [[ -n "$SSH_CONNECTION" ]]; then
     export PS1="%n@%m: %~ \$ "
 else
@@ -249,9 +246,14 @@ if command -v fzf &>/dev/null; then
                 tmux attach -t "$selection"
             fi
         fi
-
         zle reset-prompt
     }
     zle -N fzf-tmux-sessions
     bindkey '^Xt' fzf-tmux-sessions   # Ctrl-X t: pick/switch tmux session
+
+    alias tsel='fzf-tmux-sessions'
 fi
+
+# Work
+[ -f "/Users/dduclos-cavalcanti/Work/zshrc" ] && source "/Users/dduclos-cavalcanti/Work/zshrc"
+

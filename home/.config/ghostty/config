@@ -1,32 +1,81 @@
-# Ghostty config — read by cmux on startup.
-# Reload from cmux: Cmd+Shift+, (reloadConfiguration).
+# Ghostty config 
 
-# Theme — Adwaita Dark, bundled with ghostty / cmux.app.
-# Available variants: Adwaita, Adwaita Dark.
-# Browse the full list with `ghostty +list-themes`.
+# Theme
+# `ghostty +list-themes`.
 theme = Adwaita Dark
 
-# Font — installed via Brewfile (font-iosevka-nerd-font).
+macos-titlebar-style = tabs
+
+## Font
 font-family = Iosevka Nerd Font
 font-size = 12.0
 
-# Cursor.
+## Cursor
 cursor-style = block
 cursor-style-blink = false
 
-# Padding around the terminal contents.
+## Window
 window-padding-x = 6
 window-padding-y = 4
 window-padding-balance = true
+window-theme = ghostty
 
-# Treat the macOS Option key as Alt so `M-` bindings (e.g. tmux M-Tab) work.
+## Panes
+unfocused-split-opacity = 1.0
+
+# Keybinds
 macos-option-as-alt = true
 
-# Quality-of-life.
+keybind = super+d=new_split:right
+keybind = super+shift+d=new_split:down
+
+keybind = super+shift+enter=toggle_split_zoom
+keybind = super+o=goto_split:previous
+keybind = super+shift+o=goto_split:next
+
+keybind = super+ctrl+k=goto_split:up
+keybind = super+ctrl+j=goto_split:down
+keybind = super+ctrl+h=goto_split:left
+keybind = super+ctrl+l=goto_split:right
+
+keybind = super+ctrl+arrow_up=resize_split:up,10
+keybind = super+ctrl+arrow_down=resize_split:down,10
+keybind = super+ctrl+arrow_left=resize_split:left,10
+keybind = super+ctrl+arrow_right=resize_split:right,10
+
+keybind = super+ctrl+==equalize_splits
+
+## Tabs
+keybind = super+t=new_tab
+
+keybind = ctrl+tab=next_tab
+keybind = ctrl+shift+tab=previous_tab
+
+keybind = super+1=goto_tab:1
+keybind = super+2=goto_tab:2
+keybind = super+3=goto_tab:3
+keybind = super+4=goto_tab:4
+keybind = super+5=goto_tab:5
+keybind = super+6=goto_tab:6
+keybind = super+7=goto_tab:7
+keybind = super+8=goto_tab:8
+
+keybind = super+r,=prompt_tab_title
+keybind = super+ctrl+r=prompt_surface_title
+
+## Float
+keybind = global:super+ctrl+enter=toggle_quick_terminal
+
+## Claude Code
+# keybind = shift+enter=text:\x1b\r
+
+# Misc.
 mouse-hide-while-typing = true
+
+quick-terminal-position = center
+
+window-new-tab-position = current
+window-inherit-working-directory = true
+
 copy-on-select = clipboard
 confirm-close-surface = false
-
-# Splits — keep unfocused panes readable while still signalling focus.
-# 1.0 disables dimming entirely; 0.92 leaves a subtle hint.
-unfocused-split-opacity = 0.92
