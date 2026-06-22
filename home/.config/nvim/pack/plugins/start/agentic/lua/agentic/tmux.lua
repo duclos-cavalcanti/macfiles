@@ -27,12 +27,11 @@ local function claude_pid_under(pane_pid)
     return out:match("[^\n]+")
 end
 
-function M.list()
-    local sess = current_session()
-    if not sess then return {} end
-
+-- Claude panes within a given tmux session. Shared with the wezterm backend,
+-- which scopes the session set to the focused wezterm tab.
+function M.claude_panes(session)
     local out = run({
-        "tmux", "list-panes", "-s", "-t", sess,
+        "tmux", "list-panes", "-s", "-t", session,
         "-F", "#{pane_id}\t#{pane_pid}\t#{window_name}\t#{pane_current_path}",
     })
     if not out then return {} end
@@ -47,6 +46,7 @@ function M.list()
             table.insert(targets, {
                 id = pane,
                 pane = pane,
+                session = session,
                 window_name = win,
                 cwd = cwd,
                 label = string.format("%s  (%s)", main, pane),
@@ -54,6 +54,12 @@ function M.list()
         end
     end
     return targets
+end
+
+function M.list()
+    local sess = current_session()
+    if not sess then return {} end
+    return M.claude_panes(sess)
 end
 
 function M.send(target, text, press_enter)

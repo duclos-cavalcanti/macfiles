@@ -30,8 +30,8 @@ c.macos_window_background_blur = 10
 c.window_padding = {
   left = 30,
   right = 20,
-  top = 40,
-  bottom = 20,
+  top = 50,
+  bottom = 0,
 }
 
 -- misc settings
