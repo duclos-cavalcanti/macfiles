@@ -39,7 +39,7 @@ c.scrollback_lines = 3500
 
 -- keys
 c.keys = {
-    { key = 's',        mods = 'CMD|SHIFT',         action = wezterm.action.PaneSelect { alphabet = 'hjklgui', mode = 'Activate', }},
+    { key = 's',        mods = 'CMD',               action = wezterm.action.PaneSelect { alphabet = 'hjklgui', mode = 'Activate', }},
 
     { key = 'd',        mods = 'CMD',               action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } },
     { key = 'd',        mods = 'CMD|SHIFT',         action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } },
@@ -50,8 +50,8 @@ c.keys = {
     { key = 't',        mods = 'CMD',               action = wezterm.action.SpawnTab 'CurrentPaneDomain' },
     { key = 'l',        mods = 'CMD',               action = tab.Rename() },
 
-    { key = 'Tab',      mods = 'CMD|SHIFT',         action = wezterm.action.ActivateTabRelative(-1) },
-    { key = 'Tab',      mods = 'CMD',               action = wezterm.action.ActivateTabRelative(1) },
+    { key = 'Tab',      mods = 'CTRL|SHIFT',         action = wezterm.action.ActivateTabRelative(-1) },
+    { key = 'Tab',      mods = 'CTRL',               action = wezterm.action.ActivateTabRelative(1) },
     { key = 'Tab',      mods = 'ALT',               action = wezterm.action.MoveTabRelative(-1) },
     { key = 'Tab',      mods = 'ALT|SHIFT',         action = wezterm.action.MoveTabRelative(1) },
 
@@ -64,11 +64,11 @@ c.keys = {
     { key = 'r',        mods = 'CMD',               action = wezterm.action.PaneSelect { mode = 'SwapWithActive', alphabet='hjklgui' } },
     { key = '1',        mods = 'CMD|SHIFT',         action = wezterm.action.PaneSelect { mode = 'MoveToNewTab', alphabet='hjklgui' } },
 
-    { key = 'z',        mods = 'CMD|SHIFT',         action = wezterm.action.TogglePaneZoomState },
+    { key = 'Enter',    mods = 'CMD|SHIFT',         action = wezterm.action.TogglePaneZoomState },
 
     { key = 'n',        mods = 'CMD',               action = workspace.Launch() },
     { key = '4',        mods = 'CMD|SHIFT',         action = workspace.Rename() },
-    { key = 's',        mods = 'CMD',               action = workspace.Manager() },
+    { key = 's',        mods = 'CMD|SHIFT',         action = workspace.Manager() },
     { key = 'd',        mods = 'CMD|CTRL',          action = workspace.Delete() },
 
     { key = '9',        mods = 'CMD|SHIFT',         action = workspace.SwitchToPrevious()},
