@@ -12,7 +12,7 @@ Refs: [cmux docs](https://cmux.com/docs) · [ghostty docs](https://ghostty.org/d
 
 - [ ] Replace `cmux send` in `agentic/cmux.lua` with `cmux rpc workspace.prompt_submit` (safer bracketed-paste; confirm schema via `cmux capabilities`).
 - [ ] Emit OSC 9 / OSC 777 from `home/.claude/scripts/{start,prompt,notif,stop}-signal.sh` for native ghostty notifications; set `desktop-notifications = true`.
-- [ ] Resolve dead agentic-signal subsystem: the 4 `home/.claude/scripts/*-signal.sh` orchestrators are `exit 0` no-ops (all dispatch lines commented out, and they reference a nonexistent `~/.tmux/agentic/`); the 4 `home/.cmux/agentic/claude-*-signal.sh` backends are uncalled TODO stubs; `settings.json` fires all four as hooks for zero effect; `statusline.sh` consumes no signal. Either build it (the OSC 9/777 item above) or delete the 8 scripts + 4 hook blocks.
+- [ ] Resolve dead agentic-signal subsystem: the 4 `home/.cmux/agentic/*-signal.sh` backends are removed. Remaining: the 4 `home/.claude/scripts/*-signal.sh` orchestrators are `exit 0` no-ops (dispatch lines commented out, referencing a nonexistent `~/.tmux/agentic/` and the now-deleted `~/.cmux/agentic/`); `settings.json` fires all four as hooks for zero effect; `statusline.sh` consumes no signal. Either build it (the OSC 9/777 item above) or delete the 4 orchestrators + 4 hook blocks.
 - [x] Add `:AgenticPreview [path]` live markdown preview via `cmux markdown open` to `agentic/init.lua`.
 - [ ] Pin + color the daily-driver claude surface (`cmux tab-action --action pin` + `cmux workspace-action --action set-color`).
 - [ ] Try `cmux feed tui` — permission-arbitration sidebar panel (`ctrl+4`).
