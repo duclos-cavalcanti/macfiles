@@ -423,9 +423,9 @@ local plugins = {
             name = "agentic",
             lazy = true,
             keys = {
-                { "<C-b>f", "<cmd>AgenticSendFile<CR>", desc = "Send file ref to agent" },
-                { "<C-b>i", ":<C-u>AgenticSendSelection<CR>", mode = "x", desc = "Send selection ref to agent" },
-                { "<C-b>o", "<cmd>AgenticPreview<CR>", desc = "Preview current buffer in cmux markdown panel" },
+                { "<C-g>f", "<cmd>AgenticSendFile<CR>", desc = "Send file ref to agent" },
+                { "<C-g>i", ":<C-u>AgenticSendSelection<CR>", mode = "x", desc = "Send selection ref to agent" },
+                { "<C-g>o", "<cmd>AgenticPreview<CR>", desc = "Preview current buffer in cmux markdown panel" },
             },
             config = function()
                 require("agentic").setup()
