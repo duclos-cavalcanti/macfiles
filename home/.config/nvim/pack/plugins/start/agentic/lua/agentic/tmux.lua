@@ -27,8 +27,8 @@ local function claude_pid_under(pane_pid)
     return out:match("[^\n]+")
 end
 
--- Claude panes within a given tmux session. Shared with the wezterm backend,
--- which scopes the session set to the focused wezterm tab.
+-- Claude panes within a given tmux session. Shared with the zellij backend,
+-- which scopes the session set by attached-state and matching git repo.
 function M.claude_panes(session)
     local out = run({
         "tmux", "list-panes", "-s", "-t", session,

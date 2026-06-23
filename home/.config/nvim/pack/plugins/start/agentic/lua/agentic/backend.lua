@@ -6,17 +6,16 @@ local M = {}
 local registered = nil
 
 local function active_backend()
-    -- wezterm first: it scopes tmux discovery to the focused tab. Gated on a
-    -- live mux (probe); if the GUI/mux isn't reachable, fall through to plain
-    -- tmux/cmux so behaviour is never worse than before.
-    if (vim.env.WEZTERM_CONFIG_DIR or "") ~= "" and vim.fn.executable("wezterm") == 1 then
-        vim.fn.system({ "wezterm", "cli", "list", "--format", "json" })
-        if vim.v.shell_error == 0 then
-            return require("agentic.wezterm")
-        end
-    end
     if (vim.env.TMUX or "") ~= "" then
         return require("agentic.tmux")
+    end
+    -- nvim in a regular zellij pane (no $TMUX) while claude runs in tmux: the
+    -- tmux server is still reachable, so discover/send through it.
+    if (vim.env.ZELLIJ or "") ~= "" and vim.fn.executable("tmux") == 1 then
+        vim.fn.system({ "tmux", "list-sessions" })
+        if vim.v.shell_error == 0 then
+            return require("agentic.zellij")
+        end
     end
     if vim.fn.executable("cmux") == 1 then
         vim.fn.system({ "cmux", "ping" })
@@ -60,7 +59,7 @@ end
 function M.send(text, press_enter)
     local backend = active_backend()
     if not backend then
-        vim.notify("agentic: no wezterm, tmux, or cmux session detected", vim.log.levels.WARN)
+        vim.notify("agentic: no tmux, zellij, or cmux session detected", vim.log.levels.WARN)
         return
     end
     local targets = backend.list()
@@ -80,7 +79,7 @@ end
 function M.register()
     local backend = active_backend()
     if not backend then
-        vim.notify("agentic: no wezterm, tmux, or cmux session detected", vim.log.levels.WARN)
+        vim.notify("agentic: no tmux, zellij, or cmux session detected", vim.log.levels.WARN)
         return
     end
     registered = nil
@@ -92,7 +91,7 @@ end
 function M.preview(path)
     local backend = active_backend()
     if not backend then
-        vim.notify("agentic: no wezterm, tmux, or cmux session detected", vim.log.levels.WARN)
+        vim.notify("agentic: no tmux, zellij, or cmux session detected", vim.log.levels.WARN)
         return
     end
     if backend.name ~= "cmux" then
