@@ -425,7 +425,7 @@ local plugins = {
             keys = {
                 { "<C-g>f", "<cmd>AgenticSendFile<CR>", desc = "Send file ref to agent" },
                 { "<C-g>i", ":<C-u>AgenticSendSelection<CR>", mode = "x", desc = "Send selection ref to agent" },
-                { "<C-g>o", "<cmd>AgenticPreview<CR>", desc = "Preview current buffer in cmux markdown panel" },
+                { "<C-g>r", "<cmd>AgenticRegister<CR>", desc = "Register a tmux session for the agent" },
             },
             config = function()
                 require("agentic").setup()

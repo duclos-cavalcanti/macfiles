@@ -1,11 +1,11 @@
-*agentic.txt*    Send file/selection refs to a tmux/cmux agent pane
+*agentic.txt*    Send file/selection refs to a claude pane in tmux
 
 ==============================================================================
 INTRODUCTION                                              *agentic-introduction*
 
-agentic is a tiny local plugin that forwards a reference to the current file
-(or visual selection) into a running CLI agent (e.g. claude) on an adjacent
-tmux pane or cmux surface, then focuses that pane/surface.
+agentic forwards a reference to the current file (or visual selection) into a
+running claude on a tmux pane, then focuses that pane. It talks to the tmux
+server directly, so nvim need not be inside tmux itself.
 
 Reference format mirrors GitHub-style anchors:
 
@@ -16,6 +16,21 @@ Reference format mirrors GitHub-style anchors:
 Paths are relative to the git root when available, else to cwd.
 
 ==============================================================================
+TARGETING                                                     *agentic-targeting*
+
+By default a send assumes nvim is inside tmux: it reads the current session
+and finds claude panes within it. One match → sent. Several → you're prompted.
+None (or nvim isn't in tmux) → a warning pointing you at :AgenticRegister.
+
+:AgenticRegister overrides the session: it lists ALL sessions on the server
+(works even when nvim isn't in tmux) so you can lock onto one; future sends
+then look for claude in that session. Sticky until you re-register or the
+session dies, at which point sends fall back to the current session.
+
+Delivery is load-buffer + paste-buffer (no trailing Enter — review, then
+submit yourself), followed by select-pane.
+
+==============================================================================
 COMMANDS                                                      *agentic-commands*
 
 :AgenticSendFile                                            *:AgenticSendFile*
@@ -24,22 +39,8 @@ COMMANDS                                                      *agentic-commands*
 :AgenticSendSelection                                  *:AgenticSendSelection*
     Send the current visual selection as a line-range reference.
 
-==============================================================================
-BACKENDS                                                      *agentic-backends*
-
-Detection order:
-
-    1. $TMUX set         → tmux backend
-    2. `cmux ping` ok   → cmux backend
-    3. otherwise         → vim.notify warning, no-op
-
-Tmux backend finds the target pane by scanning panes in the current session
-for one whose child process matches `claude`, then uses load-buffer +
-paste-buffer + send-keys Enter, then `select-pane`.
-
-Cmux backend parses `cmux top --processes --json` for a surface whose process
-tree contains a process at `/claude/`, restricted to the current workspace
-($CMUX_WORKSPACE_ID), then `cmux send` + `rpc surface.focus`.
+:AgenticRegister                                            *:AgenticRegister*
+    Register against any tmux claude, overriding repo correlation.
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:
