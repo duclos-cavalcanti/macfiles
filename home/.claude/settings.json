@@ -2,6 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(glab *)",
+      "Bash(jira issue create:*)",
       "Bash(tmux *)",
       "Bash(printenv TMUX)",
       "mcp__atlassian__*",

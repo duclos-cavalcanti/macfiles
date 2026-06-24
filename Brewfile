@@ -2,12 +2,11 @@ cask_args appdir: '/Applications'
 
 # taps
 tap "jesseduffield/lazydocker"
-tap "manaflow-ai/cmux"
 
 # base
 brew "nvim"
 cask "ghostty"
-cask "cmux"
+brew "zellij"
 brew "tmux"
 brew "tmuxp"
 brew "lazygit"
