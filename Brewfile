@@ -38,6 +38,7 @@ brew "gcc"
 brew "protobuf"
 brew "pandoc"
 brew "tree-sitter-cli"
+brew "fonttools"
 
 # system
 brew "spotify_player"

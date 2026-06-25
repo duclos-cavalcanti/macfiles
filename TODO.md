@@ -37,7 +37,7 @@ Refs: [cmux docs](https://cmux.com/docs) · [ghostty docs](https://ghostty.org/d
 ## Workflow / dotfiles polish
 
 - [ ] Set up `~/.config/cmux/dock.json` to pin TUIs (lazygit, log tail, test watcher) to the sidebar.
-- [ ] Delete `home/.scripts/example.sh` — it's a working fzf tmux-session switcher that duplicates the `^Xt` → `fzf-tmux-sessions` binding already defined in `home/.zshrc` (DRY).
+- [x] Delete `home/.scripts/example.sh` — duplicated the `^Xt` → `fzf-tmux-sessions` zsh binding (DRY). Removed `.scripts` entirely; personal scripts now live in `home/.bin` (already on PATH).
 - [ ] Delete dead macOS Terminal.app profile `home/.config/terminal/profile.terminal` (8.7k, referenced nowhere; the stack is ghostty + cmux) — unless kept as a deliberate fallback, in which case add a note saying why.
 
 ## Neovim / trim toward core
