@@ -144,3 +144,25 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
     desc = "Remove trailing whitespace and blank lines at EOF for Lua files"
 })
+
+-- Markdown Preview.app — open the current buffer's file in the macOS app
+-- (https://markdownpreview.app, installed via install.sh). Verifies the app is
+-- installed before launching, and that the buffer is a saved file.
+local function open_markdown_preview()
+    local app = "Markdown Preview"
+    -- ask LaunchServices (what `open -a` uses) if the app is registered anywhere
+    -- — location-agnostic, unlike a PATH/executable() check (a GUI .app isn't on PATH)
+    vim.fn.system({ "osascript", "-e", ('id of app "%s"'):format(app) })
+    if vim.v.shell_error ~= 0 then
+        vim.notify(app .. ".app not found — install it (install.sh)", vim.log.levels.WARN)
+        return
+    end
+    local file = vim.api.nvim_buf_get_name(0)
+    if file == "" or vim.fn.filereadable(file) == 0 then
+        vim.notify("Markdown Preview: no saved file in this buffer", vim.log.levels.WARN)
+        return
+    end
+    vim.fn.jobstart({ "open", "-a", app, file }, { detach = true })
+end
+vim.keymap.set("n", "<leader>mp", open_markdown_preview,
+    { noremap = true, silent = true, desc = "Open buffer in Markdown Preview.app" })

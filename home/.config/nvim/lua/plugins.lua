@@ -382,6 +382,28 @@ local plugins = {
         { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup({}) end, },
         { "numToStr/Comment.nvim", config = function() require('Comment').setup() end, },
         { "fei6409/log-highlight.nvim", config = function() require("log-highlight").setup {} end, },
+        { -- gitsigns: git gutter signs + line-level blame
+            "lewis6991/gitsigns.nvim",
+            event = { "BufReadPre", "BufNewFile" },
+            opts = {
+                current_line_blame = true, -- inline "who/when" on the current line
+                current_line_blame_opts = { delay = 250, virt_text_pos = "eol" },
+                on_attach = function(bufnr)
+                    local gs = require("gitsigns")
+                    local function map(mode, lhs, rhs, desc)
+                        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+                    end
+                    -- hunk navigation
+                    map("n", "]h", function() gs.nav_hunk("next") end, "Next git hunk")
+                    map("n", "[h", function() gs.nav_hunk("prev") end, "Prev git hunk")
+                    -- blame / history
+                    map("n", "<leader>gb", function() gs.blame_line({ full = true }) end, "Blame line (full popup)")
+                    map("n", "<leader>gB", function() gs.blame() end, "Blame whole file")
+                    map("n", "<leader>gp", gs.preview_hunk, "Preview hunk diff")
+                    map("n", "<leader>gt", gs.toggle_current_line_blame, "Toggle inline line blame")
+                end,
+            },
+        },
         {
             "esmuellert/codediff.nvim",
             cmd = "CodeDiff",
