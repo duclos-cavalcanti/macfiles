@@ -7,7 +7,7 @@ theme = Adwaita Dark
 macos-titlebar-style = tabs
 
 ## Font
-font-family = Iosevka Nerd Font
+font-family = Dejavu Sans Mono Nerd Font
 font-size = 12.0
 
 ## Cursor
