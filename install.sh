@@ -21,6 +21,7 @@ function install_brew() {
 function install_packages() {
     print_section "Installing packages from Brewfile"
     if [ -f "Brewfile" ]; then
+        brew tap pluk-inc/tap 2>/dev/null && brew trust pluk-inc/tap 2>/dev/null
         brew bundle install
         print_status "Packages installed successfully"
     else
@@ -50,33 +51,6 @@ function install_git_config() {
     print_status "git difftool configured successfully"
 }
 
-# Markdown Preview (https://markdownpreview.app) — not in Homebrew; ships as a
-# DMG via GitHub Releases. Download, copy the .app to /Applications, and clear
-# the Gatekeeper quarantine so it opens without a warning. Idempotent.
-function install_markdown_preview() {
-    print_section "Installing Markdown Preview (GitHub DMG)"
-    if [ -d "/Applications/Markdown Preview.app" ]; then
-        print_status "Markdown Preview already installed — skipping"
-        return
-    fi
-    local url="https://github.com/pluk-inc/markdown-preview/releases/latest/download/Markdown-Preview.dmg"
-    local tmp dmg mount src
-    tmp="$(mktemp -d)"
-    dmg="$tmp/markdown-preview.dmg"
-    if ! curl -fsSL "$url" -o "$dmg"; then
-        echo "Markdown Preview: download failed"; rm -rf "$tmp"; return 1
-    fi
-    mount="$(hdiutil attach "$dmg" -nobrowse -readonly | grep -o '/Volumes/.*' | tail -1)"
-    src="$(find "$mount" -maxdepth 1 -name '*.app' | head -1)"
-    if [ -n "$src" ]; then
-        cp -R "$src" /Applications/
-        xattr -dr com.apple.quarantine "/Applications/$(basename "$src")" 2>/dev/null
-    fi
-    hdiutil detach "$mount" -quiet
-    rm -rf "$tmp"
-    print_status "Markdown Preview installed"
-}
-
 function main() {
     print_status "Starting macfiles setup..."
 
@@ -91,7 +65,6 @@ function main() {
 
     install_brew
     install_packages
-    install_markdown_preview
     install_dotfiles
     install_git_config
 

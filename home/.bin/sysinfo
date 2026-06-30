@@ -1,22 +1,12 @@
 #!/bin/sh
-# sysinfo — disk / mem / cpu usage for the tmux status bar (macOS).
-# Emits three green pills (nerd-font icon + %3s value, round powerline caps like
-# the window style), separated by transparent spaces. Fixed width keeps the
-# centered bar from shifting.
-# Icons (Material Design, verified in Iosevka Nerd Font):
-#   󰋊 disk U+F02CA   󰍛 mem U+F035B   󰻠 cpu U+F0EE0
-
+# sysinfo — disk / mem / cpu usage as PLAIN text for a status bar; the consumer
+# (zellij/zjstatus top bar) applies color. Output:  󰋊  67% 󰍛  20% 󰻠   8%
+# Icons (Material Design): 󰋊 disk U+F02CA  󰍛 mem U+F035B  󰻠 cpu U+F0EE0
+#
 # df $HOME, not /: on macOS / is the sealed system volume (~8%); the writable
 # Data volume (where files live) is the meaningful fill level.
 disk=$(df "$HOME" | awk 'NR==2 {gsub(/%/,"",$5); print $5}')
 mem=$(memory_pressure 2>/dev/null | awk -F': ' '/free percentage/ {gsub(/%/,"",$2); print 100-$2}')
 cpu=$(ps -A -o %cpu= | awk -v n="$(getconf _NPROCESSORS_ONLN)" '{s+=$1} END {printf "%d", s/n}')
 
-wrap() {
-    printf '#[bg=grey,fg=black] %s %3s%% #[fg=green,bg=default]' "$1" "$2"
-}
-
-printf '%s %s %s#[default]\n' \
-    "$(wrap '󰋊' "$disk")" \
-    "$(wrap '󰍛' "$mem")" \
-    "$(wrap '󰻠' "$cpu")"
+printf '󰋊 %3s%% 󰍛 %3s%% 󰻠 %3s%%\n' "$disk" "$mem" "$cpu"

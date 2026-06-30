@@ -30,3 +30,4 @@
 - Bartis Slack ID:  `D08GS0GEX0Q`
 - Jack Slack ID:  `D08FMEL6NQN`
 - Praneeth Slack ID:  `D090WQQ9HHQ`
+- Daniel/Me: `D08DNJ0AK0E`

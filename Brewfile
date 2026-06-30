@@ -2,6 +2,7 @@ cask_args appdir: '/Applications'
 
 # taps
 tap "jesseduffield/lazydocker"
+tap "pluk-inc/tap"
 
 # base
 brew "nvim"
@@ -16,6 +17,7 @@ brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
 cask "font-iosevka-nerd-font"
 cask "font-dejavu-sans-mono-nerd-font"
+cask "markdown-preview"
 
 # utils
 brew "curl"
