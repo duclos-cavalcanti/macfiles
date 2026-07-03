@@ -439,6 +439,15 @@ local plugins = {
             },
         },
     },
+    { -- markdown: in-buffer rendering (headings/code/tables/bullets); raw in insert mode
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = "markdown",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons",
+        },
+        opts = {},
+    },
     { -- local
         {
             dir = vim.fn.stdpath("config") .. "/pack/plugins/start/agentic",

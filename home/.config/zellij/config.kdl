@@ -1,6 +1,9 @@
 // mode
 default_mode "locked"      // uncomment to go unlock-first (recommended for nvim+tmux inside)
 
+// layout: two-bar setup (zjstatus top + built-in status-bar bottom)
+default_layout "main"
+
 // keybinds
 keybinds clear-defaults=true {
     normal {
@@ -129,7 +132,7 @@ session_serialization false     // no session resurrection
 show_startup_tips false         // no start-up tips
 
 // ui
-pane_frames false               // borderless panes
+pane_frames true                // framed panes (frameless triggers zellij stacked-pane cursor bug: gh#4370/#4047)
 simplified_ui true
 
 // theme: ANSI indices (0-15) instead of RGB, so the whole UI -- tab bar,
