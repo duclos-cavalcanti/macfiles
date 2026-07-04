@@ -5,18 +5,3 @@ home/.config/configstore/
 home/.config/github-copilot/
 
 home/.config/nvim/pack/plugins/start/nvim-todo/lua/dooing/
-
-home/.claude/skills/mady-*
-home/.claude/skills/custom-*
-
-# MADY agents — symlinks into a different project's repo
-home/.claude/agents/auditor.md
-home/.claude/agents/draftsman.md
-home/.claude/agents/finisher.md
-home/.claude/agents/foreman.md
-home/.claude/agents/inspector.md
-home/.claude/agents/millwright.md
-home/.claude/agents/overseer.md
-home/.claude/agents/prover.md
-home/.claude/agents/supervisor.md
-home/.claude/agents/worker.md

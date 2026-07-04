@@ -50,9 +50,9 @@ brew "spotify_player"
 brew "kind"
 brew "grpcurl"
 brew "k9s"
+brew "gh"
 brew "glab"
 brew "awscli"
-cask "claude-code"
 
 # work-dev
 brew "yarn"
