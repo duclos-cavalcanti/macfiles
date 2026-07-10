@@ -317,28 +317,26 @@ local plugins = {
       end,
     },
     { -- themes/ui
-        'ellisonleao/gruvbox.nvim',
-        version = '*',
+        'EdenEast/nightfox.nvim',
+        lazy = false,
         priority = 1000,
         dependencies = {
-                { "Mofiqul/adwaita.nvim", lazy = false, priority = 1000, },
                 "nvim-lualine/lualine.nvim",
                 'kyazdani42/nvim-web-devicons',
                 {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
-                {
-                    'norcalli/nvim-colorizer.lua',
-                    config  = function() require('colorizer').setup() end,
-                },
+                -- nvim-colorizer.lua needs truecolor (termguicolors). nightfox runs
+                -- truecolor, so this can be re-enabled if you want inline color swatches.
+                -- {
+                --     'norcalli/nvim-colorizer.lua',
+                --     config  = function() require('colorizer').setup() end,
+                -- },
         },
         config = function()
             vim.opt.termguicolors = true
-            vim.o.background = "dark"
-
-            vim.g.adwaita_darker = true
-            vim.g.adwaita_disable_cursorline = true
-            vim.g.adwaita_transparent = true
-
-            vim.cmd([[colorscheme adwaita]])
+            vim.o.background = "light"
+            -- nightfox variants: nightfox/duskfox/nordfox/terafox/carbonfox (dark),
+            -- dayfox/dawnfox (light). Swap the name below to switch.
+            vim.cmd([[colorscheme nightfox]])
 
             require("bufferline").setup {
                 options = {
@@ -438,15 +436,6 @@ local plugins = {
                 },
             },
         },
-    },
-    { -- markdown: in-buffer rendering (headings/code/tables/bullets); raw in insert mode
-        "MeanderingProgrammer/render-markdown.nvim",
-        ft = "markdown",
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            "nvim-tree/nvim-web-devicons",
-        },
-        opts = {},
     },
     { -- local
         {

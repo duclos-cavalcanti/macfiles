@@ -58,17 +58,19 @@ if [[ -d /opt/homebrew/bin ]]; then
     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 fi
 
-# zsh
-if command -v brew &>/dev/null; then
-    if [[ -d $(brew --prefix)/share/zsh-autosuggestions ]]; then
-        source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# zsh plugins — sourced from the fixed Homebrew prefix (as above). Do NOT use
+# `$(brew --prefix)` here: it spawns a brew subprocess on every startup and, if
+# brew is wedged, deadlocks the shell before it ever reaches the prompt.
+if [[ -d /opt/homebrew/share ]]; then
+    if [[ -d /opt/homebrew/share/zsh-autosuggestions ]]; then
+        source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     fi
 
-    if [[ -d $(brew --prefix)/share/zsh-autocomplete ]]; then
+    if [[ -d /opt/homebrew/share/zsh-autocomplete ]]; then
         zstyle ':autocomplete:*' automatic-expansion off
         zstyle ':autocomplete:*' real-time-completion off
 
-        source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+        source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
         zstyle ':autocomplete:*' ignored-input '*'
 
@@ -130,6 +132,20 @@ export PATH=$PATH:$HOME/.local/bin:$HOME/.bin
 # Homebrew
 if [[ -d /opt/homebrew ]]; then
     export PATH=$PATH:/opt/homebrew/bin:/opt/homebrew/sbin
+fi
+
+# Ghostty CLI. Two things break the standalone `ghostty` binary here:
+#  1. The .app's MacOS dir isn't on PATH by default.
+#  2. cmux injects GHOSTTY_RESOURCES_DIR pointing into its own bundle at a path
+#     that doesn't exist, so `ghostty +list-themes` / +show-config / +validate-config
+#     find no resources (empty theme list, etc.).
+# Add the binary to PATH and repair the resources dir to the real app bundle,
+# but only when the inherited value is missing/invalid (leave a valid one alone).
+if [[ -d /Applications/Ghostty.app/Contents/MacOS ]]; then
+    export PATH=$PATH:/Applications/Ghostty.app/Contents/MacOS
+    if [[ ! -d "$GHOSTTY_RESOURCES_DIR" ]]; then
+        export GHOSTTY_RESOURCES_DIR=/Applications/Ghostty.app/Contents/Resources/ghostty
+    fi
 fi
 
 # Python
