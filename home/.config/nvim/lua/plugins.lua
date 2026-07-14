@@ -16,48 +16,27 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
     { -- treesitter
         "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        lazy = false,
+        build = ":TSUpdate",
         dependencies = {
             "windwp/nvim-ts-autotag",
         },
         config = function()
-            vim.opt.runtimepath:append("$HOME/.local/share/treesitter")
-            require('nvim-treesitter.configs').setup({
-                parser_install_dir = "$HOME/.local/share/treesitter",
-            	highlight = {
-                    enable = true,
-                    additional_vim_regex_highlighting = false,
-                },
-                autotag = {
-                    enable = true,
-                    filetypes = {"js", "jsx", "javascript", "html", "xml", "markdown", "md"},
-                },
-            	ensure_installed = {
-                "bash",
-                "html",
-                "javascript",
-                "css",
-                "c",
-                "c_sharp",
-                "cpp",
-                "cmake",
-                "make",
-                "rust",
-                "python",
-                "lua",
-                "commonlisp",
-                "haskell",
-                "go",
-                "nix",
-                "gomod",
-                "gowork",
-                "java",
-                "json",
-                "yaml",
-                "vim",
-                "vimdoc",
-                "query",
-                "latex"
-            	},
+            require("nvim-treesitter").install({
+                "bash", "html", "javascript", "css", "c", "c_sharp", "cpp",
+                "cmake", "make", "rust", "python", "lua", "commonlisp",
+                "haskell", "go", "nix", "gomod", "gowork", "java", "json",
+                "yaml", "vim", "vimdoc", "query", "latex",
+            })
+
+            require("nvim-ts-autotag").setup()
+
+            -- main branch drops plugin highlighting; enable core TS per buffer.
+            vim.api.nvim_create_autocmd("FileType", {
+                callback = function()
+                    pcall(vim.treesitter.start)
+                end,
             })
         end,
     },
