@@ -6,6 +6,7 @@ tap "pluk-inc/tap"
 tap "anomalyco/tap"
 
 # base
+brew "stow"
 brew "nvim"
 cask "ghostty"
 brew "zellij"
@@ -13,7 +14,6 @@ brew "tmux"
 brew "tmuxp"
 brew "lazygit"
 brew "lazydocker"
-brew "stow"
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"
 cask "font-iosevka-nerd-font"
@@ -33,6 +33,10 @@ brew "yq"
 brew "watch"
 brew "reattach-to-user-namespace"
 
+# ai
+brew "ollama"
+brew "anomalyco/tap/opencode"
+
 # dev
 brew "autoconf"
 brew "shellcheck"
@@ -43,6 +47,15 @@ brew "protobuf"
 brew "pandoc"
 brew "tree-sitter-cli"
 brew "fonttools"
+brew "luarocks"
+brew "lua-language-server"
+brew "typescript-language-server"
+brew "vscode-langservers-extracted"
+brew "pyenv-virtualenv"
+brew "bash-language-server"
+brew "yaml-language-server"
+brew "pyright"
+brew "marksman"
 
 # system
 brew "spotify_player"
@@ -54,22 +67,6 @@ brew "k9s"
 brew "gh"
 brew "glab"
 brew "awscli"
-
-# work-dev
 brew "yarn"
 brew "node"
-brew "marksman"
 brew "sqlite"
-brew "lua-language-server"
-brew "typescript-language-server"
-brew "vscode-langservers-extracted"
-brew "yaml-language-server"
-brew "bash-language-server"
-brew "pyright"
-brew "pyenv-virtualenv"
-brew "luarocks"
-
-# ai
-brew "ollama"
-brew "anomalyco/tap/opencode"
-
