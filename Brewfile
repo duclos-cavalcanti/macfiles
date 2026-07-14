@@ -3,6 +3,7 @@ cask_args appdir: '/Applications'
 # taps
 tap "jesseduffield/lazydocker"
 tap "pluk-inc/tap"
+tap "anomalyco/tap"
 
 # base
 brew "nvim"
@@ -67,4 +68,8 @@ brew "bash-language-server"
 brew "pyright"
 brew "pyenv-virtualenv"
 brew "luarocks"
+
+# ai
+brew "ollama"
+brew "anomalyco/tap/opencode"
 

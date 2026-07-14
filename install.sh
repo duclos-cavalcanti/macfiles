@@ -21,7 +21,11 @@ function install_brew() {
 function install_packages() {
     print_section "Installing packages from Brewfile"
     if [ -f "Brewfile" ]; then
-        brew tap pluk-inc/tap 2>/dev/null && brew trust pluk-inc/tap 2>/dev/null
+        # Pre-trust every third-party tap declared in the Brewfile — brew
+        # refuses to load formulae from untrusted taps during bundle.
+        grep -E '^tap "' Brewfile | sed -E 's/^tap "([^"]+)".*/\1/' | while read -r t; do
+            brew tap "$t" 2>/dev/null && brew trust "$t" 2>/dev/null
+        done
         brew bundle install
         print_status "Packages installed successfully"
     else
