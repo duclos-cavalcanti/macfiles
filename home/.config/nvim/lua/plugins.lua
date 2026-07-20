@@ -296,7 +296,7 @@ local plugins = {
       end,
     },
     { -- themes/ui
-        "Mofiqul/dracula.nvim",
+        "Mofiqul/adwaita.nvim",
         lazy = false,
         priority = 1000,
         dependencies = {
@@ -315,7 +315,7 @@ local plugins = {
         config = function()
             vim.opt.termguicolors = true
             vim.o.background = "dark"
-            vim.cmd([[colorscheme dracula]])
+            vim.cmd([[colorscheme adwaita]])
 
             require("bufferline").setup {
                 options = {

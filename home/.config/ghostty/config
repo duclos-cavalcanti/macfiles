@@ -2,7 +2,7 @@
 
 # Theme
 # `ghostty +list-themes`.
-theme = Dracula
+theme = Adwaita Dark
 
 macos-titlebar-style = tabs
 
