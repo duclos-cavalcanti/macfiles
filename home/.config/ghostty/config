@@ -2,7 +2,7 @@
 
 # Theme
 # `ghostty +list-themes`.
-theme = Ghostty Default Style Dark
+theme = Github Dark Default
 
 macos-titlebar-style = tabs
 

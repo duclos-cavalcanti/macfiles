@@ -296,7 +296,8 @@ local plugins = {
       end,
     },
     { -- themes/ui
-        "nkxxll/ghostty-default-style-dark.nvim",
+        "projekt0n/github-nvim-theme",
+        name = 'github-theme',
         lazy = false,
         priority = 1000,
         dependencies = {
@@ -316,7 +317,7 @@ local plugins = {
         config = function()
             vim.opt.termguicolors = true
             -- vim.o.background = "light"
-            vim.cmd([[colorscheme ghostty-default-style-dark]])
+            vim.cmd([[colorscheme github_dark_default]])
 
             require("bufferline").setup {
                 options = {
