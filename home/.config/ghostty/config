@@ -2,7 +2,7 @@
 
 # Theme
 # `ghostty +list-themes`.
-theme = Nightfox
+theme = Dracula
 
 macos-titlebar-style = tabs
 

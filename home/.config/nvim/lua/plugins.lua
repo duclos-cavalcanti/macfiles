@@ -296,13 +296,15 @@ local plugins = {
       end,
     },
     { -- themes/ui
-        'EdenEast/nightfox.nvim',
+        "Mofiqul/dracula.nvim",
         lazy = false,
         priority = 1000,
         dependencies = {
                 "nvim-lualine/lualine.nvim",
                 'kyazdani42/nvim-web-devicons',
                 {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
+                { "olimorris/onedarkpro.nvim", priority = 1000, },
+                { "srcery-colors/srcery-vim", lazy = false, priority = 1000, },
                 -- nvim-colorizer.lua needs truecolor (termguicolors). nightfox runs
                 -- truecolor, so this can be re-enabled if you want inline color swatches.
                 -- {
@@ -312,10 +314,8 @@ local plugins = {
         },
         config = function()
             vim.opt.termguicolors = true
-            vim.o.background = "light"
-            -- nightfox variants: nightfox/duskfox/nordfox/terafox/carbonfox (dark),
-            -- dayfox/dawnfox (light). Swap the name below to switch.
-            vim.cmd([[colorscheme nightfox]])
+            vim.o.background = "dark"
+            vim.cmd([[colorscheme dracula]])
 
             require("bufferline").setup {
                 options = {

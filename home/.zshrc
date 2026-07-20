@@ -212,48 +212,18 @@ fi
 
 # Integrations — fzf
 if command -v fzf &>/dev/null; then
+    # shared fd base; file/dir sources differ only by --type
+    _fd="fd --follow --hidden --exclude .git --exclude VMs --exclude .cache"
+    _fd+=" --exclude .icons --exclude .local --exclude Programs --exclude snap"
+    _fd+=" --exclude quicklisp --exclude Music"
 
-    export FZF_DEFAULT_COMMAND="fd --follow --hidden --type f --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
-    export FZF_ALT_C_COMMAND="fd --follow --hidden --type d --exclude .git --exclude VMs --exclude .cache --exclude .icons --exclude .local --exclude Programs --exclude snap --exclude quicklisp --exclude Music"
+    export FZF_DEFAULT_COMMAND="$_fd --type f"
+    export FZF_ALT_C_COMMAND="$_fd --type d"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    unset _fd
 
     [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
     [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
-
-    fzf-tmux-sessions() {
-        if ! command -v tmux &>/dev/null; then
-            zle -M "tmux not installed"
-            return
-        fi
-
-        local sessions
-        sessions=$(tmux list-sessions -F '#{session_name}' 2>/dev/null)
-        if [[ -z "$sessions" ]]; then
-            zle -M "no tmux sessions"
-            return
-        fi
-
-        local current=""
-        [[ -n "$TMUX" ]] && current=$(tmux display-message -p '#{session_name}')
-
-        local selection
-        selection=$(echo "$sessions" \
-            | grep -vFx "$current" \
-            | fzf --height=~40% --reverse --prompt="tmux> " --exit-0)
-
-        if [[ -n "$selection" ]]; then
-            if [[ -n "$TMUX" ]]; then
-                tmux switch-client -t "$selection"
-            else
-                tmux attach -t "$selection"
-            fi
-        fi
-        zle reset-prompt
-    }
-    zle -N fzf-tmux-sessions
-    bindkey '^Xt' fzf-tmux-sessions   # Ctrl-X t: pick/switch tmux session
-
-    alias tsel='fzf-tmux-sessions'
 fi
 
 # Work
