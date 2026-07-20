@@ -2,7 +2,7 @@
 
 # Theme
 # `ghostty +list-themes`.
-theme = Adwaita Dark
+theme = Ghostty Default Style Dark
 
 macos-titlebar-style = tabs
 

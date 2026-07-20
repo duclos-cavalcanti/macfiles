@@ -296,10 +296,11 @@ local plugins = {
       end,
     },
     { -- themes/ui
-        "Mofiqul/adwaita.nvim",
+        "nkxxll/ghostty-default-style-dark.nvim",
         lazy = false,
         priority = 1000,
         dependencies = {
+                "fneu/breezy",
                 "nvim-lualine/lualine.nvim",
                 'kyazdani42/nvim-web-devicons',
                 {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
@@ -314,8 +315,8 @@ local plugins = {
         },
         config = function()
             vim.opt.termguicolors = true
-            vim.o.background = "dark"
-            vim.cmd([[colorscheme adwaita]])
+            -- vim.o.background = "light"
+            vim.cmd([[colorscheme ghostty-default-style-dark]])
 
             require("bufferline").setup {
                 options = {
